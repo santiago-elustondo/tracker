@@ -1,0 +1,3 @@
+new_tracker(50.0, 10.0)
+new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
+new_container("cid2", [liquid,  0.5], "pid2") -- e11
