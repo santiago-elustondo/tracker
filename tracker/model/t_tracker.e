@@ -5,7 +5,7 @@ note
 	revision: "$Revision$"
 
 class
-	T_TRACKER_X
+	T_TRACKER
 
 
 inherit
