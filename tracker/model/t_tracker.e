@@ -17,32 +17,43 @@ inherit
 create {T_TRACKER_ACCESS}
 	make
 
-feature {NONE} -- Initialization
+
+feature
+
+	max_phase_rad: REAL
+	max_container_rad: REAL
+	phases: ARRAY[T_PHASE]
+
 	make
+		do
+			phases := create {ARRAY[T_PHASE]}.make_empty
+			garbage_make
+		end
+
+	wipe_out(a_max_phase_rad: REAL; a_max_container_rad: REAL)
+		do
+			make
+			max_phase_rad := a_max_phase_rad
+			max_container_rad := a_max_container_rad
+		end
+
+
+feature -- garbage
+	garbage_make
 			-- Initialization for `Current'.
 		do
 			create s.make_empty
 			i := 0
 		end
 
-feature -- model attributes
 	s : STRING
 	i : INTEGER
-
-	max_phase_rad: REAL
-	max_container_rad: REAL
-
---	phases: ARRAY[T_PHASE]
-
-feature -- model operations
 	default_update
-			-- Perform update to the model state.
 		do
 			i := i + 1
 		end
 
 	reset
-			-- Reset model state.
 		do
 			make
 		end
