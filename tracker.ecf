@@ -12,7 +12,6 @@
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<capability>
-			<catcall_detection support="none"/>
 			<concurrency support="scoop"/>
 			<void_safety support="all" use="all"/>
 		</capability>
@@ -31,14 +30,10 @@
 		<library name="mathmodels" location="$MATHMODELS\library\mathmodels.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2.ecf"/>
+		<cluster name="tracker" location=".\tracker\" recursive="true"/>
 		<cluster name="generated_code" location=".\generated_code\" recursive="true"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
-		<cluster name="tracker" location=".\tracker\" recursive="true">
-			<file_rule>
-				<exclude>^model/utils$</exclude>
-			</file_rule>
-			<cluster name="utils" location="\media\sf_eecs-3311\tracker\tracker\model\utils\"/>
-		</cluster>
 	</target>
 </system>
+
