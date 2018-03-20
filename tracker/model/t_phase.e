@@ -14,6 +14,6 @@ feature
 	name: STRING
 	max_containers: INTEGER
 	materials: ARRAY[INTEGER]
-	containers: ARRAY[T_CONTAINER]
+	containers: STRING_TABLE[T_CONTAINER]
 
 end
