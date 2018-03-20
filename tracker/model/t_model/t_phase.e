@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {PHASE}."
+	description: "Summary description for {T_PHASE}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
@@ -10,10 +10,10 @@ class
 create
 
 feature
-	id: STRING
+	pid: STRING
 	name: STRING
 	max_containers: INTEGER
-	materials: ARRAY[INTEGER]
+	materials: ARRAY[T_MATERIAL]
 	containers: STRING_TABLE[T_CONTAINER]
 
 end
