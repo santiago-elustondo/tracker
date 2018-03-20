@@ -5,15 +5,14 @@ note
 	revision: "$Revision$"
 
 class
-	T_TRACKER
+	T_TRACKER_X
 
 create
-	
+
 
 feature
 	max_phase_rad: REAL
 	max_container_rad: REAL
-
 	phases: ARRAY[T_PHASE]
 
 
