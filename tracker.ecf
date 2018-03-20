@@ -34,6 +34,6 @@
 		<cluster name="generated_code" location=".\generated_code\" recursive="true"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
+		<cluster name="historical_lib" location=".\historical_lib\" recursive="true"/>
 	</target>
 </system>
-
