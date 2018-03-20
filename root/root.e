@@ -34,7 +34,7 @@ feature -- Attributes
 	switch: INTEGER
 			-- Running mode of ETF application.
 		do
-			Result := etf_gui_show_history
+			Result := 2
 		end
 
 feature -- Tests

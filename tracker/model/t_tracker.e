@@ -22,11 +22,11 @@ feature
 
 	max_phase_rad: REAL
 	max_container_rad: REAL
-	phases: ARRAY[T_PHASE]
+	phases: STRING_TABLE[T_PHASE]
 
 	make
 		do
-			phases := create {ARRAY[T_PHASE]}.make_empty
+			create phases.make (10)
 			garbage_make
 		end
 
