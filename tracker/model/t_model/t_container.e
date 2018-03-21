@@ -9,8 +9,14 @@ class
 
 create
 
-feature
+feature{none}
 	cid: STRING
-	container: TUPLE [material: T_MATERIAL; radioactivity: VALUE]
+	container: TUPLE [material: INTEGER; radioactivity: VALUE]
+
+feature -- queries
+	get_container : TUPLE [material: INTEGER; radioactivity: VALUE]
+		do
+			Result := container
+		end
 
 end

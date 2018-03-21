@@ -18,11 +18,13 @@ create {T_TRACKER_ACCESS}
 	make
 
 
-feature
+feature{NONE}
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
+
+feature -- constructors
 
 	make
 		do
@@ -59,6 +61,41 @@ feature -- garbage
 		end
 
 feature -- queries
+
+	tracker_in_use: BOOLEAN
+		do
+			across phases as p loop
+				Result := Result or else p.item.get_count = 0
+			end
+		end
+
+	get_max_phase_rad: VALUE
+		do
+			Result := max_phase_rad
+		end
+
+	get_max_container_rad: VALUE
+		do
+			Result := max_container_rad
+		end
+
+	has_phase(pid: STRING): BOOLEAN
+		do
+			Result := phases.has (pid)
+		end
+
+	get_phase(pid: STRING): T_PHASE
+		do
+			check attached phases.item (pid) as p then
+				Result := p
+			end
+		end
+
+	has_container(cid: STRING): BOOLEAN
+		do
+			across phases as p loop Result := (Result or else p.item.has_container (cid)) end
+		end
+
 	out : STRING
 		do
 			create Result.make_from_string ("  ")

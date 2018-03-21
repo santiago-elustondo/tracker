@@ -9,11 +9,40 @@ class
 
 create
 
-feature
+feature{none}
 	pid: STRING
 	name: STRING
-	max_containers: INTEGER
-	materials: ARRAY[T_MATERIAL]
+	capacity: INTEGER
+	materials: ARRAY[INTEGER]
 	containers: STRING_TABLE[T_CONTAINER]
+	count : INTEGER
+
+feature -- queries
+	get_capacity: INTEGER
+		do
+			Result := capacity
+		end
+
+	get_count: INTEGER
+		do
+			Result := count
+		end
+
+	material_expected(i: INTEGER): BOOLEAN
+		do
+			across materials as m loop Result := Result or else m.item = i end
+		end
+
+	has_container(cid: STRING): BOOLEAN
+		do
+			Result := containers.has (cid)
+		end
+
+	get_container(cid: STRING): T_CONTAINER
+		do
+			check attached containers.item (cid) as c then
+				Result := c
+			end
+		end
 
 end

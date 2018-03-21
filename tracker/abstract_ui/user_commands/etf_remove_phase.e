@@ -6,18 +6,26 @@ note
 
 class
 	ETF_REMOVE_PHASE
-inherit 
+inherit
 	ETF_REMOVE_PHASE_INTERFACE
 		redefine remove_phase end
 create
 	make
-feature -- command 
+feature -- command
 	remove_phase(pid: STRING)
-		require else 
+		require else
 			remove_phase_precond(pid)
+		local
+			e: STRING
     	do
-			-- perform some update on the model state
-			model.default_update
+    		if model.tracker_in_use then
+    			e := error.err_tracker_in_use
+			elseif not model.has_phase (pid) then
+				e := error.err_phase_id_not_exists
+			else
+				e := error.ok
+				model.default_update
+    		end
 			etf_cmd_container.on_change.notify ([Current])
     	end
 
