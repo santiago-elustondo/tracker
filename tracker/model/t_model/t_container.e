@@ -23,13 +23,7 @@ feature
 
 feature -- queries
 
-	get_id: STRING
-		do
-			result := cid
-		end
-
-	-- ??????? containers have containers?
-	get_container : TUPLE [material: INTEGER_64; radioactivity: VALUE]
+	get_props : TUPLE [material: INTEGER_64; radioactivity: VALUE]
 		do
 			Result := props
 		end

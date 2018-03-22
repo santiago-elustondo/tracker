@@ -31,7 +31,9 @@ feature
 			set_target(a_target)
 			cid := a_cid
 			set_default_error
-			old_container := target.get_phase (target.find_container (a_cid)).get_container (cid)
+			check attached target.find_container (cid) as phase then
+				old_container := phase.get_container (cid)
+			end
 		end
 
 	apply
@@ -40,7 +42,9 @@ feature
     			set_error(error.err_con_id_not_exists)
     		else
     			set_error(error.err_ok)
-				target.get_phase (target.find_container (cid)).remove_container (cid)
+    			check attached target.find_container (cid) as phase then
+					phase.remove_container (cid)
+				end
 			end
     	end
 

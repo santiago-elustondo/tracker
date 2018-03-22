@@ -109,13 +109,12 @@ feature -- queries
 				p.item.has_container (cid)
 			end
 		end
-
-	find_container(cid: STRING): STRING
+		
+	find_container(cid: STRING) : detachable T_PHASE
 		do
-			Result := ""
 			across phases as p loop
 				if p.item.has_container (cid) then
-					Result := p.item.get_pid
+					Result := p.item
 				end
 			end
 		end

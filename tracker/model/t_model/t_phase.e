@@ -37,7 +37,7 @@ feature -- queries
 	add_container(a_container: T_CONTAINER)
 
 		do
-			containers.put(a_container, a_container.get_id)
+			containers.put(a_container, a_container.get_cid)
 		end
 
 	remove_container(a_cid: STRING)
