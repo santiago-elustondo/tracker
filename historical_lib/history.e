@@ -52,8 +52,8 @@ feature { ANY } -- commands
 
 	pop_future: G
 	 	do
-	 		Result := implementation[cursor + 1]
-			cursor := cursor + 1
+	 		cursor := cursor + 1
+	 		Result := implementation[cursor]
 	 	end
 
 	clear_future

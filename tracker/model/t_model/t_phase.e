@@ -13,7 +13,7 @@ feature{none}
 	pid: STRING
 	name: STRING
 	capacity: INTEGER
-	materials: ARRAY[INTEGER]
+	materials: LINKED_SET[INTEGER]
 	containers: STRING_TABLE[T_CONTAINER]
 	count : INTEGER
 
