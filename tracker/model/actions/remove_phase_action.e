@@ -17,11 +17,10 @@ feature -- params
 
 	pid: STRING
 
-
 feature
 
-	clear_history:BOOLEAN = false
-	remember: BOOLEAN = true
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN = TRUE
 
 	make(
 		a_target: T_TRACKER;

@@ -15,8 +15,8 @@ create
 
 feature -- params
 
-	max_phase_radiation: VALUE;
-	max_container_radiation: VALUE;
+	max_phase_radiation: VALUE
+	max_container_radiation: VALUE
 
 feature
 

@@ -15,17 +15,17 @@ create
 
 feature -- params
 
-	pid: STRING;
-	cid: STRING;
+	pid: STRING
+	cid: STRING
 	c: TUPLE[
 		material: INTEGER_64;
 		radioactivity: VALUE
-	];
+	]
 
 feature
 
-	clear_history:BOOLEAN = false
-	remember: BOOLEAN = true
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN = TRUE
 
 	make(
 		a_target: T_TRACKER;
@@ -34,7 +34,7 @@ feature
 		a_c: TUPLE[
 			material: INTEGER_64;
 			radioactivity: VALUE
-		];
+		]
 	)
 		do
 			set_target(a_target)
