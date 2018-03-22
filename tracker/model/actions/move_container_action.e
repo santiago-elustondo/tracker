@@ -20,6 +20,10 @@ feature -- params
 	pid2: STRING;
 
 
+feature -- mem
+
+ 	container: detachable T_CONTAINER;
+
 feature
 
 	clear_history:BOOLEAN = false
@@ -57,11 +61,22 @@ feature
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)
-				target.get_phase(pid1).get_container (cid)
+				container := target.get_phase(pid1).get_container(cid);
+				if attached container then
+					target.get_phase(pid2).add_container(container);
+				end
 			end
     	end
 
 	undo
-		do end
+		do
+			if (exec_error ~ error.err_ok) and then
+				if attached container then
+					target.get_phase(pid2).remove_container(container.get_id);
+					target.get_phase(pid1).add_container(container.get_id);
+				end
+			end
+			target.set_error(prev_error)
+		end
 
 end
