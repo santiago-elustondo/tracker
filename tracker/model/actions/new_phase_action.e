@@ -57,7 +57,7 @@ feature
 			elseif expected_materials.count = 0 then
 				e := error.err_phase_no_materials
     		else
-    			e := error.ok
+    			e := error.err_ok
 				target.default_update
 			end
     	end

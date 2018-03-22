@@ -47,7 +47,7 @@ feature
 			elseif target.get_max_container_rad > target.get_max_phase_rad then
 				e := error.err_max_con_greater_max_rad
 			else
-				e := error.ok
+				e := error.err_ok
 				target.default_update
     		end
 		end

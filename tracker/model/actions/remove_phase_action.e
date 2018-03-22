@@ -40,7 +40,7 @@ feature
 			elseif not target.has_phase (pid) then
 				e := error.err_phase_id_not_exists
 			else
-				e := error.ok
+				e := error.err_ok
 				target.default_update
     		end
     	end

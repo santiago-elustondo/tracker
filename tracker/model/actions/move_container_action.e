@@ -57,7 +57,7 @@ feature
     		elseif target.get_phase (pid2).material_expected (target.get_phase (pid2).get_container (cid).get_container.material) then
     			e := error.err_phase_mat_not_expected
     		else
-    			e := error.ok
+    			e := error.err_ok
 				target.default_update
 			end
     	end
