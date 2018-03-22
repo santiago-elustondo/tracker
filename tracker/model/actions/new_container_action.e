@@ -76,7 +76,7 @@ feature
 	undo
 		do
 			if (exec_error ~ error.err_ok) then
-				target.get_phase(pid).remove_container(pid)
+				target.get_phase(pid).remove_container(cid)
 			end
 			target.set_error(prev_error)
 		end
