@@ -16,7 +16,6 @@ create
 feature -- params
 
 	pid: STRING
-	old_phase: T_PHASE
 
 
 feature
@@ -32,7 +31,9 @@ feature
 			set_target(a_target)
 			pid := a_pid
 			set_default_error
-			old_phase := target.get_phase (a_pid)
+			if attached target.get_phase (a_pid) as p then
+				phase := p
+			end
 		end
 
 	apply
@@ -51,7 +52,9 @@ feature
 	undo
 		do
 			if (exec_error ~ error.err_ok) then
-				target.add_phase (old_phase)
+				if attached phase as p then
+					target.add_phase (p)
+				end
 			end
 			target.set_error (prev_error)
 		end

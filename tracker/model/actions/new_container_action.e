@@ -46,6 +46,7 @@ feature
 
 	apply
 		do
+			prev_error := target.error
 			if not cid[1].is_alpha_numeric then
 				set_error(error.err_name_start)
 			elseif target.has_container(cid) then

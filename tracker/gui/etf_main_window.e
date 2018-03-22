@@ -40,6 +40,12 @@ feature {NONE} -- Initialization
 		do
 		end
 
+feature -- Access
+
+	new: ETF_MAIN_WINDOW
+			-- `new'
+		attribute check False then end end --| Remove line when `new' is initialized in creation procedure.
+
 feature {NONE} -- Business Object
 	business_obj: ETF_MODEL_FACADE
 	session_file: PLAIN_TEXT_FILE

@@ -16,7 +16,6 @@ create
 feature -- params
 
 	cid: STRING
-	old_container: T_CONTAINER
 
 feature
 
@@ -31,24 +30,32 @@ feature
 			set_target(a_target)
 			cid := a_cid
 			set_default_error
-			check attached target.find_container (cid) as phase then
-				old_container := phase.get_container (cid)
+			phase := target.find_container (cid)
+			if attached phase as p then
+				container := p.get_container (cid)
 			end
 		end
 
 	apply
     	do
+    		prev_error := target.error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		else
     			set_error(error.err_ok)
-    			check attached target.find_container (cid) as phase then
-					phase.remove_container (cid)
+    			if attached phase as p then
+					p.remove_container (cid)
 				end
 			end
     	end
 
 	undo
-		do end
+		do
+			if (exec_error ~ error.err_ok) then
+				if (attached phase as p) and then (attached container as con) then
+					p.add_container (con)
+				end
+			end
+		end
 
 end

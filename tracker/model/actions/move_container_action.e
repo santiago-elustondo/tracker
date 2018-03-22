@@ -19,11 +19,6 @@ feature -- params
 	pid1: STRING;
 	pid2: STRING;
 
-
-feature -- mem
-
- 	container: detachable T_CONTAINER;
-
 feature
 
 	clear_history:BOOLEAN = false
@@ -45,6 +40,7 @@ feature
 
 	apply
     	do
+    		prev_error := target.error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		elseif pid1 ~ pid2 then
@@ -63,6 +59,7 @@ feature
     			set_error(error.err_ok)
 				container := target.get_phase(pid1).get_container(cid)
 				if attached container as con then
+					target.get_phase(pid1).remove_container(con.get_cid)
 					target.get_phase(pid2).add_container(con)
 				end
 			end
