@@ -59,7 +59,6 @@ feature -- commands
 		end
 
 
-
 feature -- garbage
 	garbage_make
 			-- Initialization for `Current'.

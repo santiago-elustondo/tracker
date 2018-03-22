@@ -63,7 +63,7 @@ feature
 		--	elseif expected_materials.count = 0 then
 		--		set_error(error.err_phase_no_materials)
     		else
-    			set_error(error.ok)
+    			set_error(error.err_ok)
 					target.add_phase(create {T_PHASE}.make(
 						pid,
 						phase_name,
@@ -81,7 +81,7 @@ feature
 
 	undo
 		do
-			if (exec_error ~ error.ok) then
+			if (exec_error ~ error.err_ok) then
 				target.remove_phase(pid)
 			end
 			target.set_error(prev_error)

@@ -13,7 +13,7 @@ create
 feature{none}
 	pid: STRING
 	name: STRING
-	capacity: INTEGER
+	capacity: INTEGER_64
 	materials: LINKED_SET[INTEGER]
 	containers: STRING_TABLE[T_CONTAINER]
 
@@ -21,7 +21,7 @@ feature -- cmds
 	make(
 		a_pid: STRING
 		a_name: STRING
-		a_capacity: INTEGER
+		a_capacity: INTEGER_64
 		-- a_materials: LINKED_SET[INTEGER_64]
 	)
 		do
@@ -32,26 +32,36 @@ feature -- cmds
 			create containers.make(0)
 		end
 
+	add_container(a_container: T_CONTAINER)
+		do
+			containers.put(a_container, a_container.get_id)
+		end
+
+	remove_container(a_cid: STRING)
+		do
+			containers.remove(a_cid)
+		end
+
 feature -- queries
 	get_pid: STRING
 		do
 			result := pid
 		end
 
-	get_capacity: INTEGER
+	get_capacity: INTEGER_64
 		do
 			Result := capacity
 		end
 
-	get_count: INTEGER
+	get_count: INTEGER_64
 		do
 			Result := containers.count
 		end
 
-	material_expected(i: INTEGER): BOOLEAN
+	material_expected(i: INTEGER_64): BOOLEAN
 		do
 --			across materials as m loop Result := Result or else m.item = i end
-			Result := materials.has (i)
+			Result := materials.has (i.to_integer_32)
 		end
 
 	has_container(cid: STRING): BOOLEAN

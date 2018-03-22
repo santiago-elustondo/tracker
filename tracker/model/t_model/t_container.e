@@ -8,15 +8,29 @@ class
 	T_CONTAINER
 
 create
+	make
 
-feature{none}
+feature
 	cid: STRING
-	container: TUPLE [material: INTEGER; radioactivity: VALUE]
+	props: TUPLE [material: INTEGER_64; radioactivity: VALUE]
+
+	make(a_cid: STRING; a_props: TUPLE [material: INTEGER_64; radioactivity: VALUE])
+		do
+			cid := a_cid
+			props := a_props
+		end
 
 feature -- queries
-	get_container : TUPLE [material: INTEGER; radioactivity: VALUE]
+
+	get_id: STRING
 		do
-			Result := container
+			result := cid
+		end
+
+	-- ??????? containers have containers?
+	get_container : TUPLE [material: INTEGER_64; radioactivity: VALUE]
+		do
+			Result := props
 		end
 
 end
