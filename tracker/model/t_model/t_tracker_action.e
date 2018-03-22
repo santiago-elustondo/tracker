@@ -10,4 +10,7 @@ deferred class
 inherit
 	ACTION [T_TRACKER]
 
+feature
+	error: ERROR_HANDLING
+
 end

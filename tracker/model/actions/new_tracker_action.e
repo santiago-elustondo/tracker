@@ -13,19 +13,43 @@ inherit
 create
 	make
 
+feature -- params
+
+	max_phase_radiation: VALUE;
+	max_container_radiation: VALUE;
+
 feature
 
 	clear_history:BOOLEAN = TRUE
 	remember: BOOLEAN = FALSE
 
-	make(a_target: T_TRACKER)
+	make(
+		a_target: T_TRACKER;
+		a_max_phase_radiation: VALUE;
+		a_max_container_radiation: VALUE;
+	)
 		do
 			set_target(a_target)
+			max_phase_radiation := a_max_phase_radiation
+			max_container_radiation := a_max_container_radiation
 		end
 
 	apply
+		local
+			e: STRING
 		do
-
+			if target.tracker_in_use then
+    			e := error.err_tracker_in_use
+    		elseif target.get_max_phase_rad < 0.0 then
+    			e := error.err_max_phase_rad_negative
+    		elseif target.get_max_container_rad < 0.0 then
+				e := error.err_max_con_rad_negative
+			elseif target.get_max_container_rad > target.get_max_phase_rad then
+				e := error.err_max_con_greater_max_rad
+			else
+				e := error.ok
+				target.default_update
+    		end
 		end
 
 	undo

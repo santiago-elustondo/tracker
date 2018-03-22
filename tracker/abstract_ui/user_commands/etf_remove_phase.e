@@ -15,18 +15,12 @@ feature -- command
 	remove_phase(pid: STRING)
 		require else
 			remove_phase_precond(pid)
-		local
-			e: STRING
-    	do
-    		if model.tracker_in_use then
-    			e := error.err_tracker_in_use
-			elseif not model.has_phase (pid) then
-				e := error.err_phase_id_not_exists
-			else
-				e := error.ok
-				model.default_update
-    		end
+		do
+			model.do_action(create {REMOVE_PHASE_ACTION}.make(
+    			model,
+    			pid
+    		))
 			etf_cmd_container.on_change.notify ([Current])
-    	end
+		end
 
 end

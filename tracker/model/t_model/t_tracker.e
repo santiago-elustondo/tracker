@@ -9,8 +9,9 @@ class
 
 
 inherit
-	ANY
+	HISTORICAL[T_TRACKER_ACTION]
 		redefine
+			make,
 			out
 		end
 
@@ -28,6 +29,7 @@ feature -- constructors
 
 	make
 		do
+			precursor
 			create phases.make (10)
 			garbage_make
 		end

@@ -15,15 +15,11 @@ feature -- command
 	remove_container(cid: STRING)
 		require else
 			remove_container_precond(cid)
-		local
-			e: STRING
     	do
-    		if not model.has_container (cid) then
-    			e := error.err_con_id_not_exists
-    		else
-    			e := error.ok
-				model.default_update
-			end
+			model.do_action(create {REMOVE_CONTAINER_ACTION}.make(
+    			model,
+				cid
+    		))
 			etf_cmd_container.on_change.notify ([Current])
     	end
 

@@ -1,0 +1,78 @@
+note
+	description: "Summary description for {NEW_CONTAINER_ACTION}."
+	author: ""
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	NEW_CONTAINER_ACTION
+
+inherit
+	T_TRACKER_ACTION
+
+create
+	make
+
+feature -- params
+
+	pid: STRING;
+	cid: STRING;
+	c: TUPLE[
+		material: INTEGER_64;
+		radioactivity: VALUE
+	];
+
+
+feature
+
+	clear_history:BOOLEAN = false
+	remember: BOOLEAN = true
+
+	make(
+		a_target: T_TRACKER;
+		a_pid: STRING;
+		a_cid: STRING;
+		a_c: TUPLE[
+			material: INTEGER_64;
+			radioactivity: VALUE
+		];
+	)
+		do
+			set_target(a_target)
+			pid := a_pid
+			cid := a_cid
+			c := a_c
+		end
+
+	apply
+		local
+			e: STRING
+		do
+			if not cid[1].is_alpha_numeric then
+				e := error.err_name_start
+			elseif target.has_container(cid) then
+				e := error.err_con_id_exists
+			elseif not pid[1].is_alpha_numeric then
+				e := error.err_name_start
+			elseif not target.has_phase (pid) then
+				e := error.err_phase_id_not_exists
+			elseif c.radioactivity < 0.0 then
+				e := error.err_con_rad_negative
+			elseif target.get_phase (pid).get_count > target.get_phase (pid).get_capacity then
+				e := error.err_con_exceed_phase_cap
+			elseif c.radioactivity > target.get_max_container_rad then
+				e := error.err_con_exceed_rad_cap
+			elseif c.radioactivity > target.get_max_phase_rad then
+				e := error.err_con_exceed_safe
+			elseif not target.get_phase (pid).material_expected (c.material.as_integer_32) then
+				e := error.err_phase_mat_not_expected
+			else
+				e := error.ok
+				target.default_update
+			end
+    	end
+
+	undo
+		do end
+
+end
