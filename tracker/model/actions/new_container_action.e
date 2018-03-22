@@ -22,7 +22,6 @@ feature -- params
 		radioactivity: VALUE
 	];
 
-
 feature
 
 	clear_history:BOOLEAN = false
@@ -67,11 +66,19 @@ feature
 				set_error(error.err_phase_mat_not_expected)
 			else
 				set_error(error.err_ok)
-				target.default_update
+				target.get_phase(pid).add_container(create {T_CONTAINER}.make(
+					cid,
+					c
+				))
 			end
     	end
 
 	undo
-		do end
+		do
+			if (exec_error ~ error.err_ok) then
+				target.get_phase(pid).remove_container(pid)
+			end
+			target.set_error(prev_error)
+		end
 
 end

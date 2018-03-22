@@ -63,7 +63,6 @@ feature -- commands
 		end
 
 
-
 feature -- garbage
 
 	i : INTEGER
