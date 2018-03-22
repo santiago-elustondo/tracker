@@ -22,11 +22,6 @@ feature -- params
 		radioactivity: VALUE
 	];
 
-feature -- mem
-
-	prev_error: STRING
-	exec_error: STRING
-
 feature
 
 	clear_history:BOOLEAN = false

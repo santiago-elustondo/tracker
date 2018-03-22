@@ -22,7 +22,6 @@ feature -- cmds
 		a_pid: STRING
 		a_name: STRING
 		a_capacity: INTEGER_64
-		a_capacity: INTEGER
 		a_materials: ARRAY[INTEGER_64]
 	)
 		do
