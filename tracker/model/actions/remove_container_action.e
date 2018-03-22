@@ -29,6 +29,7 @@ feature
 		do
 			set_target(a_target)
 			cid := a_cid
+			set_default_error
 		end
 
 	apply

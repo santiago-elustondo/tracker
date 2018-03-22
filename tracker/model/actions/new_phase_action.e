@@ -15,15 +15,10 @@ create
 
 feature -- params
 
-	pid: STRING;
-	phase_name: STRING;
-	capacity: INTEGER;
-	expected_materials: ARRAY[INTEGER_64];
-
-feature -- mem
-
-	prev_error: STRING
-	exec_error: STRING
+	pid: STRING
+	phase_name: STRING
+	capacity: INTEGER
+	expected_materials: ARRAY[INTEGER_64]
 
 feature
 
@@ -43,8 +38,7 @@ feature
 			phase_name := a_phase_name
 			capacity := a_capacity
 			expected_materials := a_expected_materials
-			prev_error := ""
-			exec_error := ""
+			set_default_error
 		end
 
 	apply
@@ -72,12 +66,6 @@ feature
 					))
 				end
     	end
-
-	set_error(err: STRING)
-		do
-			exec_error := err
-			target.set_error(err)
-		end
 
 	undo
 		do

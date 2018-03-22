@@ -15,7 +15,9 @@ create
 
 feature -- params
 
-	pid: STRING;
+	pid: STRING
+	old_phase: T_PHASE
+
 
 feature
 
@@ -29,23 +31,29 @@ feature
 		do
 			set_target(a_target)
 			pid := a_pid
+			set_default_error
+			old_phase := target.get_phase (pid)
 		end
 
 	apply
-    	local
-			e: STRING
     	do
+    		prev_error := target.error
     		if target.tracker_in_use then
-    			e := error.err_tracker_in_use
+    			set_error(error.err_tracker_in_use)
 			elseif not target.has_phase (pid) then
-				e := error.err_phase_id_not_exists
+				set_error(error.err_phase_id_not_exists)
 			else
-				e := error.err_ok
-				target.default_update
+				set_error(error.err_ok)
+				target.remove_phase (pid)
     		end
     	end
 
 	undo
-		do end
+		do
+			if (exec_error ~ error.err_ok) then
+				target.add_phase (old_phase)
+			end
+			target.set_error (prev_error)
+		end
 
 end

@@ -42,6 +42,7 @@ feature
 			pid := a_pid
 			cid := a_cid
 			c := a_c
+			set_default_error
 		end
 
 	apply
@@ -49,25 +50,25 @@ feature
 			e: STRING
 		do
 			if not cid[1].is_alpha_numeric then
-				e := error.err_name_start
+				set_error(error.err_name_start)
 			elseif target.has_container(cid) then
-				e := error.err_con_id_exists
+				set_error(error.err_con_id_exists)
 			elseif not pid[1].is_alpha_numeric then
-				e := error.err_name_start
+				set_error(error.err_name_start)
 			elseif not target.has_phase (pid) then
-				e := error.err_phase_id_not_exists
+				set_error(error.err_phase_id_not_exists)
 			elseif c.radioactivity < 0.0 then
-				e := error.err_con_rad_negative
+				set_error(error.err_con_rad_negative)
 			elseif target.get_phase (pid).get_count > target.get_phase (pid).get_capacity then
-				e := error.err_con_exceed_phase_cap
+				set_error(error.err_con_exceed_phase_cap)
 			elseif c.radioactivity > target.get_max_container_rad then
-				e := error.err_con_exceed_rad_cap
+				set_error(error.err_con_exceed_rad_cap)
 			elseif c.radioactivity > target.get_max_phase_rad then
-				e := error.err_con_exceed_safe
+				set_error(error.err_con_exceed_safe)
 			elseif not target.get_phase (pid).material_expected (c.material.as_integer_32) then
-				e := error.err_phase_mat_not_expected
+				set_error(error.err_phase_mat_not_expected)
 			else
-				e := error.err_ok
+				set_error(error.err_ok)
 				target.default_update
 			end
     	end

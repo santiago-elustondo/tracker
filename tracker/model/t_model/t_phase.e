@@ -14,7 +14,7 @@ feature{none}
 	pid: STRING
 	name: STRING
 	capacity: INTEGER
-	materials: ARRAYED_LIST[INTEGER_64]
+	materials: ARRAY[INTEGER_64]
 	containers: STRING_TABLE[T_CONTAINER]
 
 feature -- cmds
@@ -29,7 +29,7 @@ feature -- cmds
 			name := a_name
 			capacity := a_capacity
 			create materials.make_from_array (a_materials)
-			create containers.make(0)
+			create containers.make(10)
 		end
 
 feature -- queries
@@ -43,9 +43,19 @@ feature -- queries
 			Result := capacity
 		end
 
+	get_name: STRING
+		do
+			Result := name
+		end
+
 	get_count: INTEGER
 		do
 			Result := containers.count
+		end
+
+	get_materials: ARRAY[INTEGER_64]
+		do
+			Result := materials
 		end
 
 	material_expected(i: INTEGER): BOOLEAN

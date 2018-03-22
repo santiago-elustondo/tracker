@@ -36,6 +36,7 @@ feature
 			cid := a_cid
 			pid1 := a_pid1
 			pid2 := a_pid2
+			set_default_error
 		end
 
 	apply
