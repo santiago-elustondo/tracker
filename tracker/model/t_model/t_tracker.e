@@ -64,8 +64,8 @@ feature -- queries
 
 	tracker_in_use: BOOLEAN
 		do
-			across phases as p loop
-				Result := Result or else p.item.get_count = 0
+			Result := across phases as p some
+				p.item.get_count /= 0
 			end
 		end
 
@@ -93,7 +93,9 @@ feature -- queries
 
 	has_container(cid: STRING): BOOLEAN
 		do
-			across phases as p loop Result := (Result or else p.item.has_container (cid)) end
+			Result := across phases as p some
+				p.item.has_container (cid)
+			end
 		end
 
 	out : STRING
