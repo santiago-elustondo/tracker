@@ -15,15 +15,10 @@ create
 
 feature -- params
 
-	pid: STRING;
-	phase_name: STRING;
-	capacity: INTEGER;
-	--expected_materials: ARRAY[INTEGER];
-
-feature -- mem
-
-	prev_error: STRING
-	exec_error: STRING
+	pid: STRING
+	phase_name: STRING
+	capacity: INTEGER
+	expected_materials: ARRAY[INTEGER_64]
 
 feature
 
@@ -35,16 +30,15 @@ feature
 		a_pid: STRING;
 		a_phase_name: STRING;
 		a_capacity: INTEGER;
-		-- a_expected_materials: ARRAY[INTEGER]
+	    a_expected_materials: ARRAY[INTEGER_64]
 	)
 		do
 			set_target(a_target)
 			pid := a_pid
 			phase_name := a_phase_name
 			capacity := a_capacity
-		--	expected_materials := a_expected_materials
-			prev_error := ""
-			exec_error := ""
+			expected_materials := a_expected_materials
+			set_default_error
 		end
 
 	apply
@@ -60,24 +54,18 @@ feature
     			set_error(error.err_name_start)
 	   		elseif target.get_phase(pid).get_capacity <= 0 then
 				set_error(error.err_phase_cap_negative)
-		--	elseif expected_materials.count = 0 then
-		--		set_error(error.err_phase_no_materials)
+			elseif expected_materials.count = 0 then
+				set_error(error.err_phase_no_materials)
     		else
     			set_error(error.err_ok)
 					target.add_phase(create {T_PHASE}.make(
 						pid,
 						phase_name,
-						capacity
-						-- expected_materials
+						capacity,
+						expected_materials
 					))
 				end
     	end
-
-	set_error(err: STRING)
-		do
-			exec_error := err
-			target.set_error(err)
-		end
 
 	undo
 		do

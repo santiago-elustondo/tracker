@@ -20,6 +20,7 @@ feature
 			props := a_props
 		end
 
+
 feature -- queries
 
 	get_id: STRING
@@ -32,5 +33,6 @@ feature -- queries
 		do
 			Result := props
 		end
+
 
 end

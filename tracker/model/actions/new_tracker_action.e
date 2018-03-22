@@ -32,22 +32,22 @@ feature
 			set_target(a_target)
 			max_phase_radiation := a_max_phase_radiation
 			max_container_radiation := a_max_container_radiation
+			set_default_error
 		end
 
 	apply
-		local
-			e: STRING
 		do
+			prev_error := target.error
 			if target.tracker_in_use then
-    			e := error.err_tracker_in_use
+    			set_error(error.err_tracker_in_use)
     		elseif max_phase_radiation < 0.0 then
-    			e := error.err_max_phase_rad_negative
+    			set_error(error.err_max_phase_rad_negative)
     		elseif max_container_radiation < 0.0 then
-				e := error.err_max_con_rad_negative
+				set_error(error.err_max_con_rad_negative)
 			elseif max_container_radiation > max_phase_radiation then
-				e := error.err_max_con_greater_max_rad
+				set_error(error.err_max_con_greater_max_rad)
 			else
-				e := error.err_ok
+				set_error(error.err_ok)
 				target.wipe_out(
 					max_phase_radiation,
 					max_container_radiation
@@ -56,6 +56,8 @@ feature
 		end
 
 	undo
-		do end
+		do
+--			not implemented
+		end
 
 end

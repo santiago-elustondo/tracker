@@ -20,8 +20,8 @@ feature -- command
     			model,
     			pid,
     			phase_name,
-    			capacity.to_integer_32
-    			--expected_materials
+    			capacity.to_integer_32,
+    			expected_materials
     		))
 			etf_cmd_container.on_change.notify ([Current])
     	end

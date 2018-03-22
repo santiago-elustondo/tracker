@@ -14,7 +14,7 @@ feature{none}
 	pid: STRING
 	name: STRING
 	capacity: INTEGER_64
-	materials: LINKED_SET[INTEGER]
+	materials: ARRAY[INTEGER_64]
 	containers: STRING_TABLE[T_CONTAINER]
 
 feature -- cmds
@@ -22,14 +22,15 @@ feature -- cmds
 		a_pid: STRING
 		a_name: STRING
 		a_capacity: INTEGER_64
-		-- a_materials: LINKED_SET[INTEGER_64]
+		a_capacity: INTEGER
+		a_materials: ARRAY[INTEGER_64]
 	)
 		do
 			pid := a_pid
 			name := a_name
 			capacity := a_capacity
-			create materials.make
-			create containers.make(0)
+			create materials.make_from_array (a_materials)
+			create containers.make(10)
 		end
 
 	add_container(a_container: T_CONTAINER)

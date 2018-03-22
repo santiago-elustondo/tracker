@@ -13,4 +13,23 @@ inherit
 feature
 	error: ERROR_HANDLING
 
+feature -- mem
+
+	prev_error: STRING
+	exec_error: STRING
+
+feature --setters
+	set_error(err: STRING)
+		do
+			exec_error := err
+			target.set_error(err)
+		end
+
+
+	set_default_error
+		do
+			prev_error := ""
+			exec_error := ""
+		end
+
 end

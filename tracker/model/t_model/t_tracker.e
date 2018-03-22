@@ -33,7 +33,11 @@ feature -- commands
 			precursor
 			create phases.make (10)
 			error := ""
-			garbage_make
+		end
+
+	reset
+		do
+			make
 		end
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
@@ -60,24 +64,13 @@ feature -- commands
 
 
 feature -- garbage
-	garbage_make
-			-- Initialization for `Current'.
-		do
-			create s.make_empty
-			i := 0
-		end
 
-	s : STRING
 	i : INTEGER
 	default_update
 		do
 			i := i + 1
 		end
 
-	reset
-		do
-			make
-		end
 
 feature -- queries
 
@@ -114,6 +107,15 @@ feature -- queries
 		do
 			Result := across phases as p some
 				p.item.has_container (cid)
+			end
+		end
+
+	get_container(cid: STRING): detachable T_CONTAINER
+		do
+			across phases as p loop
+				if p.item.has_container (cid) then
+					Result := p.item.get_container (cid)
+				end
 			end
 		end
 
