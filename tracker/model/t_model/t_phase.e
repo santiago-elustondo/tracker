@@ -15,7 +15,6 @@ feature{none}
 	capacity: INTEGER
 	materials: LINKED_SET[INTEGER]
 	containers: STRING_TABLE[T_CONTAINER]
-	count : INTEGER
 
 feature -- queries
 	get_capacity: INTEGER
@@ -25,7 +24,7 @@ feature -- queries
 
 	get_count: INTEGER
 		do
-			Result := count
+			Result := containers.count
 		end
 
 	material_expected(i: INTEGER): BOOLEAN
