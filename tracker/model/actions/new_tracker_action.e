@@ -40,15 +40,18 @@ feature
 		do
 			if target.tracker_in_use then
     			e := error.err_tracker_in_use
-    		elseif target.get_max_phase_rad < 0.0 then
+    		elseif max_phase_radiation < 0.0 then
     			e := error.err_max_phase_rad_negative
-    		elseif target.get_max_container_rad < 0.0 then
+    		elseif max_container_radiation < 0.0 then
 				e := error.err_max_con_rad_negative
-			elseif target.get_max_container_rad > target.get_max_phase_rad then
+			elseif max_container_radiation > max_phase_radiation then
 				e := error.err_max_con_greater_max_rad
 			else
 				e := error.ok
-				target.default_update
+				target.wipe_out(
+					max_phase_radiation,
+					max_container_radiation
+				)
     		end
 		end
 

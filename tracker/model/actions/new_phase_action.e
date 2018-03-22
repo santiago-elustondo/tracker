@@ -17,8 +17,13 @@ feature -- params
 
 	pid: STRING;
 	phase_name: STRING;
-	capacity: INTEGER_64;
-	expected_materials: ARRAY[INTEGER_64];
+	capacity: INTEGER;
+	--expected_materials: ARRAY[INTEGER];
+
+feature -- mem
+
+	prev_error: STRING
+	exec_error: STRING
 
 feature
 
@@ -29,40 +34,57 @@ feature
 		a_target: T_TRACKER;
 		a_pid: STRING;
 		a_phase_name: STRING;
-		a_capacity: INTEGER_64;
-		a_expected_materials: ARRAY[INTEGER_64]
+		a_capacity: INTEGER;
+		-- a_expected_materials: ARRAY[INTEGER]
 	)
 		do
 			set_target(a_target)
 			pid := a_pid
 			phase_name := a_phase_name
 			capacity := a_capacity
-			expected_materials := a_expected_materials
+		--	expected_materials := a_expected_materials
+			prev_error := ""
+			exec_error := ""
 		end
 
 	apply
-    	local
-			e: STRING
     	do
+    		prev_error := target.error
     		if target.tracker_in_use then
-    			e := error.err_tracker_in_use
+    			set_error(error.err_tracker_in_use)
     		elseif not pid [1].is_alpha_numeric then
-    			e := error.err_name_start
+    			set_error(error.err_name_start)
     		elseif target.has_phase (pid) then
-    			e := error.err_phase_id_exists
+    			set_error(error.err_phase_id_exists)
     		elseif not phase_name [1].is_alpha_numeric then
-    			e := error.err_name_start
+    			set_error(error.err_name_start)
 	   		elseif target.get_phase(pid).get_capacity <= 0 then
-				e := error.err_phase_cap_negative
-			elseif expected_materials.count = 0 then
-				e := error.err_phase_no_materials
+				set_error(error.err_phase_cap_negative)
+		--	elseif expected_materials.count = 0 then
+		--		set_error(error.err_phase_no_materials)
     		else
-    			e := error.ok
-				target.default_update
+    			set_error(error.ok)
+				target.add_phase(create {T_PHASE}.make(
+					pid,
+					phase_name,
+					capacity
+					-- expected_materials
+				))
 			end
     	end
 
+	set_error(err: STRING)
+		do
+			exec_error := err
+			target.set_error(err)
+		end
+
 	undo
-		do end
+		do
+			if (exec_error ~ error.ok) then
+				target.remove_phase(pid)
+			end
+			target.set_error(prev_error)
+		end
 
 end

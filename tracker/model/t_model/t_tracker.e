@@ -19,18 +19,20 @@ create {T_TRACKER_ACCESS}
 	make
 
 
-feature{NONE}
+feature
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
+	error: STRING
 
-feature -- constructors
+feature -- commands
 
 	make
 		do
 			precursor
 			create phases.make (10)
+			error := ""
 			garbage_make
 		end
 
@@ -40,6 +42,22 @@ feature -- constructors
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		end
+
+	add_phase(a_phase: T_PHASE)
+		do
+			phases.put(a_phase, a_phase.get_pid)
+		end
+
+	remove_phase(a_pid: STRING)
+		do
+			phases.remove(a_pid)
+		end
+
+	set_error(a_error: STRING)
+		do
+			error := a_error
+		end
+
 
 
 feature -- garbage
