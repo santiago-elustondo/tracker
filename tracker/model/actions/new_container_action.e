@@ -67,7 +67,7 @@ feature
 			elseif not target.get_phase (pid).material_expected (c.material.as_integer_32) then
 				e := error.err_phase_mat_not_expected
 			else
-				e := error.ok
+				e := error.err_ok
 				target.default_update
 			end
     	end

@@ -64,13 +64,13 @@ feature
 		--		set_error(error.err_phase_no_materials)
     		else
     			set_error(error.ok)
-				target.add_phase(create {T_PHASE}.make(
-					pid,
-					phase_name,
-					capacity
-					-- expected_materials
-				))
-			end
+					target.add_phase(create {T_PHASE}.make(
+						pid,
+						phase_name,
+						capacity
+						-- expected_materials
+					))
+				end
     	end
 
 	set_error(err: STRING)

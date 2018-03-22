@@ -38,7 +38,7 @@ feature
     		if not target.has_container (cid) then
     			e := error.err_con_id_not_exists
     		else
-    			e := error.ok
+    			e := error.err_ok
 				target.default_update
 			end
     	end
