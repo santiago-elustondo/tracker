@@ -15,7 +15,8 @@ create
 
 feature -- params
 
-	cid: STRING;
+	cid: STRING
+	old_container: T_CONTAINER
 
 feature
 
@@ -30,17 +31,16 @@ feature
 			set_target(a_target)
 			cid := a_cid
 			set_default_error
+			old_container := target.get_phase (target.find_container (a_cid)).get_container (cid)
 		end
 
 	apply
-		local
-			e: STRING
     	do
     		if not target.has_container (cid) then
-    			e := error.err_con_id_not_exists
+    			set_error(error.err_con_id_not_exists)
     		else
-    			e := error.err_ok
-				target.default_update
+    			set_error(error.err_ok)
+				target.get_phase (target.find_container (cid)).remove_container (cid)
 			end
     	end
 

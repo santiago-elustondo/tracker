@@ -110,11 +110,12 @@ feature -- queries
 			end
 		end
 
-	get_container(cid: STRING): detachable T_CONTAINER
+	find_container(cid: STRING): STRING
 		do
+			Result := ""
 			across phases as p loop
 				if p.item.has_container (cid) then
-					Result := p.item.get_container (cid)
+					Result := p.item.get_pid
 				end
 			end
 		end

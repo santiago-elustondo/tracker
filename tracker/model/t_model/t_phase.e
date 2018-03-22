@@ -32,7 +32,10 @@ feature -- cmds
 			create containers.make(10)
 		end
 
+feature -- queries
+
 	add_container(a_container: T_CONTAINER)
+
 		do
 			containers.put(a_container, a_container.get_id)
 		end
@@ -60,7 +63,6 @@ feature -- queries
 
 	material_expected(i: INTEGER_64): BOOLEAN
 		do
---			across materials as m loop Result := Result or else m.item = i end
 			Result := materials.has (i.to_integer_32)
 		end
 

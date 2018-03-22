@@ -34,5 +34,10 @@ feature -- queries
 			Result := props
 		end
 
+	get_cid : STRING
+		do
+			Result := cid
+		end
+
 
 end
