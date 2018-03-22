@@ -33,7 +33,11 @@ feature -- commands
 			precursor
 			create phases.make (10)
 			error := ""
-			garbage_make
+		end
+
+	reset
+		do
+			make
 		end
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
@@ -61,24 +65,13 @@ feature -- commands
 
 
 feature -- garbage
-	garbage_make
-			-- Initialization for `Current'.
-		do
-			create s.make_empty
-			i := 0
-		end
 
-	s : STRING
 	i : INTEGER
 	default_update
 		do
 			i := i + 1
 		end
 
-	reset
-		do
-			make
-		end
 
 feature -- queries
 
