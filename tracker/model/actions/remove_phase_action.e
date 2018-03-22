@@ -30,9 +30,6 @@ feature
 			set_target(a_target)
 			pid := a_pid
 			set_default_error
-			if attached target.get_phase (a_pid) as p then
-				phase := p
-			end
 		end
 
 	apply
@@ -44,17 +41,18 @@ feature
 				set_error(error.err_phase_id_not_exists)
 			else
 				set_error(error.err_ok)
+				phase := target.get_phase (pid)
 				target.remove_phase (pid)
     		end
     	end
 
 	undo
 		do
-			if (exec_error ~ error.err_ok) then
+--			if (exec_error ~ error.err_ok) then
 				if attached phase as p then
 					target.add_phase (p)
 				end
-			end
+--			end
 			target.set_error (prev_error)
 		end
 

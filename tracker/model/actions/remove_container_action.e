@@ -30,10 +30,6 @@ feature
 			set_target(a_target)
 			cid := a_cid
 			set_default_error
-			phase := target.find_container (cid)
-			if attached phase as p then
-				container := p.get_container (cid)
-			end
 		end
 
 	apply
@@ -43,7 +39,9 @@ feature
     			set_error(error.err_con_id_not_exists)
     		else
     			set_error(error.err_ok)
+    			phase := target.find_container (cid)
     			if attached phase as p then
+    				container := p.get_container (cid)
 					p.remove_container (cid)
 				end
 			end
@@ -51,11 +49,11 @@ feature
 
 	undo
 		do
-			if (exec_error ~ error.err_ok) then
+--			if (exec_error ~ error.err_ok) then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)
 				end
-			end
+--			end
 		end
 
 end
