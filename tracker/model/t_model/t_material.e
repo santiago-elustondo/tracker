@@ -4,14 +4,17 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-expanded class
+class
 	T_MATERIAL
 
 create
-	default_create
+	make
 
 feature
-
+	make
+		do
+			create mat.make_from_array (<<glass, metal, plastic, liquid>>)
+		end
 
 
 feature
@@ -19,8 +22,11 @@ feature
 	metal: INTEGER = 2
 	plastic: INTEGER = 3
 	liquid: INTEGER = 4
---	glass: like current
---	metal: like current
---	plastic: like current
---	liquid: like current
+	mat: ARRAY[INTEGER]
+
+feature
+	get_material(i: INTEGER) : INTEGER
+		do
+			Result := mat[i]
+		end
 end

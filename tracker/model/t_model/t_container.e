@@ -13,10 +13,12 @@ feature{none}
 	cid: STRING
 	container: TUPLE [material: INTEGER; radioactivity: VALUE]
 
+
 feature -- queries
 	get_container : TUPLE [material: INTEGER; radioactivity: VALUE]
 		do
 			Result := container
 		end
+
 
 end
