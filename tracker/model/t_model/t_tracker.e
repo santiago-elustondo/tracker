@@ -111,6 +111,15 @@ feature -- queries
 			end
 		end
 
+	get_container(cid: STRING): detachable T_CONTAINER
+		do
+			across phases as p loop
+				if p.item.has_container (cid) then
+					Result := p.item.get_container (cid)
+				end
+			end
+		end
+
 	out : STRING
 		do
 			create Result.make_from_string ("  ")
