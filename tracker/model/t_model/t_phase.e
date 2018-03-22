@@ -30,7 +30,8 @@ feature -- queries
 
 	material_expected(i: INTEGER): BOOLEAN
 		do
-			across materials as m loop Result := Result or else m.item = i end
+--			across materials as m loop Result := Result or else m.item = i end
+			Result := materials.has (i)
 		end
 
 	has_container(cid: STRING): BOOLEAN
