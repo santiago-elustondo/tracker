@@ -32,7 +32,7 @@ feature
 			set_target(a_target)
 			pid := a_pid
 			set_default_error
-			old_phase := target.get_phase (pid)
+			old_phase := target.get_phase (a_pid)
 		end
 
 	apply

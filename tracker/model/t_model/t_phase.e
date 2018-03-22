@@ -32,6 +32,11 @@ feature -- cmds
 			create containers.make(10)
 		end
 
+	remove_container(a_cid: STRING)
+		do
+			containers.remove (a_cid)
+		end
+
 feature -- queries
 	get_pid: STRING
 		do

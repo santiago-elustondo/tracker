@@ -20,5 +20,10 @@ feature -- queries
 			Result := container
 		end
 
+	get_cid : STRING
+		do
+			Result := cid
+		end
+
 
 end
