@@ -7,6 +7,11 @@ note
 class
 	T_MATERIAL
 
+inherit
+	ANY
+		redefine is_equal end
+
+
 create
 	make
 
@@ -34,6 +39,15 @@ feature
 	get_name: STRING
 		do
 			Result := name
+		end
+
+	is_equal(other: T_MATERIAL): BOOLEAN
+		do
+			if other.name ~ current.name then
+				result := true
+			else
+				result := false
+			end
 		end
 
 end
