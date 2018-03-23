@@ -36,6 +36,12 @@ feature --setters
 			exec_error := ""
 		end
 
+	-- this is a query
+	action_success: BOOLEAN
+		do
+			result := exec_error ~ error.err_ok
+		end
+
 	increment_num_actions
 		do
 			target.increment_num_actions

@@ -25,7 +25,14 @@ feature -- params
 feature
 
 	clear_history:BOOLEAN = FALSE
-	remember: BOOLEAN = TRUE
+	remember: BOOLEAN
+		do
+			if (action_success) then
+				result := true
+			else
+				result := false
+			end
+		end
 
 	make(
 		a_target: T_TRACKER;
