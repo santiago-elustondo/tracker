@@ -34,7 +34,7 @@ feature
 
 	apply
     	do
-    		prev_error := target.error
+    		prev_error := target.get_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		else

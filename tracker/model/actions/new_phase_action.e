@@ -43,7 +43,7 @@ feature
 
 	apply
     	do
-    		prev_error := target.error
+    		prev_error := target.get_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     		elseif not pid [1].is_alpha_numeric then
@@ -52,7 +52,7 @@ feature
     			set_error(error.err_phase_id_exists)
     		elseif not phase_name [1].is_alpha_numeric then
     			set_error(error.err_name_start)
-	   		elseif target.get_phase(pid).get_capacity <= 0 then
+	   		elseif capacity <= 0 then
 				set_error(error.err_phase_cap_negative)
 			elseif expected_materials.count = 0 then
 				set_error(error.err_phase_no_materials)

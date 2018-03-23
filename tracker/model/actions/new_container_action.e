@@ -46,7 +46,7 @@ feature
 
 	apply
 		do
-			prev_error := target.error
+			prev_error := target.get_error
 			if not cid[1].is_alpha_numeric then
 				set_error(error.err_name_start)
 			elseif target.has_container(cid) then
@@ -69,6 +69,7 @@ feature
 				set_error(error.err_ok)
 				target.get_phase(pid).add_container(create {T_CONTAINER}.make(
 					cid,
+					pid,
 					c
 				))
 			end

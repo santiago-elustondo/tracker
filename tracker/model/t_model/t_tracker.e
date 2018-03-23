@@ -19,12 +19,13 @@ create {T_TRACKER_ACCESS}
 	make
 
 
-feature
+feature {NONE}
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
 	error: STRING
+	state: INTEGER
 
 feature -- commands
 
@@ -32,7 +33,8 @@ feature -- commands
 		do
 			precursor
 			create phases.make (10)
-			error := ""
+			state := 1
+			error := "  state 0 ok"
 		end
 
 	reset
@@ -63,15 +65,6 @@ feature -- commands
 		end
 
 
-feature -- garbage
-
-	i : INTEGER
-	default_update
-		do
-			i := i + 1
-		end
-
-
 feature -- queries
 
 	tracker_in_use: BOOLEAN
@@ -79,6 +72,16 @@ feature -- queries
 			Result := across phases as p some
 				p.item.get_count /= 0
 			end
+		end
+
+	get_error: STRING
+		do
+			Result := error
+		end
+
+	get_state: INTEGER
+		do
+			Result := state
 		end
 
 	get_max_phase_rad: VALUE
@@ -109,7 +112,7 @@ feature -- queries
 				p.item.has_container (cid)
 			end
 		end
-		
+
 	find_container(cid: STRING) : detachable T_PHASE
 		do
 			across phases as p loop
@@ -119,13 +122,30 @@ feature -- queries
 			end
 		end
 
+	print_tracker: STRING
+		do
+			Create Result.make_from_string("  max_phase_radiation: ")
+			Result.append_double (get_max_phase_rad.as_double)
+			Result.append (", max_container_radiation: ")
+			Result.append_double (get_max_container_rad.as_double)
+		end
+
 	out : STRING
 		do
-			create Result.make_from_string ("  ")
-			Result.append ("System State: default model state ")
-			Result.append ("(")
-			Result.append (i.out)
-			Result.append (")")
+			create Result.make_from_string ("")
+			Result.append (error+"%N")
+			state := state + 1
+			Result.append (print_tracker+"%N")
+			Result.append ("  phases: pid->name:capacity,count,radiation%N")
+			across phases as p loop
+				Result.append(p.item.print_phase+"%N")
+			end
+			Result.append ("  containers: cid->pid->material,radioactivity%N")
+			across phases as p loop
+				across p.item.get_containers as c loop
+					Result.append(c.item.print_container+"%N")
+				end
+			end
 		end
 
 end
