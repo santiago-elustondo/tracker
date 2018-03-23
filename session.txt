@@ -1,5 +1,2 @@
 new_tracker(50.0, 10.0)
-new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
-new_phase("pid1", "unpacking", 2, <<glass, metal, plastic, liquid>>)
-new_phase("pid3", "unpacking2", 2, <<plastic, metal, plastic, liquid>>)
-new_container("cid4", [metal,   3.0], "pid1")
+new_phase("pid3", "unpacking2", 2, <<plastic, metal, plastic>>)

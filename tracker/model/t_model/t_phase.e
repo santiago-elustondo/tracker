@@ -103,19 +103,6 @@ feature -- queries
 --			end
 --		end
 
-	get_material(i: INTEGER_64): STRING
-		do
-			inspect i
-				when 1 then
-					Result := "glass"
-				when 2 then
-					Result := "metal"
-				when 3 then
-					Result := "plastic"
-				when 4 then
-					Result := "liquid"
-			end
-		end
 
 feature --print
 	print_phase : STRING

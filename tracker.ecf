@@ -36,7 +36,6 @@
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
 		<cluster name="tracker" location=".\tracker\" recursive="true">
-			<cluster name="t_materials" location="\media\sf_eecs-3311\tracker\tracker\model\t_model\t_materials\"/>
 		</cluster>
 	</target>
 </system>

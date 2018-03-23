@@ -73,10 +73,16 @@ feature --setters
 		end
 
 	materials_set(materials: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
+		local
+			temp_set: LINKED_SET [INTEGER_64]
 		do
 			Create Result.make
+			Create temp_set.make
 			across materials as m loop
-				Result.put (create {T_MATERIAL}.make (materials[m.item.to_integer_32]))
+				temp_set.put (m.item.as_integer_64)
+			end
+			across temp_set as t loop
+				Result.put (create {T_MATERIAL}.make (materials[t.item.to_integer_32]))
 			end
 		end
 

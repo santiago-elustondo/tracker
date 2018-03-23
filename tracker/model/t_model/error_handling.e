@@ -1,4 +1,4 @@
-note
+ note
 	description: "Summary description for {ERROR_HANDLING}."
 	author: ""
 	date: "$Date$"
