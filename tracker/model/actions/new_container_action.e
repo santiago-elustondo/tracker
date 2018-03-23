@@ -88,6 +88,7 @@ feature
 
 	undo
 		do
+			increment_num_actions
 			state_go_back
 			if (exec_error ~ error.err_ok) then
 				target.get_phase(pid).remove_container(cid)
