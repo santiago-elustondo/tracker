@@ -51,7 +51,7 @@ feature --setters
 		do
 			if post_state_id = 0 then
 				pre_state_id := target.current_state_id
-				post_state_id := pre_state_id
+				post_state_id := target.next_state_id
 			end
 			target.set_next_state_id(post_state_id + 1)
 		end
@@ -59,8 +59,8 @@ feature --setters
 	state_move
 		do
 			if post_state_id = 0 then
-				post_state_id := target.next_state_id
 				pre_state_id := target.current_state_id
+				post_state_id := target.next_state_id
 			end
 			target.set_current_state_id(post_state_id)
 			target.set_next_state_id(post_state_id + 1)
