@@ -11,22 +11,35 @@ create
 	make
 
 feature
-	make
+	make(i: INTEGER_64)
 		do
-			create mat.make_from_array (<<glass, metal, plastic, liquid>>)
+			mid := i
+			inspect mid
+				when 1 then
+					name := "glass"
+				when 2 then
+					name := "metal"
+				when 3 then
+					name := "plastic"
+				when 4 then
+					name := "liquid"
+			end
 		end
 
 
 feature
-	glass: INTEGER = 1
-	metal: INTEGER = 2
-	plastic: INTEGER = 3
-	liquid: INTEGER = 4
-	mat: ARRAY[INTEGER]
+	name: STRING
+	mid: INTEGER_64
 
 feature
-	get_material(i: INTEGER) : INTEGER
+
+	get_name: STRING
 		do
-			Result := mat[i]
+			Result := name
+		end
+
+	get_mid : INTEGER_64
+		do
+			Result := mid
 		end
 end

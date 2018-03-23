@@ -1,6 +1,5 @@
 new_tracker(50.0, 10.0)
 new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
 new_phase("pid1", "unpacking", 2, <<glass, metal, plastic, liquid>>)
-undo
-redo
-new_tracker(60, 25)
+new_phase("pid3", "unpacking2", 2, <<plastic, metal, plastic, liquid>>)
+new_container("cid4", [metal,   3.0], "pid1")

@@ -18,7 +18,7 @@ feature -- params
 	pid: STRING
 	cid: STRING
 	c: TUPLE[
-		material: INTEGER_64;
+		material: T_MATERIAL;
 		radioactivity: VALUE
 	]
 
@@ -47,7 +47,7 @@ feature
 			set_target(a_target)
 			pid := a_pid
 			cid := a_cid
-			c := a_c
+			c := [create {T_MATERIAL}.make (a_c.material), a_c.radioactivity]
 			set_default_error
 		end
 
@@ -79,7 +79,7 @@ feature
 			elseif c.radioactivity > target.get_max_phase_rad then
 				set_error(error.err_con_exceed_safe)
 				state_stay
-			elseif not target.get_phase (pid).material_expected (c.material.as_integer_32) then
+			elseif not target.get_phase (pid).material_expected (c.material) then
 				set_error(error.err_phase_mat_not_expected)
 				state_stay
 			else

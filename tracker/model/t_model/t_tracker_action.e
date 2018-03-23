@@ -72,4 +72,12 @@ feature --setters
 			target.set_next_state_id(pre_state_id + 1)
 		end
 
+	materials_set(materials: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
+		do
+			Create Result.make
+			across materials as m loop
+				Result.put (create {T_MATERIAL}.make (materials[m.item.to_integer_32]))
+			end
+		end
+
 end

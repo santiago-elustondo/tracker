@@ -14,7 +14,7 @@ feature{none}
 	pid: STRING
 	name: STRING
 	capacity: INTEGER_64
-	materials: ARRAY[INTEGER_64]
+	materials: LINKED_SET[T_MATERIAL]
 	containers: STRING_TABLE[T_CONTAINER]
 
 feature -- cmds
@@ -22,13 +22,13 @@ feature -- cmds
 		a_pid: STRING
 		a_name: STRING
 		a_capacity: INTEGER_64
-		a_materials: ARRAY[INTEGER_64]
+		a_materials: LINKED_SET[T_MATERIAL]
 	)
 		do
 			pid := a_pid
 			name := a_name
 			capacity := a_capacity
-			create materials.make_from_array (a_materials)
+			materials := a_materials
 			create containers.make(10)
 		end
 
@@ -73,9 +73,9 @@ feature -- queries
 			Result := containers.count
 		end
 
-	material_expected(i: INTEGER_64): BOOLEAN
+	material_expected(i: T_MATERIAL): BOOLEAN
 		do
-			Result := materials.has (i.to_integer_32)
+			Result := materials.has (i)
 		end
 
 	has_container(cid: STRING): BOOLEAN
@@ -95,13 +95,13 @@ feature -- queries
 			Result := containers
 		end
 
-	materials_set: LINKED_SET[INTEGER_64]
-		do
-			Create Result.make
-			across materials as m loop
-				Result.put (m.item)
-			end
-		end
+--	materials_set: LINKED_SET[INTEGER_64]
+--		do
+--			Create Result.make
+--			across materials as m loop
+--				Result.put (m.item)
+--			end
+--		end
 
 	get_material(i: INTEGER_64): STRING
 		do
@@ -127,10 +127,10 @@ feature --print
 			Result.append (get_capacity.out + ",")
 			Result.append (get_count.out + ",")
 			Result.append (get_radiation.out + ",{")
-			across 1 |..| (materials_set.count - 1) as i loop
-				Result.append(get_material(materials_set[i.item])+ ",")
+			across 1 |..| (materials.count - 1) as i loop
+				Result.append(materials[i.item].get_name+ ",")
 			end
-			Result.append (get_material(materials_set[materials_set.count])+ "}")
+			Result.append (materials[materials.count].get_name+ "}")
 		end
 
 end
