@@ -19,7 +19,6 @@ feature -- mem
 	exec_error: STRING
 	container: detachable T_CONTAINER
 	phase: detachable T_PHASE
-	state: INTEGER
 
 feature --setters
 	set_error(err: STRING)
@@ -32,24 +31,18 @@ feature --setters
 		do
 			Create Result.make_from_string ("  state ")
 			Result.append_integer (target.get_state)
-			if target.get_state /= state then
+			if target.get_state /= (target.get_history.get_cursor + 1) then
 				Result.append(" (to ")
-				Result.append_integer(state)
+				Result.append_integer(target.get_history.get_cursor + 1)
 				Result.append(")")
 			end
 			Result.append (" " + exec_error)
-		end
-
-	get_state: INTEGER
-		do
-			Result := state
 		end
 
 	set_default_error
 		do
 			prev_error := ""
 			exec_error := ""
-			state := state + 1
 		end
 
 end

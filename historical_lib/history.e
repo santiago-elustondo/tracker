@@ -72,6 +72,11 @@ feature { ANY } -- commands
 			make
 		end
 
+	get_cursor: INTEGER
+		do
+			Result := cursor
+		end
+
 feature { NONE } -- utils
 
 	array_slice(a_array:ARRAY[G]; a_start_index:INTEGER; a_end_index:INTEGER): ARRAY[G]

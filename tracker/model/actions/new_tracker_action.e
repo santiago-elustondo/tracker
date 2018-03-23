@@ -20,8 +20,8 @@ feature -- params
 
 feature
 
-	clear_history:BOOLEAN = TRUE
-	remember: BOOLEAN = FALSE
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN = TRUE
 
 	make(
 		a_target: T_TRACKER;

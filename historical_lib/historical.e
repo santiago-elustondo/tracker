@@ -50,4 +50,9 @@ feature { ANY }
 			end
 		end
 
+	get_history: HISTORY[ACTION_TYPE]
+		do
+			Result := history
+		end
+
 end
