@@ -53,7 +53,7 @@ feature
 					target.add_phase (p)
 				end
 --			end
-			target.set_error (prev_error)
+			target.set_error(print_error(prev_error))
 		end
 
 end

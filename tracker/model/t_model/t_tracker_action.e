@@ -24,10 +24,10 @@ feature --setters
 	set_error(err: STRING)
 		do
 			exec_error := err
-			target.set_error(print_error)
+			target.set_error(print_error(exec_error))
 		end
 
-	print_error : STRING
+	print_error(e: STRING) : STRING
 		do
 			Create Result.make_from_string ("  state ")
 			Result.append_integer (target.get_state)
@@ -36,7 +36,7 @@ feature --setters
 				Result.append_integer(target.get_history.get_cursor + 1)
 				Result.append(")")
 			end
-			Result.append (" " + exec_error)
+			Result.append (" " + e)
 		end
 
 	set_default_error

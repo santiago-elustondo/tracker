@@ -73,7 +73,7 @@ feature
 					target.get_phase(pid1).add_container(con)
 				end
 --			end
-			target.set_error(prev_error)
+			target.set_error(print_error(prev_error))
 		end
 
 end

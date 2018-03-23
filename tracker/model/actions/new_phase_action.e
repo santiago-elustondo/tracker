@@ -72,7 +72,7 @@ feature
 			if (exec_error ~ error.err_ok) then
 				target.remove_phase(pid)
 			end
-			target.set_error(prev_error)
+			target.set_error(print_error(prev_error))
 		end
 
 end
