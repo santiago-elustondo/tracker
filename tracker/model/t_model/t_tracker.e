@@ -33,8 +33,7 @@ feature -- commands
 		do
 			precursor
 			create phases.make (10)
-			state := 1
-			error := "  state 0 ok"
+			error := "ok"
 		end
 
 	reset
@@ -130,11 +129,23 @@ feature -- queries
 			Result.append_double (get_max_container_rad.as_double)
 		end
 
+	print_state : STRING
+		do
+			Create Result.make_from_string ("  state ")
+			Result.append_integer (get_state)
+			if get_state /= (get_history.get_cursor) then
+				Result.append(" (to ")
+				Result.append_integer(get_history.get_cursor)
+				Result.append(")")
+			end
+			Result.append (" ")
+			state := state + 1
+		end
+
 	out : STRING
 		do
 			create Result.make_from_string ("")
-			Result.append (error+"%N")
-			state := state + 1
+			Result.append (print_state + error+"%N")
 			Result.append (print_tracker+"%N")
 			Result.append ("  phases: pid->name:capacity,count,radiation%N")
 			across phases as p loop

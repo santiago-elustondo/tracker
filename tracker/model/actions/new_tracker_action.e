@@ -47,11 +47,11 @@ feature
 			elseif max_container_radiation > max_phase_radiation then
 				set_error(error.err_max_con_greater_max_rad)
 			else
-				set_error(error.err_ok)
 				target.wipe_out(
 					max_phase_radiation,
 					max_container_radiation
 				)
+				set_error(error.err_ok)
     		end
 		end
 
