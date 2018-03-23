@@ -19,13 +19,17 @@ create {T_TRACKER_ACCESS}
 	make
 
 
-feature {NONE}
+feature
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
 	error: STRING
 	state: INTEGER
+
+	current_num_actions: INTEGER;
+	current_state_id: INTEGER;
+	next_state_id: INTEGER;
 
 feature -- commands
 
@@ -34,6 +38,8 @@ feature -- commands
 			precursor
 			create phases.make (10)
 			error := "ok"
+			current_num_actions := 0;
+			current_state_id := 0;
 		end
 
 	reset
@@ -61,6 +67,21 @@ feature -- commands
 	set_error(a_error: STRING)
 		do
 			error := a_error
+		end
+
+	set_current_state_id(a_id: INTEGER)
+		do
+			current_state_id := a_id
+		end
+
+	set_next_state_id(a_id: INTEGER)
+		do
+			next_state_id := a_id
+		end
+
+	increment_num_actions
+		do
+			current_num_actions := current_num_actions + 1
 		end
 
 

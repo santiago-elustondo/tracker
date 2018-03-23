@@ -20,6 +20,9 @@ feature -- mem
 	container: detachable T_CONTAINER
 	phase: detachable T_PHASE
 
+	pre_state_id: INTEGER
+	post_state_id: INTEGER
+
 feature --setters
 	set_error(err: STRING)
 		do
@@ -31,6 +34,38 @@ feature --setters
 		do
 			prev_error := ""
 			exec_error := ""
+		end
+
+	increment_num_actions
+		do
+			target.increment_num_actions
+		end
+
+	state_stay
+		do
+			pre_state_id := target.current_state_id
+			post_state_id := pre_state_id
+			next_state_increment
+		end
+
+	state_move
+		do
+			pre_state_id := target.current_state_id
+			post_state_id := target.next_state_id
+			target.set_current_state_id(post_state_id)
+			next_state_increment
+		end
+
+	state_go_back
+		do
+			target.set_current_state_id(pre_state_id)
+			next_state_increment
+		end
+
+	-- this one's private
+	next_state_increment
+		do
+			target.set_next_state_id(pre_state_id + 1)
 		end
 
 end
