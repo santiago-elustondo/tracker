@@ -16,39 +16,45 @@ create
 
 feature
 	make(i: INTEGER_64)
---		local
---			glass : T_GLASS
 		do
-			mid := i
 			inspect i
 				when 1 then
-					name := "glass"
+					material := create{T_GLASS}
 				when 2 then
-					name := "metal"
+					material := create{T_METAL}
 				when 3 then
-					name := "plastic"
+					material := create{T_PLASTIC}
 				when 4 then
-					name := "liquid"
+					material := create{T_LIQUID}
 			end
 		end
 
 
 feature
-	name: STRING
-	mid: INTEGER_64
---	material: T_MATERIAL
+	name: detachable STRING
+	material: detachable T_MATERIAL
 
 
 feature
 
+	get_material: T_MATERIAL
+		do
+			check attached material as m then
+				Result := m
+			end
+		end
+
 	get_name: STRING
 			do
-				Result := name
+				Result := ""
+				check attached material as m then
+					Result := m.get_name
+				end
 			end
 
 	is_equal (other: like current): BOOLEAN
 		do
-			Result := (mid ~ other.mid)
+			Result := (name ~ other.name)
 --			if other.mid ~ current.name then
 --				result := true
 --			else

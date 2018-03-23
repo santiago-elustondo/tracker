@@ -1,11 +1,11 @@
 note
-	description: "Summary description for {T_GLASS}."
+	description: "Summary description for {T_LIQUID}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 expanded class
-	T_GLASS
+	T_LIQUID
 
 inherit
 	T_MATERIAL
@@ -14,7 +14,7 @@ inherit
 feature
 	get_name : STRING
 		do
-			Result := "glass"
+			Result := "liquid"
 		end
 
 end

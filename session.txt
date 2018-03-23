@@ -1,2 +1,2 @@
 new_tracker(50.0, 10.0)
-new_phase("pid3", "unpacking2", 2, <<plastic, metal, plastic>>)
+new_phase("pid4", "unpacking2", 2, <<plastic, plastic, plastic, metal, metal, plastic, glass, glass, metal, plastic>>)
