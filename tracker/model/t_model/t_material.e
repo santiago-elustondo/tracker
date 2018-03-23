@@ -13,8 +13,7 @@ create
 feature
 	make(i: INTEGER_64)
 		do
-			mid := i
-			inspect mid
+			inspect i
 				when 1 then
 					name := "glass"
 				when 2 then
@@ -29,7 +28,6 @@ feature
 
 feature
 	name: STRING
-	mid: INTEGER_64
 
 feature
 
@@ -38,8 +36,4 @@ feature
 			Result := name
 		end
 
-	get_mid : INTEGER_64
-		do
-			Result := mid
-		end
 end
