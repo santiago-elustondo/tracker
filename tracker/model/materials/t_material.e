@@ -9,9 +9,6 @@ deferred class
 
 feature
 
-
-feature
-
 	get_name: STRING
 		deferred end
 
