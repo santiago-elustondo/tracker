@@ -154,13 +154,13 @@ feature -- queries
 
 	print_tracker: STRING
 		do
-			Create Result.make_from_string("  max_phase_radiation: ")
+			Create Result.make_from_string("%N  max_phase_radiation: ")
 			Result.append (get_max_phase_rad.out)
 			Result.append (", max_container_radiation: ")
-			Result.append (get_max_container_rad.out+"%N")
-			Result.append ("  phases: pid->name:capacity,count,radiation%N")
+			Result.append (get_max_container_rad.out)
+			Result.append ("%N  phases: pid->name:capacity,count,radiation")
 			Result.append (print_phases)
-			Result.append ("  containers: cid->pid->material,radioactivity%N")
+			Result.append ("%N  containers: cid->pid->material,radioactivity")
 			Result.append (print_containers)
 		end
 
@@ -187,7 +187,7 @@ feature -- queries
 				ph.extend(p.item)
 			end
 			across ph as p loop
-				Result.append(p.item.print_phase+"%N")
+				Result.append("%N"+p.item.print_phase)
 			end
 		end
 
@@ -203,14 +203,14 @@ feature -- queries
 				end
 			end
 			across con as c loop
-				Result.append(c.item.print_container+"%N")
+				Result.append("%N"+c.item.print_container)
 			end
 		end
 
 	out : STRING
 		do
 			create Result.make_from_string ("")
-			Result.append (print_state + error+"%N")
+			Result.append (print_state + error)
 			if (error ~ (create{ERROR_HANDLING}).err_ok) then
 				Result.append (print_tracker)
 			end
