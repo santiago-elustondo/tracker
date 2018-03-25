@@ -155,9 +155,13 @@ feature -- queries
 	print_tracker: STRING
 		do
 			Create Result.make_from_string("  max_phase_radiation: ")
-			Result.append_double (get_max_phase_rad.as_double)
+			Result.append (get_max_phase_rad.out)
 			Result.append (", max_container_radiation: ")
-			Result.append_double (get_max_container_rad.as_double)
+			Result.append (get_max_container_rad.out+"%N")
+			Result.append ("  phases: pid->name:capacity,count,radiation%N")
+			Result.append (print_phases)
+			Result.append ("  containers: cid->pid->material,radioactivity%N")
+			Result.append (print_containers)
 		end
 
 	print_state : STRING
@@ -207,11 +211,9 @@ feature -- queries
 		do
 			create Result.make_from_string ("")
 			Result.append (print_state + error+"%N")
-			Result.append (print_tracker+"%N")
-			Result.append ("  phases: pid->name:capacity,count,radiation%N")
-			Result.append (print_phases)
-			Result.append ("  containers: cid->pid->material,radioactivity%N")
-			Result.append (print_containers)
+			if (error ~ (create{ERROR_HANDLING}).err_ok) then
+				Result.append (print_tracker)
+			end
 		end
 
 end
