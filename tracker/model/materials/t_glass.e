@@ -9,12 +9,11 @@ expanded class
 
 inherit
 	T_MATERIAL
-		redefine get_name end
 
 feature
-	get_name : STRING
-		do
-			Result := "glass"
-		end
+	get_name : STRING = "glass"
+
+	get_mid : INTEGER_64 = 1
+
 
 end

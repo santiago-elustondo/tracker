@@ -18,7 +18,8 @@ feature -- params
 	pid: STRING
 	phase_name: STRING
 	capacity: INTEGER
-	expected_materials: LINKED_SET[T_MATERIAL]
+--	expected_materials: LINKED_SET[T_MATERIAL]
+	expected_materials: ARRAY[INTEGER_64]
 
 feature
 
@@ -37,7 +38,7 @@ feature
 			pid := a_pid
 			phase_name := a_phase_name
 			capacity := a_capacity
-			expected_materials := materials_set(a_expected_materials)
+			expected_materials := a_expected_materials
 			set_default_error
 		end
 

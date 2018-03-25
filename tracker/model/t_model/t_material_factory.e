@@ -1,15 +1,11 @@
 note
-	description: "Summary description for {T_MATERIAL}."
+	description: "Summary description for {T_MATERIAL_FACTORY}."
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	T_MATERIAL
-
-inherit
-	ANY
-		redefine is_equal end
+	T_MATERIAL_FACTORY
 
 create
 	make
@@ -29,11 +25,8 @@ feature
 			end
 		end
 
-
 feature
-	name: detachable STRING
 	material: detachable T_MATERIAL
-
 
 feature
 
@@ -45,20 +38,17 @@ feature
 		end
 
 	get_name: STRING
-			do
-				Result := ""
-				check attached material as m then
-					Result := m.get_name
-				end
-			end
-
-	is_equal (other: like current): BOOLEAN
 		do
-			Result := (name ~ other.name)
---			if other.mid ~ current.name then
---				result := true
---			else
---				result := false
---			end
+			check attached material as m then
+				Result := m.get_name
+			end
 		end
+
+	get_mid: INTEGER_64
+		do
+			check attached material as m then
+				Result := m.get_mid
+			end
+		end
+
 end

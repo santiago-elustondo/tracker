@@ -163,20 +163,36 @@ feature -- queries
 			state := state + 1
 		end
 
+	sort_phases : SORTED_TWO_WAY_LIST[T_PHASE]
+		do
+			Create Result.make
+			across phases as p loop
+				Result.extend(p.item)
+			end
+		end
+
+	sort_containers : SORTED_TWO_WAY_LIST[T_CONTAINER]
+		do
+			Create Result.make
+			across phases as p loop
+				across p.item.get_containers as c loop
+					Result.extend(c.item)
+				end
+			end
+		end
+
 	out : STRING
 		do
 			create Result.make_from_string ("")
 			Result.append (print_state + error+"%N")
 			Result.append (print_tracker+"%N")
 			Result.append ("  phases: pid->name:capacity,count,radiation%N")
-			across phases as p loop
+			across sort_phases as p loop
 				Result.append(p.item.print_phase+"%N")
 			end
 			Result.append ("  containers: cid->pid->material,radioactivity%N")
-			across phases as p loop
-				across p.item.get_containers as c loop
-					Result.append(c.item.print_container+"%N")
-				end
+			across sort_containers as c loop
+				Result.append(c.item.print_container+"%N")
 			end
 		end
 

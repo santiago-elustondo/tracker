@@ -7,6 +7,9 @@ note
 class
 	T_PHASE
 
+inherit
+	COMPARABLE
+
 create
 	make
 
@@ -22,17 +25,17 @@ feature -- cmds
 		a_pid: STRING
 		a_name: STRING
 		a_capacity: INTEGER_64
-		a_materials: LINKED_SET[T_MATERIAL]
+		a_materials: ARRAY[INTEGER_64]
 	)
 		do
 			pid := a_pid
 			name := a_name
 			capacity := a_capacity
-			materials := a_materials
+			materials := materials_set(a_materials)
 			create containers.make(10)
 		end
 
-feature -- queries
+feature -- commands
 
 	add_container(a_container: T_CONTAINER)
 
@@ -43,6 +46,19 @@ feature -- queries
 	remove_container(a_cid: STRING)
 		do
 			containers.remove(a_cid)
+		end
+
+	to_material(mat: INTEGER_64): T_MATERIAL
+		do
+			Result := (create{T_MATERIAL_FACTORY}.make (mat)).get_material
+		end
+
+	materials_set(mat: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
+		do
+			Create Result.make
+			across mat as m loop
+				Result.put (to_material(m.item))
+			end
 		end
 
 feature -- queries
@@ -73,9 +89,9 @@ feature -- queries
 			Result := containers.count
 		end
 
-	material_expected(i: T_MATERIAL): BOOLEAN
+	material_expected(i: INTEGER_64): BOOLEAN
 		do
-			Result := materials.has (i)
+			Result := materials.has (to_material(i))
 		end
 
 	has_container(cid: STRING): BOOLEAN
@@ -95,13 +111,16 @@ feature -- queries
 			Result := containers
 		end
 
---	materials_set: LINKED_SET[INTEGER_64]
---		do
---			Create Result.make
---			across materials as m loop
---				Result.put (m.item)
---			end
---		end
+	is_less alias "<" (other: like current): BOOLEAN --used to sort users, first by name, then by id
+		do
+			if current = other then
+				Result := False
+			elseif current.get_pid < other.get_pid then
+				Result := True
+			elseif current.get_pid ~ other.get_pid then
+				Result := current.get_name < other.get_name
+			end
+		end
 
 
 feature --print

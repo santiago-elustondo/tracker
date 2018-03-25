@@ -26,5 +26,4 @@ feature {NONE}
 feature -- Attributes
 	-- may declare your own model state here
 	model : T_TRACKER
-	error : ERROR_HANDLING
 end

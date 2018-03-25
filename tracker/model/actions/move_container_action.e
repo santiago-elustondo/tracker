@@ -53,7 +53,7 @@ feature
 				set_error(error.err_con_exceed_phase_cap)
 			elseif target.get_phase (pid1).get_container (cid).get_props.radioactivity > target.get_max_phase_rad then
     			set_error(error.err_con_exceed_safe)
-    		elseif target.get_phase (pid2).material_expected (target.get_phase (pid1).get_container (cid).get_props.material) then
+    		elseif target.get_phase (pid2).material_expected (target.get_phase (pid1).get_container (cid).get_props.material.get_mid) then
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)

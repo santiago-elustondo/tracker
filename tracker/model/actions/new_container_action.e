@@ -18,7 +18,7 @@ feature -- params
 	pid: STRING
 	cid: STRING
 	c: TUPLE[
-		material: T_MATERIAL;
+		material: INTEGER_64;
 		radioactivity: VALUE
 	]
 
@@ -47,7 +47,8 @@ feature
 			set_target(a_target)
 			pid := a_pid
 			cid := a_cid
-			c := [create {T_MATERIAL}.make (a_c.material), a_c.radioactivity]
+			c := a_c
+--			c := [create {T_MATERIAL}.make (a_c.material), a_c.radioactivity]
 			set_default_error
 		end
 
