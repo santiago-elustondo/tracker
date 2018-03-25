@@ -50,17 +50,17 @@ feature { ANY }
 			end
 		end
 
-	get_history: HISTORY[ACTION_TYPE]
+	get_history: HISTORY[ACTION_TYPE] -- can be removed once counter is fixed
 		do
 			Result := history
 		end
 
-	has_past: BOOLEAN
+	has_past: BOOLEAN -- used by undo_action
 		do
 			Result := history.has_past
 		end
 
-	has_future: BOOLEAN
+	has_future: BOOLEAN -- used by redo_action
 		do
 			Result := history.has_future
 		end
