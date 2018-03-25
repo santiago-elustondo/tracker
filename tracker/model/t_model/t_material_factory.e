@@ -26,29 +26,12 @@ feature
 		end
 
 feature
-	material: detachable T_MATERIAL
+	material:  T_MATERIAL
 
 feature
 
 	get_material: T_MATERIAL
 		do
-			check attached material as m then
-				Result := m
-			end
+			Result := material
 		end
-
---	get_name: STRING
---		do
---			check attached material as m then
---				Result := m.get_name
---			end
---		end
-
---	get_mid: INTEGER_64
---		do
---			check attached material as m then
---				Result := m.get_mid
---			end
---		end
-
 end
