@@ -14,4 +14,6 @@ feature
 	get_name : STRING = "plastic"
 
 	get_mid : INTEGER_64 = 3
+
 end
+

@@ -20,7 +20,7 @@ feature -- params
 
 feature
 
-	clear_history:BOOLEAN = FALSE
+	clear_history:BOOLEAN = TRUE
 	remember: BOOLEAN = TRUE
 
 	make(

@@ -18,7 +18,6 @@ feature -- params
 	pid: STRING
 	phase_name: STRING
 	capacity: INTEGER
---	expected_materials: LINKED_SET[T_MATERIAL]
 	expected_materials: ARRAY[INTEGER_64]
 
 feature

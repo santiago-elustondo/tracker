@@ -25,7 +25,7 @@ feature
 			end
 		end
 
-feature
+feature{NONE}
 	material:  T_MATERIAL
 
 feature

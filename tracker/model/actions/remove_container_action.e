@@ -49,11 +49,11 @@ feature
 
 	undo
 		do
---			if (exec_error ~ error.err_ok) then
+			if (exec_error ~ error.err_ok) then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)
 				end
---			end
+			end
 			target.set_error(prev_error)
 		end
 

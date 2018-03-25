@@ -48,11 +48,11 @@ feature
 
 	undo
 		do
---			if (exec_error ~ error.err_ok) then
+			if (exec_error ~ error.err_ok) then
 				if attached phase as p then
 					target.add_phase (p)
 				end
---			end
+			end
 			target.set_error(prev_error)
 		end
 
