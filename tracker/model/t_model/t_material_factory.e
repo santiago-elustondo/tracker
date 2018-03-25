@@ -37,18 +37,18 @@ feature
 			end
 		end
 
-	get_name: STRING
-		do
-			check attached material as m then
-				Result := m.get_name
-			end
-		end
+--	get_name: STRING
+--		do
+--			check attached material as m then
+--				Result := m.get_name
+--			end
+--		end
 
-	get_mid: INTEGER_64
-		do
-			check attached material as m then
-				Result := m.get_mid
-			end
-		end
+--	get_mid: INTEGER_64
+--		do
+--			check attached material as m then
+--				Result := m.get_mid
+--			end
+--		end
 
 end

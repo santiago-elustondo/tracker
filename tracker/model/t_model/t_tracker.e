@@ -163,21 +163,33 @@ feature -- queries
 			state := state + 1
 		end
 
-	sort_phases : SORTED_TWO_WAY_LIST[T_PHASE]
+	print_phases : STRING
+		local
+			ph: SORTED_TWO_WAY_LIST[T_PHASE]
 		do
-			Create Result.make
+			Create ph.make
+			Create Result.make_empty
 			across phases as p loop
-				Result.extend(p.item)
+				ph.extend(p.item)
+			end
+			across ph as p loop
+				Result.append(p.item.print_phase+"%N")
 			end
 		end
 
-	sort_containers : SORTED_TWO_WAY_LIST[T_CONTAINER]
+	print_containers : STRING
+		local
+			con : SORTED_TWO_WAY_LIST[T_CONTAINER]
 		do
-			Create Result.make
+			Create con.make
+			Create Result.make_empty
 			across phases as p loop
 				across p.item.get_containers as c loop
-					Result.extend(c.item)
+					con.extend (c.item)
 				end
+			end
+			across con as c loop
+				Result.append(c.item.print_container+"%N")
 			end
 		end
 
@@ -187,13 +199,9 @@ feature -- queries
 			Result.append (print_state + error+"%N")
 			Result.append (print_tracker+"%N")
 			Result.append ("  phases: pid->name:capacity,count,radiation%N")
-			across sort_phases as p loop
-				Result.append(p.item.print_phase+"%N")
-			end
+			Result.append (print_phases)
 			Result.append ("  containers: cid->pid->material,radioactivity%N")
-			across sort_containers as c loop
-				Result.append(c.item.print_container+"%N")
-			end
+			Result.append (print_containers)
 		end
 
 end
