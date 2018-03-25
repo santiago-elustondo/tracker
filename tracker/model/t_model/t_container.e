@@ -35,6 +35,11 @@ feature
 			props := [(create {T_MATERIAL_FACTORY}.make (a_props.a_material)).get_material, a_props.a_radioactivity]
 		end
 
+feature -- commands
+	set_pid(a_pid: STRING)
+		do
+			pid := a_pid
+		end
 
 feature -- queries
 

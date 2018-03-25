@@ -63,6 +63,7 @@ feature -- commands
 				if attached container as con then
 					target.get_phase(pid1).remove_container(con.get_cid)
 					target.get_phase(pid2).add_container(con)
+					target.get_phase(pid2).get_container(cid).set_pid(pid2) -- this is terrible
 				end
 			end
     	end
