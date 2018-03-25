@@ -1,0 +1,1 @@
+error: '../tests/acceptance/student/*.txt' does not exist
