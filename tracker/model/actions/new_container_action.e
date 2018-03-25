@@ -44,15 +44,15 @@ feature{NONE} -- params
 feature -- commands
 
 	clear_history:BOOLEAN = FALSE
-	remember: BOOLEAN -- why is this different from all the rest?
-		do
-			Result := action_success
+	remember: BOOLEAN = TRUE
+--		do
+--			Result := action_success
 --			if (action_success) then
 --				result := true
 --			else
 --				result := false
 --			end
-		end
+--		end
 
 	apply
 		do
