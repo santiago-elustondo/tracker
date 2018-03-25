@@ -11,6 +11,7 @@
 		<option warning="true">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
+		<setting name="console_application" value="false"/>
 		<capability>
 			<catcall_detection support="none"/>
 			<concurrency support="scoop"/>
@@ -35,7 +36,6 @@
 		<cluster name="historical_lib" location=".\historical_lib\" recursive="true"/>
 		<cluster name="root" location=".\root\" recursive="true"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
-		<cluster name="tracker" location=".\tracker\" recursive="true">
-		</cluster>
+		<cluster name="tracker" location=".\tracker\" recursive="true"/>
 	</target>
 </system>

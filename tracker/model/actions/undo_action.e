@@ -28,10 +28,10 @@ feature -- commands
 
 	apply
 		do
-			if target.has_past then
-				target.undo_action
-			else
+			if not target.has_past then
 				set_error(error.err_undo)
+			else
+				target.undo_action
 			end
 
 		end

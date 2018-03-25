@@ -28,10 +28,10 @@ feature -- comands
 
 	apply
 		do
-			if target.has_future then
-				target.redo_action
-			else
+			if not target.has_future then
 				set_error(error.err_redo)
+			else
+				target.redo_action
 			end
 
 		end
