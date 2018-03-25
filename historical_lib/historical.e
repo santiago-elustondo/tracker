@@ -55,4 +55,14 @@ feature { ANY }
 			Result := history
 		end
 
+	has_past: BOOLEAN
+		do
+			Result := history.has_past
+		end
+
+	has_future: BOOLEAN
+		do
+			Result := history.has_future
+		end
+
 end

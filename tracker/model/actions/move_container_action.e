@@ -13,16 +13,7 @@ inherit
 create
 	make
 
-feature -- params
-
-	cid: STRING
-	pid1: STRING
-	pid2: STRING
-
-feature
-
-	clear_history:BOOLEAN = FALSE
-	remember: BOOLEAN = TRUE
+feature{NONE} -- Initialization
 
 	make(
 		a_target: T_TRACKER;
@@ -37,6 +28,17 @@ feature
 			pid2 := a_pid2
 			set_default_error
 		end
+
+feature{NONE} -- params
+
+	cid: STRING
+	pid1: STRING
+	pid2: STRING
+
+feature -- commands
+
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN = TRUE
 
 	apply
     	do

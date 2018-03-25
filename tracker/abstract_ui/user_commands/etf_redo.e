@@ -15,7 +15,12 @@ feature -- command
 	redo
     	do
 			-- perform some update on the model state
-			model.redo_action
+			model.do_action (create{REDO_ACTION}.make (model))
+--			if not model.has_future then
+--				model.set_error ((create{ERROR_HANDLING}).err_redo)
+--			else
+--				model.redo_action
+--			end
 			etf_cmd_container.on_change.notify ([Current])
     	end
 

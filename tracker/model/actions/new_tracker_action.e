@@ -13,15 +13,7 @@ inherit
 create
 	make
 
-feature -- params
-
-	max_phase_radiation: VALUE
-	max_container_radiation: VALUE
-
-feature
-
-	clear_history:BOOLEAN = TRUE
-	remember: BOOLEAN = TRUE
+feature{NONE} -- Initialization
 
 	make(
 		a_target: T_TRACKER;
@@ -34,6 +26,16 @@ feature
 			max_container_radiation := a_max_container_radiation
 			set_default_error
 		end
+
+feature{NONE} -- params
+
+	max_phase_radiation: VALUE
+	max_container_radiation: VALUE
+
+feature -- commands
+
+	clear_history:BOOLEAN = TRUE
+	remember: BOOLEAN = TRUE
 
 	apply
 		do

@@ -13,26 +13,7 @@ inherit
 create
 	make
 
-feature -- params
-
-	pid: STRING
-	cid: STRING
-	c: TUPLE[
-		material: INTEGER_64;
-		radioactivity: VALUE
-	]
-
-feature
-
-	clear_history:BOOLEAN = FALSE
-	remember: BOOLEAN
-		do
-			if (action_success) then
-				result := true
-			else
-				result := false
-			end
-		end
+feature{NONE} -- Initialization
 
 	make(
 		a_target: T_TRACKER;
@@ -49,6 +30,28 @@ feature
 			cid := a_cid
 			c := a_c
 			set_default_error
+		end
+
+feature{NONE} -- params
+
+	pid: STRING
+	cid: STRING
+	c: TUPLE[
+		material: INTEGER_64;
+		radioactivity: VALUE
+	]
+
+feature -- commands
+
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN -- why is this different from all the rest?
+		do
+			Result := action_success
+--			if (action_success) then
+--				result := true
+--			else
+--				result := false
+--			end
 		end
 
 	apply
@@ -70,7 +73,7 @@ feature
 			elseif c.radioactivity < 0.0 then
 				set_error(error.err_con_rad_negative)
 				state_stay
-			elseif target.get_phase (pid).get_count > target.get_phase (pid).get_capacity then
+			elseif target.get_phase (pid).get_count >= target.get_phase (pid).get_capacity then
 				set_error(error.err_con_exceed_phase_cap)
 				state_stay
 			elseif c.radioactivity > target.get_max_container_rad then

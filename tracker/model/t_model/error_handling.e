@@ -27,6 +27,8 @@ feature -- Error Message Constants
     err_phase_ID_same: STRING = "e16: source and target phase identifier must be different"
     err_con_ID_not_in_phase: STRING = "e17: this container identifier is not in the source phase"
     err_con_rad_negative: STRING = "e18: this container radiation must not be negative"
+    err_undo: STRING = "e19: there is no more to undo"
+    err_redo: STRING = "e20: there is no more to redo"
     err_ok: STRING = "ok"
 
 end

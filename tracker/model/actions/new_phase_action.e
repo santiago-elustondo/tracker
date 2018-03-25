@@ -13,17 +13,7 @@ inherit
 create
 	make
 
-feature -- params
-
-	pid: STRING
-	phase_name: STRING
-	capacity: INTEGER
-	expected_materials: ARRAY[INTEGER_64]
-
-feature
-
-	clear_history:BOOLEAN = FALSE
-	remember: BOOLEAN = TRUE
+feature{NONE} -- Initialization
 
 	make(
 		a_target: T_TRACKER;
@@ -40,6 +30,19 @@ feature
 			expected_materials := a_expected_materials
 			set_default_error
 		end
+
+
+feature{NONE} -- params
+
+	pid: STRING
+	phase_name: STRING
+	capacity: INTEGER
+	expected_materials: ARRAY[INTEGER_64]
+
+feature -- commands
+
+	clear_history:BOOLEAN = FALSE
+	remember: BOOLEAN = TRUE
 
 	apply
     	do
