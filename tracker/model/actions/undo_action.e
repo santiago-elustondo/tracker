@@ -38,7 +38,7 @@ feature -- commands
 
 	undo
 		do
-			-- not implemented
+			-- not implemented(need to force a change)
 		end
 
 end
