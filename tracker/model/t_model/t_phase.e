@@ -40,6 +40,7 @@ feature -- commands
 	add_container(a_container: T_CONTAINER)
 
 		do
+			a_container.set_pid(current.get_pid)
 			containers.put(a_container, a_container.get_cid)
 		end
 

@@ -72,7 +72,7 @@ feature { ANY } -- commands
 			make
 		end
 
-	get_cursor: INTEGER
+	get_cursor: INTEGER -- can be removed once counter has been fixed
 		do
 			Result := cursor
 		end
