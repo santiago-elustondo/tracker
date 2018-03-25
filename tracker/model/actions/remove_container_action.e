@@ -1,4 +1,4 @@
-note
+ note
 	description: "Summary description for {MOVE_CONTAINER_ACTION}."
 	author: ""
 	date: "$Date$"

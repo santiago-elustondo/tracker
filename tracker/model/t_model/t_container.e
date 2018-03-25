@@ -13,13 +13,15 @@ inherit
 create
 	make
 
-feature
+feature{NONE} -- parameters
 	cid: STRING
 	pid: STRING
 	props: TUPLE [
 		material: T_MATERIAL;
 		radioactivity: VALUE
 	]
+
+feature{NONE} -- Initialization
 
 	make(
 		a_cid: STRING;
@@ -32,7 +34,10 @@ feature
 		do
 			cid := a_cid
 			pid := a_pid
-			props := [(create {T_MATERIAL_FACTORY}.make (a_props.a_material)).get_material, a_props.a_radioactivity]
+			props := [
+				(create {T_MATERIAL_FACTORY}.make (a_props.a_material)).get_material,
+				a_props.a_radioactivity
+			]
 		end
 
 feature -- commands

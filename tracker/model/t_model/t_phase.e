@@ -13,14 +13,14 @@ inherit
 create
 	make
 
-feature{none}
+feature {NONE} -- params
 	pid: STRING
 	name: STRING
 	capacity: INTEGER_64
 	materials: LINKED_SET[T_MATERIAL]
 	containers: STRING_TABLE[T_CONTAINER]
 
-feature -- cmds
+feature{NONE} -- cmds
 	make(
 		a_pid: STRING
 		a_name: STRING

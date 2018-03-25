@@ -16,8 +16,7 @@ inherit
 		end
 
 create {T_TRACKER_ACCESS}
-	make
-
+	make, reset
 
 feature
 
@@ -31,7 +30,7 @@ feature
 	current_state_id: INTEGER;
 	next_state_id: INTEGER;
 
-feature -- commands
+feature{NONE} -- Initialization
 
 	make
 		do
@@ -41,6 +40,8 @@ feature -- commands
 			current_num_actions := 0;
 			current_state_id := 0;
 		end
+
+feature -- commands
 
 	reset
 		do
