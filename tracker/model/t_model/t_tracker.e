@@ -114,6 +114,16 @@ feature -- queries
 			Result := max_container_rad
 		end
 
+	get_phase_rad_exceeded(pid: STRING; rad: VALUE) : BOOLEAN
+		do
+			Result := (get_phase(pid).get_radiation + rad) > get_max_phase_rad
+		end
+
+	get_container_rad_exceeded(rad: VALUE) : BOOLEAN
+		do
+			Result := rad > get_max_container_rad
+		end
+
 	has_phase(pid: STRING): BOOLEAN
 		do
 			Result := phases.has (pid)

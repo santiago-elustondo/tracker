@@ -13,7 +13,7 @@ inherit
 create
 	make
 
-feature{NONE}
+feature{NONE} -- Initialization
 
 	make(a_target :T_TRACKER)
 		do
@@ -21,7 +21,7 @@ feature{NONE}
 			set_default_error
 		end
 
-feature
+feature -- commands
 
 	clear_history:BOOLEAN = FALSE
 	remember: BOOLEAN = FALSE

@@ -73,13 +73,13 @@ feature -- commands
 			elseif c.radioactivity < 0.0 then
 				set_error(error.err_con_rad_negative)
 				state_stay
-			elseif target.get_phase (pid).get_count >= target.get_phase (pid).get_capacity then
+			elseif target.get_phase (pid).max_capacity then
 				set_error(error.err_con_exceed_phase_cap)
 				state_stay
-			elseif c.radioactivity > target.get_max_container_rad then
+			elseif target.get_container_rad_exceeded(c.radioactivity) then
 				set_error(error.err_con_exceed_rad_cap)
 				state_stay
-			elseif c.radioactivity > target.get_max_phase_rad then
+			elseif target.get_phase_rad_exceeded(pid, c.radioactivity) then
 				set_error(error.err_con_exceed_safe)
 				state_stay
 			elseif not target.get_phase (pid).material_expected (c.material) then

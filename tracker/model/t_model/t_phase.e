@@ -111,6 +111,11 @@ feature -- queries
 			Result := containers
 		end
 
+	max_capacity: BOOLEAN
+		do
+			Result := (get_count = get_capacity)
+		end
+
 	is_less alias "<" (other: like current): BOOLEAN --used to sort users, first by name, then by id
 		do
 			if current = other then
