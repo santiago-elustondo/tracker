@@ -32,9 +32,7 @@ feature
 
 	material_expected(mat: INTEGER_64) : BOOLEAN
 		do
-			Result := across materials as m some
-				m.item.get_mid = mat
-			end
+			Result := materials.has (check_material(mat))
 		end
 
 	at(i: INTEGER_64): T_MATERIAL
