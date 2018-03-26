@@ -107,7 +107,7 @@ feature -- queries
 
 	to_material(mat: INTEGER_64): T_MATERIAL
 		do
-			Result := (create{T_MATERIAL_FACTORY}.make (mat)).get_material
+			Result := (create{T_MATERIAL_FACTORY}.make_m (mat)).get_material
 		end
 
 	materials_set(mats: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
@@ -118,7 +118,7 @@ feature -- queries
 			end
 		end
 
-	is_less alias "<" (other: like current): BOOLEAN --used to sort users, first by name, then by id
+	is_less alias "<" (other: like current): BOOLEAN
 		do
 			if current = other then
 				Result := False

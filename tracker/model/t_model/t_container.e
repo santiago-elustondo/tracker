@@ -9,6 +9,8 @@ class
 
 inherit
 	COMPARABLE
+--	T_MATERIAL_FACTORY
+--		undefine is_equal end
 
 create
 	make
@@ -34,8 +36,10 @@ feature{NONE} -- Initialization
 		do
 			cid := a_cid
 			pid := a_pid
+--			set_material(a_props.a_material)
 			props := [
-				(create {T_MATERIAL_FACTORY}.make (a_props.a_material)).get_material,
+				(create {T_MATERIAL_FACTORY}.make_m (a_props.a_material)).get_material,
+--				get_material,
 				a_props.a_radioactivity
 			]
 		end

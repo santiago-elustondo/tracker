@@ -8,10 +8,11 @@ class
 	T_MATERIAL_FACTORY
 
 create
-	make
+	make_m
+
 
 feature{NONE}
-	make(a_material: INTEGER_64)
+	make_m(a_material: INTEGER_64)
 		do
 			set_material(a_material)
 		end
