@@ -82,7 +82,7 @@ feature -- commands
 			elseif target.get_phase_rad_exceeded(pid, c.radioactivity) then
 				set_error(error.err_con_exceed_safe)
 				state_stay
-			elseif not target.get_phase (pid).material_expected (c.material) then
+			elseif not target.get_phase (pid).get_materials.material_expected (c.material) then
 				set_error(error.err_phase_mat_not_expected)
 				state_stay
 			else
