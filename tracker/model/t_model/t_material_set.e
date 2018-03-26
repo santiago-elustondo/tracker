@@ -19,7 +19,7 @@ feature
 
 	make(a_materials: ARRAY[INTEGER_64])
 		do
-			Create materials.make
+			create materials.make
 			across a_materials as m loop
 				materials.put (check_material(m.item))
 			end
@@ -35,9 +35,10 @@ feature
 			Result := materials.has (check_material(mat))
 		end
 
-	at(i: INTEGER_64): T_MATERIAL
+	at alias "[]" (i: INTEGER_64): T_MATERIAL
 		do
-			Result := materials.at (i.to_integer_32)
+			Result := materials [i.to_integer_32]
 		end
+
 
 end

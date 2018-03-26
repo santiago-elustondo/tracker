@@ -36,7 +36,6 @@ feature{NONE} -- Initialization
 		do
 			cid := a_cid
 			pid := a_pid
---			set_material(a_props.a_material)
 			props := [
 --				(create {T_MATERIAL_FACTORY}.make_m (a_props.a_material)).get_material,
 				check_material(a_props.a_material),
@@ -67,7 +66,7 @@ feature -- queries
 			Result := pid
 		end
 
-	is_less alias "<" (other: like current): BOOLEAN --used to sort users, first by name, then by id
+	is_less alias "<" (other: like current): BOOLEAN
 		do
 			if current = other then
 				Result := False

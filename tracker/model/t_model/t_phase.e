@@ -149,9 +149,9 @@ feature -- print
 			Result.append (get_count.out + ",")
 			Result.append (get_radiation.out + ",{")
 			across 1 |..| (materials.get_count - 1) as i loop
-				Result.append(materials.at(i.item).get_name+ ",")
+				Result.append(materials[i.item].get_name+ ",")
 			end
-			Result.append (materials.at(materials.get_count).get_name+ "}")
+			Result.append (materials [materials.get_count].get_name+ "}")
 		end
 
 end

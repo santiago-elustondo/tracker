@@ -4,11 +4,12 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	T_MATERIAL_FACTORY
 
-create
-	default_create
+
+--create
+--	default_create
 
 
 --feature{NONE}
