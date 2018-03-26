@@ -4,7 +4,7 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-deferred class
+class
 	T_MATERIAL_FACTORY
 
 
@@ -43,7 +43,7 @@ feature -- queries
 --			Result := material
 --		end
 
-	check_material(a_material: INTEGER_64) : T_MATERIAL
+	parse_material(a_material: INTEGER_64) : T_MATERIAL
 		do
 			inspect a_material
 				when 1 then
