@@ -153,6 +153,8 @@ feature -- queries
 			end
 		end
 
+feature -- print
+
 	print_tracker: STRING
 		do
 			Create Result.make_from_string("%N  max_phase_radiation: ")

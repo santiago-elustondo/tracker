@@ -10,10 +10,20 @@ class
 create
 	make
 
-feature
-	make(i: INTEGER_64)
+feature{NONE}
+	make(a_material: INTEGER_64)
 		do
-			inspect i
+			set_material(a_material)
+		end
+
+feature{NONE}
+	material:  T_MATERIAL
+
+feature -- commands
+
+	set_material(a_material : INTEGER_64)
+		do
+			inspect a_material
 				when 1 then
 					material := create{T_GLASS}
 				when 2 then
@@ -24,11 +34,7 @@ feature
 					material := create{T_LIQUID}
 			end
 		end
-
-feature{NONE}
-	material:  T_MATERIAL
-
-feature
+feature -- queries
 
 	get_material: T_MATERIAL
 		do
