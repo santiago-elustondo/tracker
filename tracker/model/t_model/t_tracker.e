@@ -50,7 +50,6 @@ feature -- commands
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		do
-			make
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		end

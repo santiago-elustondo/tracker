@@ -67,6 +67,7 @@ feature -- commands
 		do
 			increment_num_actions
 			state_go_back
+			set_error(error.err_undo)
 		end
 
 end
