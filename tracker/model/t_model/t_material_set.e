@@ -18,7 +18,7 @@ feature
 		do
 			create materials.make
 			across a_materials as m loop
-				materials.put ((create {T_MATERIAL_FACTORY}).parse_material(m.item))
+				materials.put ((create {T_MATERIAL_FACTORY}.default_create).parse_material(m.item))
 			end
 		end
 
@@ -29,7 +29,7 @@ feature
 
 	material_expected(mat: INTEGER_64) : BOOLEAN
 		do
-			Result := materials.has ((create {T_MATERIAL_FACTORY}).parse_material(mat))
+			Result := materials.has ((create {T_MATERIAL_FACTORY}.default_create).parse_material(mat))
 		end
 
 	at alias "[]" (i: INTEGER_64): T_MATERIAL

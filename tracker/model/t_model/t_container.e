@@ -35,7 +35,7 @@ feature{NONE} -- Initialization
 			cid := a_cid
 			pid := a_pid
 			props := [
-				(create {T_MATERIAL_FACTORY}).parse_material(a_props.a_material),
+				(create {T_MATERIAL_FACTORY}.default_create).parse_material(a_props.a_material),
 				a_props.a_radioactivity
 			]
 		end

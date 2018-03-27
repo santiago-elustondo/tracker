@@ -10,6 +10,9 @@ expanded class
 inherit
 	T_MATERIAL
 
+create
+	default_create
+
 feature
 	get_name : STRING = "metal"
 

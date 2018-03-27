@@ -7,6 +7,9 @@
 expanded class
 	ERROR_HANDLING
 
+create
+	default_create
+
 feature -- Error Message Constants
 
 	err_tracker_in_use: STRING = "e1: current tracker is in use"

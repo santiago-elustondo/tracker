@@ -17,7 +17,6 @@ feature {NONE} -- params
 	pid: STRING
 	name: STRING
 	capacity: INTEGER_64
---	materials: LINKED_SET[T_MATERIAL]
 	materials: T_MATERIAL_SET
 	containers: STRING_TABLE[T_CONTAINER]
 
@@ -32,7 +31,6 @@ feature{NONE} -- cmds
 			pid := a_pid
 			name := a_name
 			capacity := a_capacity
---			materials := materials_set(a_materials)
 			create materials.make(a_materials)
 			create containers.make(10)
 		end
@@ -80,11 +78,6 @@ feature -- queries
 			Result := containers.count
 		end
 
---	material_expected(mat: INTEGER_64): BOOLEAN
---		do
---			Result := materials.has (to_material(mat))
---		end
-
 	get_materials: T_MATERIAL_SET
 		do
 			Result := materials
@@ -112,19 +105,6 @@ feature -- queries
 		do
 			Result := (get_count = get_capacity)
 		end
-
---	to_material(mat: INTEGER_64): T_MATERIAL
---		do
---			Result := (create{T_MATERIAL_FACTORY}.make_m (mat)).get_material
---		end
-
---	materials_set(mats: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
---		do
---			Create Result.make
---			across mats as m loop
---				Result.put (to_material(m.item))
---			end
---		end
 
 	is_less alias "<" (other: like current): BOOLEAN
 		do

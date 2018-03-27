@@ -167,7 +167,7 @@ feature -- print
 			Result.append (print_containers)
 		end
 
-	print_state : STRING
+	print_state : STRING -- this method needs to be replaced
 		do
 			Create Result.make_from_string ("  state ")
 			Result.append_integer (get_state)
@@ -214,7 +214,7 @@ feature -- print
 		do
 			create Result.make_from_string ("")
 			Result.append (print_state + error)
-			if (error ~ (create{ERROR_HANDLING}).err_ok) then
+			if (error ~ {ERROR_HANDLING}.err_ok) then
 				Result.append (print_tracker)
 			end
 		end
