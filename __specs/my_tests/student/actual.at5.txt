@@ -1,0 +1,210 @@
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 1 (to 0) e19: there is no more to undo
+->undo
+  state 2 (to 0) e19: there is no more to undo
+->move_container("cid5","pid2","pid1")
+  state 3 (to 1) e15: this container identifier not in tracker
+->undo
+  state 4 (to 0) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->redo
+  state 5 (to 1) e15: this container identifier not in tracker
+->redo
+  state 6 (to 1) e20: there is no more to redo
+->redo
+  state 7 (to 1) e20: there is no more to redo
+->undo
+  state 8 (to 0) e15: this container identifier not in tracker
+->undo
+  state 9 (to 0) e19: there is no more to undo
+->undo
+  state 10 (to 0) e19: there is no more to undo
+->new_tracker(50,10)
+  state 11 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 12 (to 0) e19: there is no more to undo
+->undo
+  state 13 (to 0) e19: there is no more to undo
+->undo
+  state 14 (to 0) e19: there is no more to undo
+->redo
+  state 15 (to 0) e20: there is no more to redo
+->redo
+  state 16 (to 0) e20: there is no more to redo
+->redo
+  state 17 (to 0) e20: there is no more to redo
+->undo
+  state 18 (to 0) e19: there is no more to undo
+->undo
+  state 19 (to 0) e19: there is no more to undo
+->undo
+  state 20 (to 0) e19: there is no more to undo
+->new_phase("pid2","Compacting",3,<<glass, metal, liquid>>)
+  state 21 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->Compacting:3,0,0.00,{glass,metal,liquid}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 22 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 23 (to 0) e19: there is no more to undo
+->undo
+  state 24 (to 0) e19: there is no more to undo
+->redo
+  state 25 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->Compacting:3,0,0.00,{glass,metal,liquid}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 26 (to 1) e20: there is no more to redo
+->redo
+  state 27 (to 1) e20: there is no more to redo
+->undo
+  state 28 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 29 (to 0) e19: there is no more to undo
+->undo
+  state 30 (to 0) e19: there is no more to undo
+->new_phase("pid1","Compacting",2,<<glass, metal, plastic>>)
+  state 31 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->Compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 32 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 33 (to 0) e19: there is no more to undo
+->undo
+  state 34 (to 0) e19: there is no more to undo
+->redo
+  state 35 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->Compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 36 (to 1) e20: there is no more to redo
+->redo
+  state 37 (to 1) e20: there is no more to redo
+->undo
+  state 38 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 39 (to 0) e19: there is no more to undo
+->undo
+  state 40 (to 0) e19: there is no more to undo
+->new_container("cid4",[metal, 3],"pid2")
+  state 41 (to 1) e9: phase identifier not in the system
+->undo
+  state 42 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 43 (to 0) e19: there is no more to undo
+->undo
+  state 44 (to 0) e19: there is no more to undo
+->redo
+  state 45 (to 1) e9: phase identifier not in the system
+->redo
+  state 46 (to 1) e20: there is no more to redo
+->redo
+  state 47 (to 1) e20: there is no more to redo
+->undo
+  state 48 (to 0) e9: phase identifier not in the system
+->undo
+  state 49 (to 0) e19: there is no more to undo
+->undo
+  state 50 (to 0) e19: there is no more to undo
+->new_container("cid5",[metal, 2],"pid2")
+  state 51 (to 1) e9: phase identifier not in the system
+->undo
+  state 52 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 53 (to 0) e19: there is no more to undo
+->undo
+  state 54 (to 0) e19: there is no more to undo
+->redo
+  state 55 (to 1) e9: phase identifier not in the system
+->redo
+  state 56 (to 1) e20: there is no more to redo
+->redo
+  state 57 (to 1) e20: there is no more to redo
+->undo
+  state 58 (to 0) e9: phase identifier not in the system
+->undo
+  state 59 (to 0) e19: there is no more to undo
+->undo
+  state 60 (to 0) e19: there is no more to undo
+->move_container("cid4","pid2","pid1")
+  state 61 (to 1) e15: this container identifier not in tracker
+->undo
+  state 62 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 63 (to 0) e19: there is no more to undo
+->undo
+  state 64 (to 0) e19: there is no more to undo
+->redo
+  state 65 (to 1) e15: this container identifier not in tracker
+->redo
+  state 66 (to 1) e20: there is no more to redo
+->redo
+  state 67 (to 1) e20: there is no more to redo
+->undo
+  state 68 (to 0) e15: this container identifier not in tracker
+->undo
+  state 69 (to 0) e19: there is no more to undo
+->undo
+  state 70 (to 0) e19: there is no more to undo
+->move_container("cid5","pid2","pid1")
+  state 71 (to 1) e15: this container identifier not in tracker
+->undo
+  state 72 (to 0) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 73 (to 0) e19: there is no more to undo
+->undo
+  state 74 (to 0) e19: there is no more to undo
+->redo
+  state 75 (to 1) e15: this container identifier not in tracker
+->redo
+  state 76 (to 1) e20: there is no more to redo
+->redo
+  state 77 (to 1) e20: there is no more to redo
+->undo
+  state 78 (to 0) e15: this container identifier not in tracker
+->undo
+  state 79 (to 0) e19: there is no more to undo
+->undo
+  state 80 (to 0) e19: there is no more to undo

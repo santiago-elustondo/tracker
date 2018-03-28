@@ -59,13 +59,13 @@ feature -- commands
 			increment_num_actions
 --    		prev_error := target.get_error
 			prev_error := get_prev_error
-			if not cid[1].is_alpha_numeric then -- must check length as well
+			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then -- must check length as well
 				set_error(error.err_name_start)
 				state_stay
 			elseif target.has_container(cid) then
 				set_error(error.err_con_id_exists)
 				state_stay
-			elseif not pid[1].is_alpha_numeric then -- must check length as well
+			elseif (pid.is_empty) or else not pid[1].is_alpha_numeric then -- must check length as well
 				set_error(error.err_name_start)
 				state_stay
 			elseif not target.has_phase (pid) then

@@ -1,0 +1,94 @@
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 1 (to 0) e19: there is no more to undo
+->undo
+  state 2 (to 0) e19: there is no more to undo
+->redo
+  state 3 (to 0) e20: there is no more to redo
+->redo
+  state 4 (to 0) e20: there is no more to redo
+->undo
+  state 5 (to 0) e19: there is no more to undo
+->new_tracker(20,20)
+  state 6 (to 0) ok
+  max_phase_radiation: 20.00, max_container_radiation: 20.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 7 (to 0) e19: there is no more to undo
+->undo
+  state 8 (to 0) e19: there is no more to undo
+->redo
+  state 9 (to 0) e20: there is no more to redo
+->redo
+  state 10 (to 0) e20: there is no more to redo
+->new_tracker(20,30)
+  state 11 (to 0) e4: max container must not be more than max phase radiation
+->undo
+  state 12 (to 0) e19: there is no more to undo
+->undo
+  state 13 (to 0) e19: there is no more to undo
+->undo
+  state 14 (to 0) e19: there is no more to undo
+->redo
+  state 15 (to 0) e20: there is no more to redo
+->redo
+  state 16 (to 0) e20: there is no more to redo
+->redo
+  state 17 (to 0) e20: there is no more to redo
+->new_tracker(50.6969,20.02)
+  state 18 (to 0) ok
+  max_phase_radiation: 50.70, max_container_radiation: 20.02
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 19 (to 0) e19: there is no more to undo
+->redo
+  state 20 (to 0) e20: there is no more to redo
+->new_tracker(20,30)
+  state 21 (to 0) e4: max container must not be more than max phase radiation
+->undo
+  state 22 (to 0) e19: there is no more to undo
+->undo
+  state 23 (to 0) e19: there is no more to undo
+->redo
+  state 24 (to 0) e20: there is no more to redo
+->redo
+  state 25 (to 0) e20: there is no more to redo
+->redo
+  state 26 (to 0) e20: there is no more to redo
+->new_tracker(-5.5,0)
+  state 27 (to 0) e2: max phase radiation must be non-negative value
+->undo
+  state 28 (to 0) e19: there is no more to undo
+->undo
+  state 29 (to 0) e19: there is no more to undo
+->redo
+  state 30 (to 0) e20: there is no more to redo
+->redo
+  state 31 (to 0) e20: there is no more to redo
+->new_tracker(10,-2.8)
+  state 32 (to 0) e3: max container radiation must be non-negative value
+->undo
+  state 33 (to 0) e19: there is no more to undo
+->undo
+  state 34 (to 0) e19: there is no more to undo
+->redo
+  state 35 (to 0) e20: there is no more to redo
+->redo
+  state 36 (to 0) e20: there is no more to redo
+->new_tracker(-69.69999,-69.99999)
+  state 37 (to 0) e2: max phase radiation must be non-negative value
+->undo
+  state 38 (to 0) e19: there is no more to undo
+->undo
+  state 39 (to 0) e19: there is no more to undo
+->redo
+  state 40 (to 0) e20: there is no more to redo
+->redo
+  state 41 (to 0) e20: there is no more to redo
+->redo
+  state 42 (to 0) e20: there is no more to redo

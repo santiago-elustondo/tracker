@@ -35,7 +35,7 @@ feature{NONE} -- params
 feature -- commands
 
 	clear_history:BOOLEAN = TRUE
-	remember: BOOLEAN = TRUE
+	remember: BOOLEAN = FALSE
 
 	apply
 		do

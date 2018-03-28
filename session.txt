@@ -1,2 +1,2 @@
-new_phase("a","a",0,<<>>)
-new_phase("","a",0,<<>>)
+new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
+undo
