@@ -52,13 +52,13 @@ feature -- commands
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     			state_stay
-    		elseif not pid [1].is_alpha_numeric then
+    		elseif not pid [1].is_alpha_numeric then --must check length as well
     			set_error(error.err_name_start)
     			state_stay
     		elseif target.has_phase (pid) then
     			set_error(error.err_phase_id_exists)
     			state_stay
-    		elseif not phase_name [1].is_alpha_numeric then
+    		elseif not phase_name [1].is_alpha_numeric then --must check length as well
     			set_error(error.err_name_start)
     			state_stay
 	   		elseif capacity <= 0 then
