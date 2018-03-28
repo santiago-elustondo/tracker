@@ -26,7 +26,7 @@ feature { ANY } -- queries
 
 	has_past: BOOLEAN
 		do
-			Result := cursor > 1
+			Result := cursor > 0
 		end
 
 	has_future: BOOLEAN
