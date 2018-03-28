@@ -24,7 +24,6 @@ feature
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
 	error: STRING
-	state: INTEGER
 
 	current_num_actions: INTEGER;
 	current_state_id: INTEGER;
@@ -35,7 +34,7 @@ feature{NONE} -- Initialization
 		do
 			precursor
 			create phases.make (10)
-			error := "ok"
+			error := {ERROR_HANDLING}.err_ok
 			current_num_actions := 0;
 			current_state_id := 0;
 		end
@@ -88,14 +87,19 @@ feature -- queries
 			end
 		end
 
+	get_current_num_actions: INTEGER
+		do
+			Result := current_num_actions
+		end
+
+	get_current_state_id: INTEGER
+		do
+			Result := current_state_id
+		end
+
 	get_error: STRING
 		do
 			Result := error
-		end
-
-	get_state: INTEGER
-		do
-			Result := state
 		end
 
 	get_max_phase_rad: VALUE
@@ -146,7 +150,15 @@ feature -- queries
 			end
 		end
 
+
 feature -- print
+
+	print_to : BOOLEAN
+		do
+			Result := (current_state_id /= current_num_actions)
+				and then (error /= {ERROR_HANDLING}.err_undo)
+				and then (error /= {ERROR_HANDLING}.err_redo)
+		end
 
 	print_tracker: STRING
 		do
@@ -163,14 +175,13 @@ feature -- print
 	print_state : STRING -- this method needs to be replaced
 		do
 			Create Result.make_from_string ("  state ")
-			Result.append_integer (current_num_actions)
-			if current_state_id /= (current_num_actions) then
+			Result.append (get_current_num_actions.out)
+			if print_to then
 				Result.append(" (to ")
-				Result.append_integer(current_state_id)
+				Result.append(current_state_id.out)
 				Result.append(")")
 			end
 			Result.append (" ")
-			state := state + 1
 		end
 
 	print_phases : STRING
