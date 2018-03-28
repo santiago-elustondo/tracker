@@ -35,8 +35,11 @@ feature{NONE} -- params
 
 feature -- commands
 
-	clear_history:BOOLEAN = TRUE
-	remember: BOOLEAN = FALSE
+	clear_history:BOOLEAN
+		do result := action_success end
+
+	remember: BOOLEAN
+		do result := not action_success end
 
 	apply
 		do
