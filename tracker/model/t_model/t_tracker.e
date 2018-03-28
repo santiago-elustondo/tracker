@@ -153,7 +153,7 @@ feature -- queries
 
 feature -- print
 
-	print_to : BOOLEAN
+	print_old_state : BOOLEAN
 		do
 			Result := (current_state_id /= current_num_actions)
 				and then (error /= {ERROR_HANDLING}.err_undo)
@@ -176,7 +176,7 @@ feature -- print
 		do
 			Create Result.make_from_string ("  state ")
 			Result.append (get_current_num_actions.out)
-			if print_to then
+			if print_old_state then
 				Result.append(" (to ")
 				Result.append(current_state_id.out)
 				Result.append(")")
