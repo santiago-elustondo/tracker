@@ -30,7 +30,6 @@ move_container ("cid4", "pid1", "pid2")
 new_container("cid4", [metal,   3.0], "pid1")  -- e10
 new_container("cid1", [glass,   5.5], "pid1")  -- e10
 new_container("cid2", [liquid,  0.5], "pid1")  -- ok
-
 undo
 undo
 undo
