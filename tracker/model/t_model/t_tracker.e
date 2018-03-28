@@ -155,7 +155,7 @@ feature -- print
 
 	print_old_state : BOOLEAN
 		do
-			Result := (current_state_id /= current_num_actions)
+			Result := (get_current_state_id /= get_current_num_actions)
 				and then (error /= {ERROR_HANDLING}.err_undo)
 				and then (error /= {ERROR_HANDLING}.err_redo)
 		end
