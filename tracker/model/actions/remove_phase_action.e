@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -36,17 +37,13 @@ feature
 
 	apply
     	do
-    		increment_num_actions
---    		prev_error := target.get_error
+    		precursor
 			prev_error := get_prev_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
-    			state_stay
 			elseif not target.has_phase (pid) then
 				set_error(error.err_phase_id_not_exists)
-				state_stay
 			else
-				state_move
 				set_error(error.err_ok)
 				phase := target.get_phase (pid)
 				target.remove_phase (pid)
@@ -55,8 +52,7 @@ feature
 
 	undo
 		do
-			increment_num_actions
-			state_go_back
+			precursor
 			if (exec_error ~ error.err_ok) then
 				if attached phase as p then
 					target.add_phase (p)

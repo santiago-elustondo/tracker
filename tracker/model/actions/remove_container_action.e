@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -36,14 +37,11 @@ feature -- commands
 
 	apply
     	do
-    		increment_num_actions
---    		prev_error := target.get_error
+    		precursor
 			prev_error := get_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
-    			state_stay
     		else
-    			state_move
     			set_error(error.err_ok)
     			phase := target.find_container (cid)
     			if attached phase as p then
@@ -55,8 +53,7 @@ feature -- commands
 
 	undo
 		do
-			increment_num_actions
-			state_go_back
+			precursor
 			if (exec_error ~ error.err_ok) then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)

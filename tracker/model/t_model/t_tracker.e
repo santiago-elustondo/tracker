@@ -28,7 +28,6 @@ feature
 
 	current_num_actions: INTEGER;
 	current_state_id: INTEGER;
-	next_state_id: INTEGER;
 
 feature{NONE} -- Initialization
 
@@ -72,11 +71,6 @@ feature -- commands
 	set_current_state_id(a_id: INTEGER)
 		do
 			current_state_id := a_id
-		end
-
-	set_next_state_id(a_id: INTEGER)
-		do
-			next_state_id := a_id
 		end
 
 	increment_num_actions
@@ -169,10 +163,10 @@ feature -- print
 	print_state : STRING -- this method needs to be replaced
 		do
 			Create Result.make_from_string ("  state ")
-			Result.append_integer (get_state)
-			if get_state /= (get_history.get_cursor) then
+			Result.append_integer (current_num_actions)
+			if current_state_id /= (current_num_actions) then
 				Result.append(" (to ")
-				Result.append_integer(get_history.get_cursor)
+				Result.append_integer(current_state_id)
 				Result.append(")")
 			end
 			Result.append (" ")

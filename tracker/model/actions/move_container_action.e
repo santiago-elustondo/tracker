@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -42,32 +43,23 @@ feature -- commands
 
 	apply
     	do
-    		increment_num_actions
---    		prev_error := target.get_error
+    		precursor
 			prev_error := get_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
-    			state_stay
     		elseif pid1 ~ pid2 then
     			set_error(error.err_phase_id_same)
-    			state_stay
 			elseif not (target.has_phase (pid1) and target.has_phase (pid2)) then
 				set_error(error.err_phase_id_not_exists)
-				state_stay
 			elseif not(target.get_phase (pid1).has_container (cid)) then
 				set_error(error.err_con_id_not_in_phase)
-				state_stay
 			elseif target.get_phase (pid2).max_capacity then
 				set_error(error.err_con_exceed_phase_cap)
-				state_stay
 			elseif target.get_phase_rad_exceeded(pid2, target.get_phase (pid1).get_container (cid).get_props.radioactivity) then
     			set_error(error.err_con_exceed_safe)
-    			state_stay
     		elseif not target.get_phase (pid2).get_materials.material_expected (target.get_phase (pid1).get_container (cid).get_props.material.get_mid) then
     			set_error(error.err_phase_mat_not_expected)
-    			state_stay
     		else
-    			state_move
     			set_error(error.err_ok)
 				container := target.get_phase(pid1).get_container(cid)
 				if attached container as con then
@@ -79,6 +71,7 @@ feature -- commands
 
 	undo
 		do
+			precursor
 			if (exec_error ~ error.err_ok) then
 				if attached container as con then
 					target.get_phase(pid2).remove_container(con.get_cid)

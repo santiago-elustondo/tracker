@@ -42,34 +42,20 @@ feature --setters
 			result := exec_error ~ error.err_ok
 		end
 
-	increment_num_actions
-		do
-			target.increment_num_actions
-		end
-
-	state_stay
-		do
+	apply
+    	do
+    		target.increment_num_actions
 			if post_state_id = 0 then
 				pre_state_id := target.current_state_id
-				post_state_id := target.next_state_id
-			end
-			target.set_next_state_id(post_state_id + 1)
-		end
-
-	state_move
-		do
-			if post_state_id = 0 then
-				pre_state_id := target.current_state_id
-				post_state_id := target.next_state_id
+				post_state_id := target.current_num_actions
 			end
 			target.set_current_state_id(post_state_id)
-			target.set_next_state_id(post_state_id + 1)
 		end
 
-	state_go_back
+	undo
 		do
+			target.increment_num_actions
 			target.set_current_state_id(pre_state_id)
-			target.set_next_state_id(pre_state_id + 1)
 		end
 
 	get_prev_error: STRING

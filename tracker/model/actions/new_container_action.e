@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -56,38 +57,27 @@ feature -- commands
 
 	apply
 		do
-			increment_num_actions
---    		prev_error := target.get_error
+			precursor
 			prev_error := get_prev_error
 			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then -- must check length as well
 				set_error(error.err_name_start)
-				state_stay
 			elseif target.has_container(cid) then
 				set_error(error.err_con_id_exists)
-				state_stay
 			elseif (pid.is_empty) or else not pid[1].is_alpha_numeric then -- must check length as well
 				set_error(error.err_name_start)
-				state_stay
 			elseif not target.has_phase (pid) then
 				set_error(error.err_phase_id_not_exists)
-				state_stay
 			elseif c.radioactivity < 0.0 then
 				set_error(error.err_con_rad_negative)
-				state_stay
 			elseif target.get_phase (pid).max_capacity then
 				set_error(error.err_con_exceed_phase_cap)
-				state_stay
 			elseif target.get_container_rad_exceeded(c.radioactivity) then
 				set_error(error.err_con_exceed_rad_cap)
-				state_stay
 			elseif target.get_phase_rad_exceeded(pid, c.radioactivity) then
 				set_error(error.err_con_exceed_safe)
-				state_stay
 			elseif not target.get_phase (pid).get_materials.material_expected (c.material) then
 				set_error(error.err_phase_mat_not_expected)
-				state_stay
 			else
-				state_move
 				set_error(error.err_ok)
 				target.get_phase(pid).add_container(create {T_CONTAINER}.make(
 					cid,
@@ -99,8 +89,7 @@ feature -- commands
 
 	undo
 		do
-			increment_num_actions
-			state_go_back
+			precursor
 			if (exec_error ~ error.err_ok) then
 				target.get_phase(pid).remove_container(cid)
 			end

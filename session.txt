@@ -1,2 +1,7 @@
-new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
+new_tracker(150, 100)
+new_phase("pid55" ,  "test_phase",  50,  <<liquid, plastic>>)
+new_phase("pid25" ,  "test_phase",  50,  <<liquid, plastic>>)
 undo
+new_container("cid44", [plastic, 40] , "pid55")
+undo
+redo

@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -39,23 +40,17 @@ feature -- commands
 
 	apply
 		do
-			increment_num_actions
---			prev_error := target.get_error
+			precursor
 			prev_error := get_prev_error
 			if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
-    			state_stay
     		elseif max_phase_radiation < 0.0 then
     			set_error(error.err_max_phase_rad_negative)
-    			state_stay
     		elseif max_container_radiation < 0.0 then
 				set_error(error.err_max_con_rad_negative)
-				state_stay
 			elseif max_container_radiation > max_phase_radiation then
 				set_error(error.err_max_con_greater_max_rad)
-				state_stay
 			else
-				state_move
 				set_error(error.err_ok)
 				target.wipe_out(
 					max_phase_radiation,
@@ -65,10 +60,6 @@ feature -- commands
 		end
 
 	undo
-		do
-			increment_num_actions
-			state_go_back
---			set_error(error.err_undo)
-		end
+		do precursor end
 
 end

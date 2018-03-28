@@ -9,6 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
+	redefine apply, undo end
 
 create
 	make
@@ -46,29 +47,21 @@ feature -- commands
 
 	apply
     	do
-    		increment_num_actions
---    		prev_error := target.get_error
+    		precursor
 			prev_error := get_prev_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
-    			state_stay
     		elseif (pid.is_empty) or else not pid [1].is_alpha_numeric then --must check length as well
     			set_error(error.err_name_start)
-    			state_stay
     		elseif target.has_phase (pid) then
     			set_error(error.err_phase_id_exists)
-    			state_stay
     		elseif (phase_name.is_empty) or else not phase_name [1].is_alpha_numeric then --must check length as well
     			set_error(error.err_name_start)
-    			state_stay
 	   		elseif capacity <= 0 then
 				set_error(error.err_phase_cap_negative)
-				state_stay
 			elseif expected_materials.count = 0 then
 				set_error(error.err_phase_no_materials)
-				state_stay
     		else
-    			state_move
     			set_error(error.err_ok)
 				target.add_phase(create {T_PHASE}.make(
 					pid,
@@ -81,8 +74,7 @@ feature -- commands
 
 	undo
 		do
-			increment_num_actions
-			state_go_back
+			precursor
 			if (exec_error ~ error.err_ok) then
 				target.remove_phase(pid)
 			end
