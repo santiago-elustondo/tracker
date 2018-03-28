@@ -58,12 +58,12 @@ feature --setters
 			target.set_current_state_id(pre_state_id)
 		end
 
-	get_prev_error: STRING
+	set_prev_error
 		do
 			if target.get_history.has_past then
-				Result := target.get_history.peek.exec_error
+				prev_error := target.get_history.peek.exec_error
 			else
-				Result := error.err_ok
+				prev_error := error.err_ok
 			end
 		end
 

@@ -38,7 +38,7 @@ feature -- commands
 	apply
     	do
     		precursor
-			prev_error := get_prev_error
+			set_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		else

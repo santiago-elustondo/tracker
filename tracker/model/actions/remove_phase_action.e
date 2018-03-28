@@ -38,7 +38,7 @@ feature
 	apply
     	do
     		precursor
-			prev_error := get_prev_error
+			set_prev_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
 			elseif not target.has_phase (pid) then

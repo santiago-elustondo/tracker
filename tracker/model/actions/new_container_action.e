@@ -58,7 +58,7 @@ feature -- commands
 	apply
 		do
 			precursor
-			prev_error := get_prev_error
+			set_prev_error
 			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then -- must check length as well
 				set_error(error.err_name_start)
 			elseif target.has_container(cid) then
