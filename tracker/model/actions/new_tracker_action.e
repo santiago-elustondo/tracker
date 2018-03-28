@@ -40,7 +40,8 @@ feature -- commands
 	apply
 		do
 			increment_num_actions
-			prev_error := target.get_error
+--			prev_error := target.get_error
+			prev_error := error.err_ok
 			if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     			state_stay
@@ -55,11 +56,11 @@ feature -- commands
 				state_stay
 			else
 				state_move
+				set_error(error.err_ok)
 				target.wipe_out(
 					max_phase_radiation,
 					max_container_radiation
 				)
-				set_error(error.err_ok)
     		end
 		end
 
@@ -67,7 +68,7 @@ feature -- commands
 		do
 			increment_num_actions
 			state_go_back
-			set_error(error.err_undo)
+--			set_error(error.err_undo)
 		end
 
 end

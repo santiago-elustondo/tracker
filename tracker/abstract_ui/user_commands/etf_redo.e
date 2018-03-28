@@ -16,7 +16,7 @@ feature -- command
     	do
 			-- perform some update on the model state
 --			model.do_action (create{REDO_ACTION}.make (model))
-			if not model.has_future then
+			if not model.get_history.has_future then
 				model.set_error ({ERROR_HANDLING}.err_redo)
 			else
 				model.redo_action

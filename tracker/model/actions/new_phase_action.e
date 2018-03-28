@@ -47,7 +47,8 @@ feature -- commands
 	apply
     	do
     		increment_num_actions
-    		prev_error := target.get_error
+--    		prev_error := target.get_error
+			prev_error := target.get_history.peek_past.exec_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     			state_stay

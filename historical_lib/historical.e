@@ -29,10 +29,9 @@ feature { ANY }
 			action.apply
 			if action.clear_history then
 				history.clear_all
-			else
-				if action.remember then
-					history.add(action)
-				end
+			end
+			if action.remember then
+				history.add(action)
 			end
 		end
 
@@ -55,14 +54,19 @@ feature { ANY }
 			Result := history
 		end
 
-	has_past: BOOLEAN -- used by undo_action
-		do
-			Result := history.has_past
-		end
+--	has_past: BOOLEAN -- used by undo_action
+--		do
+--			Result := history.has_past
+--		end
 
-	has_future: BOOLEAN -- used by redo_action
-		do
-			Result := history.has_future
-		end
+--	has_future: BOOLEAN -- used by redo_action
+--		do
+--			Result := history.has_future
+--		end
+
+--	is_first : BOOLEAN
+--		do
+--			Result := history.is_first
+--		end
 
 end

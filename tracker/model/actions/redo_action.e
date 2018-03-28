@@ -28,7 +28,7 @@ feature -- comands
 
 	apply
 		do
-			if not target.has_future then
+			if not target.get_history.has_future then
 				set_error(error.err_redo)
 			else
 				target.redo_action

@@ -28,7 +28,7 @@ feature -- commands
 
 	apply
 		do
-			if not target.has_past then
+			if not target.get_history.has_past then
 				set_error(error.err_undo)
 			else
 				target.undo_action

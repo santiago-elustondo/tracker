@@ -26,12 +26,22 @@ feature { ANY } -- queries
 
 	has_past: BOOLEAN
 		do
-			Result := cursor > 0
+			Result := cursor > 1
 		end
 
 	has_future: BOOLEAN
 		do
 			Result := cursor < implementation.count
+		end
+
+	is_first : BOOLEAN
+		do
+			Result := cursor = 1
+		end
+
+	peek_past: G
+		do
+			Result := implementation[cursor]
 		end
 
 

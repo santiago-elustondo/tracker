@@ -1,6 +1,5 @@
 new_tracker(50, 10)
-undo
+new_phase("pid1", "unpacking", 2, <<glass, metal, plastic, liquid>>)
 redo
-new_phase("pid2", "compacting", 2, <<glass, metal, plastic>>)
+new_container("cid4", [metal,   3.0], "pid1")
 undo
-redo
