@@ -58,7 +58,7 @@ feature -- commands
 		do
 			increment_num_actions
 --    		prev_error := target.get_error
-			prev_error := target.get_history.peek_past.exec_error
+			prev_error := get_prev_error
 			if not cid[1].is_alpha_numeric then
 				set_error(error.err_name_start)
 				state_stay

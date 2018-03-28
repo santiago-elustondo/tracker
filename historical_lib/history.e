@@ -39,7 +39,7 @@ feature { ANY } -- queries
 			Result := cursor = 1
 		end
 
-	peek_past: G
+	peek: G
 		do
 			Result := implementation[cursor]
 		end

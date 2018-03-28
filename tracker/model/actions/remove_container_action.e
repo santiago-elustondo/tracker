@@ -38,7 +38,7 @@ feature -- commands
     	do
     		increment_num_actions
 --    		prev_error := target.get_error
-			prev_error := target.get_history.peek_past.exec_error
+			prev_error := get_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     			state_stay
