@@ -38,7 +38,7 @@ feature
 	apply
     	do
     		precursor
-			set_prev_error
+--			set_prev_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
 			elseif not target.has_phase (pid) then
@@ -52,13 +52,14 @@ feature
 
 	undo
 		do
-			precursor
+--			precursor
 			if (exec_error ~ error.err_ok) then
 				if attached phase as p then
 					target.add_phase (p)
 				end
 			end
-			target.set_error(prev_error)
+			precursor
+--			target.set_error(prev_error)
 		end
 
 end

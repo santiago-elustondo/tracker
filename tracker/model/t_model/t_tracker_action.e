@@ -46,6 +46,7 @@ feature --setters
     	do
     		target.increment_num_actions
 			if post_state_id = 0 then
+				prev_error := target.get_history.peek.exec_error
 				prev_state_id := target.get_current_state_id
 				post_state_id := target.get_current_num_actions
 			end
@@ -56,6 +57,7 @@ feature --setters
 		do
 			target.increment_num_actions
 			target.set_current_state_id(prev_state_id)
+			target.set_error (prev_error)
 		end
 
 	set_prev_error

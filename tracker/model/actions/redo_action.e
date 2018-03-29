@@ -34,7 +34,6 @@ feature -- comands
 			else
 				target.redo_action
 			end
-
 		end
 
 

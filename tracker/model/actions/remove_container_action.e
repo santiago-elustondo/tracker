@@ -38,7 +38,7 @@ feature -- commands
 	apply
     	do
     		precursor
-			set_prev_error
+--			set_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		else
@@ -53,13 +53,14 @@ feature -- commands
 
 	undo
 		do
-			precursor
+--			precursor
 			if (exec_error ~ error.err_ok) then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)
 				end
 			end
-			target.set_error(prev_error)
+--			target.set_error(prev_error)
+			precursor
 		end
 
 end
