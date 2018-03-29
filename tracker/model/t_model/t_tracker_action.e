@@ -45,10 +45,10 @@ feature --setters
 	apply
     	do
     		target.increment_num_actions
+    		set_prev_error
 			if post_state_id = 0 then
 				prev_state_id := target.get_current_state_id
 				post_state_id := target.get_current_num_actions
-				set_prev_error
 			end
 			target.set_current_state_id(post_state_id)
 		end
