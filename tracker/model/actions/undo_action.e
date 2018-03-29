@@ -29,7 +29,7 @@ feature -- commands
 	apply
 		do
 			if not target.get_history.has_past then
-				target.increment_num_actions
+				precursor
 				set_error(error.err_undo)
 			else
 				target.undo_action
