@@ -81,11 +81,12 @@ feature -- commands
 
 	undo
 		do
-			precursor
+--			precursor
 			if (exec_error ~ error.err_ok) then
 				target.get_phase(pid).remove_container(cid)
 			end
-			target.set_error (prev_error)
+--			target.set_error (prev_error)
+			precursor
 		end
 
 end

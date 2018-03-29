@@ -71,14 +71,15 @@ feature -- commands
 
 	undo
 		do
-			precursor
+--			precursor
 			if (exec_error ~ error.err_ok) then
 				if attached container as con then
 					target.get_phase(pid2).remove_container(con.get_cid)
 					target.get_phase(pid1).add_container(con)
 				end
 			end
-			target.set_error(prev_error)
+			precursor
+--			target.set_error(prev_error)
 		end
 
 end

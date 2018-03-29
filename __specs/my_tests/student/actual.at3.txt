@@ -3,285 +3,305 @@
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->new_tracker(50,10)
-  state 1 (to 0) ok
+  state 1 ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 2 (to 0) e19: there is no more to undo
+  state 2 e19: there is no more to undo
 ->undo
-  state 3 (to 0) e19: there is no more to undo
+  state 3 e19: there is no more to undo
 ->undo
-  state 4 (to 0) e19: there is no more to undo
+  state 4 e19: there is no more to undo
 ->redo
-  state 5 (to 0) e20: there is no more to redo
+  state 5 e20: there is no more to redo
 ->redo
-  state 6 (to 0) e20: there is no more to redo
+  state 6 e20: there is no more to redo
 ->redo
-  state 7 (to 0) e20: there is no more to redo
+  state 7 e20: there is no more to redo
 ->redo
-  state 8 (to 0) e20: there is no more to redo
+  state 8 e20: there is no more to redo
 ->redo
-  state 9 (to 0) e20: there is no more to redo
+  state 9 e20: there is no more to redo
 ->undo
-  state 10 (to 0) e19: there is no more to undo
+  state 10 e19: there is no more to undo
 ->undo
-  state 11 (to 0) e19: there is no more to undo
+  state 11 e19: there is no more to undo
 ->undo
-  state 12 (to 0) e19: there is no more to undo
+  state 12 e19: there is no more to undo
 ->undo
-  state 13 (to 0) e19: there is no more to undo
+  state 13 e19: there is no more to undo
 ->undo
-  state 14 (to 0) e19: there is no more to undo
+  state 14 e19: there is no more to undo
 ->redo
-  state 15 (to 0) e20: there is no more to redo
+  state 15 e20: there is no more to redo
 ->redo
-  state 16 (to 0) e20: there is no more to redo
+  state 16 e20: there is no more to redo
 ->redo
-  state 17 (to 0) e20: there is no more to redo
+  state 17 e20: there is no more to redo
 ->new_phase("pid2","compacting",2,<<glass, metal, plastic>>)
-  state 18 (to 1) ok
+  state 18 ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 19 (to 0) ok
+  state 19 (to 1) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 20 (to 0) e19: there is no more to undo
+  state 20 e19: there is no more to undo
 ->undo
-  state 21 (to 0) e19: there is no more to undo
+  state 21 e19: there is no more to undo
 ->redo
-  state 22 (to 1) ok
-  max_phase_radiation: 50.00, max_container_radiation: 10.00
-  phases: pid->name:capacity,count,radiation
-    pid2->compacting:2,0,0.00,{glass,metal,plastic}
-  containers: cid->pid->material,radioactivity
-->redo
-  state 23 (to 1) e20: there is no more to redo
-->undo
-  state 24 (to 0) ok
-  max_phase_radiation: 50.00, max_container_radiation: 10.00
-  phases: pid->name:capacity,count,radiation
-  containers: cid->pid->material,radioactivity
-->redo
-  state 25 (to 1) ok
+  state 22 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 26 (to 1) e20: there is no more to redo
-->redo
-  state 27 (to 1) e20: there is no more to redo
-->redo
-  state 28 (to 1) e20: there is no more to redo
-->redo
-  state 29 (to 1) e20: there is no more to redo
+  state 23 e20: there is no more to redo
 ->undo
-  state 30 (to 0) ok
+  state 24 (to 1) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
-->undo
-  state 31 (to 0) e19: there is no more to undo
-->undo
-  state 32 (to 0) e19: there is no more to undo
-->undo
-  state 33 (to 0) e19: there is no more to undo
-->undo
-  state 34 (to 0) e19: there is no more to undo
 ->redo
-  state 35 (to 1) ok
+  state 25 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 36 (to 1) e20: there is no more to redo
+  state 26 e20: there is no more to redo
 ->redo
-  state 37 (to 1) e20: there is no more to redo
+  state 27 e20: there is no more to redo
+->redo
+  state 28 e20: there is no more to redo
+->redo
+  state 29 e20: there is no more to redo
+->undo
+  state 30 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 31 e19: there is no more to undo
+->undo
+  state 32 e19: there is no more to undo
+->undo
+  state 33 e19: there is no more to undo
+->undo
+  state 34 e19: there is no more to undo
+->redo
+  state 35 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 36 e20: there is no more to redo
+->redo
+  state 37 e20: there is no more to redo
 ->new_phase(";pid2","compacting",2,<<glass, metal, plastic>>)
-  state 38 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 38 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 39 (to 1) ok
+  state 39 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 40 (to 0) ok
+  state 40 (to 1) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 41 (to 0) e19: there is no more to undo
+  state 41 e19: there is no more to undo
 ->redo
-  state 42 (to 1) ok
-  max_phase_radiation: 50.00, max_container_radiation: 10.00
-  phases: pid->name:capacity,count,radiation
-    pid2->compacting:2,0,0.00,{glass,metal,plastic}
-  containers: cid->pid->material,radioactivity
-->redo
-  state 43 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
-->redo
-  state 44 (to 2) e20: there is no more to redo
-->redo
-  state 45 (to 2) e20: there is no more to redo
-->redo
-  state 46 (to 2) e20: there is no more to redo
-->redo
-  state 47 (to 2) e20: there is no more to redo
-->redo
-  state 48 (to 2) e20: there is no more to redo
-->undo
-  state 49 (to 1) e5: identifiers/names must start with A-Z, a-z or 0..9
-->undo
-  state 50 (to 0) ok
-  max_phase_radiation: 50.00, max_container_radiation: 10.00
-  phases: pid->name:capacity,count,radiation
-  containers: cid->pid->material,radioactivity
-->undo
-  state 51 (to 0) e19: there is no more to undo
-->undo
-  state 52 (to 0) e19: there is no more to undo
-->undo
-  state 53 (to 0) e19: there is no more to undo
-->redo
-  state 54 (to 1) ok
+  state 42 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 55 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 43 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 56 (to 2) e20: there is no more to redo
+  state 44 e20: there is no more to redo
+->redo
+  state 45 e20: there is no more to redo
+->redo
+  state 46 e20: there is no more to redo
+->redo
+  state 47 e20: there is no more to redo
+->redo
+  state 48 e20: there is no more to redo
+->undo
+  state 49 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 50 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 51 e19: there is no more to undo
+->undo
+  state 52 e19: there is no more to undo
+->undo
+  state 53 e19: there is no more to undo
+->redo
+  state 54 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 55 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 56 e20: there is no more to redo
 ->new_phase(";pid2",";compacting",-1,<<>>)
-  state 57 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 57 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 58 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 58 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 59 (to 1) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 59 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
 ->undo
-  state 60 (to 0) ok
+  state 60 (to 1) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->redo
-  state 61 (to 1) ok
+  state 61 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 62 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 62 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 63 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 63 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 64 (to 3) e20: there is no more to redo
+  state 64 e20: there is no more to redo
 ->redo
-  state 65 (to 3) e20: there is no more to redo
+  state 65 e20: there is no more to redo
 ->redo
-  state 66 (to 3) e20: there is no more to redo
+  state 66 e20: there is no more to redo
 ->redo
-  state 67 (to 3) e20: there is no more to redo
+  state 67 e20: there is no more to redo
 ->undo
-  state 68 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 68 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 69 (to 1) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 69 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
 ->undo
-  state 70 (to 0) ok
+  state 70 (to 1) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 71 (to 0) e19: there is no more to undo
+  state 71 e19: there is no more to undo
 ->undo
-  state 72 (to 0) e19: there is no more to undo
+  state 72 e19: there is no more to undo
 ->redo
-  state 73 (to 1) ok
+  state 73 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 74 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 74 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 75 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 75 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->new_phase(";pid2",";compacting",-1,<<>>)
-  state 76 (to 4) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 76 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 77 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 77 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 78 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 78 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 79 (to 1) e5: identifiers/names must start with A-Z, a-z or 0..9
-->redo
-  state 80 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
-->redo
-  state 81 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
-->redo
-  state 82 (to 4) e5: identifiers/names must start with A-Z, a-z or 0..9
-->redo
-  state 83 (to 4) e20: there is no more to redo
-->redo
-  state 84 (to 4) e20: there is no more to redo
-->undo
-  state 85 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
-->undo
-  state 86 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
-->undo
-  state 87 (to 1) e5: identifiers/names must start with A-Z, a-z or 0..9
-->undo
-  state 88 (to 0) ok
-  max_phase_radiation: 50.00, max_container_radiation: 10.00
-  phases: pid->name:capacity,count,radiation
-  containers: cid->pid->material,radioactivity
-->undo
-  state 89 (to 0) e19: there is no more to undo
-->redo
-  state 90 (to 1) ok
+  state 79 (to 18) ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 91 (to 2) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 80 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 92 (to 3) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 81 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 93 (to 4) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 82 (to 76) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 94 (to 4) e20: there is no more to redo
+  state 83 e20: there is no more to redo
 ->redo
-  state 95 (to 4) e20: there is no more to redo
+  state 84 e20: there is no more to redo
+->undo
+  state 85 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 86 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 87 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 88 (to 1) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 89 e19: there is no more to undo
 ->redo
-  state 96 (to 4) e20: there is no more to redo
+  state 90 (to 18) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 91 (to 38) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 92 (to 57) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 93 (to 76) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 94 e20: there is no more to redo
+->redo
+  state 95 e20: there is no more to redo
+->redo
+  state 96 e20: there is no more to redo
 ->new_tracker(50,10)
-  state 97 (to 0) ok
+  state 97 ok
   max_phase_radiation: 50.00, max_container_radiation: 10.00
   phases: pid->name:capacity,count,radiation
     pid2->compacting:2,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 98 (to 0) e19: there is no more to undo
+  state 98 e19: there is no more to undo
 ->undo
-  state 99 (to 0) e19: there is no more to undo
+  state 99 e19: there is no more to undo
 ->redo
-  state 100 (to 0) e20: there is no more to redo
+  state 100 e20: there is no more to redo
 ->redo
-  state 101 (to 0) e20: there is no more to redo
+  state 101 e20: there is no more to redo
 ->redo
-  state 102 (to 0) e20: there is no more to redo
+  state 102 e20: there is no more to redo
 ->redo
-  state 103 (to 0) e20: there is no more to redo
+  state 103 e20: there is no more to redo
 ->redo
-  state 104 (to 0) e20: there is no more to redo
+  state 104 e20: there is no more to redo
 ->redo
-  state 105 (to 0) e20: there is no more to redo
+  state 105 e20: there is no more to redo
 ->redo
-  state 106 (to 0) e20: there is no more to redo
+  state 106 e20: there is no more to redo

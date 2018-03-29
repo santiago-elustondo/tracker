@@ -32,8 +32,8 @@ feature --setters
 
 	set_default_error
 		do
-			prev_error := ""
-			exec_error := ""
+			prev_error := error.err_ok
+			exec_error := error.err_ok
 		end
 
 	-- this is a query
@@ -57,7 +57,7 @@ feature --setters
 		do
 			target.increment_num_actions
 			target.set_current_state_id(prev_state_id)
-			target.set_error (prev_error)
+			set_error (prev_error)
 		end
 
 	set_prev_error

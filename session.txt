@@ -1,39 +1,4 @@
---new_tracker(50.0, 10.0)
-new_phase(";pid2", "compacting", 2, <<glass, metal, plastic>>)
-undo
-redo
-new_tracker(5, 50)
-undo
-<<<<<<< HEAD
-<<<<<<< HEAD
-redo
-undo
-redo
-redo
-undo
-undo
-undo
-undo
-redo
-redo
-undo
-undo
-undo
-=======
+new_tracker(10, -9)
 undo
 redo
 undo
-undo
-redo
-undo
-undo
->>>>>>> parent of 9f25657... fixed double counting undo/redo
-=======
-undo
-redo
-undo
-undo
-redo
-undo
-undo
->>>>>>> parent of 9f25657... fixed double counting undo/redo

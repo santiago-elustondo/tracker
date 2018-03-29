@@ -63,6 +63,9 @@ feature -- commands
 		end
 
 	undo
-		do precursor end
+		do
+			precursor
+--			target.set_error (prev_error)
+		end
 
 end

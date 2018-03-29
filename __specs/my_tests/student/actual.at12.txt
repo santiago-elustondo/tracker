@@ -3,71 +3,71 @@
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 1 (to 0) e19: there is no more to undo
+  state 1 e19: there is no more to undo
 ->undo
-  state 2 (to 0) e19: there is no more to undo
+  state 2 e19: there is no more to undo
 ->redo
-  state 3 (to 0) e20: there is no more to redo
+  state 3 e20: there is no more to redo
 ->redo
-  state 4 (to 0) e20: there is no more to redo
+  state 4 e20: there is no more to redo
 ->new_container("a",[glass, 0],"a")
-  state 5 (to 1) e9: phase identifier not in the system
+  state 5 e9: phase identifier not in the system
 ->new_tracker(10,5)
-  state 6 (to 0) ok
+  state 6 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->undo
-  state 7 (to 0) e19: there is no more to undo
+  state 7 e19: there is no more to undo
 ->redo
-  state 8 (to 0) e20: there is no more to redo
+  state 8 e20: there is no more to redo
 ->undo
-  state 9 (to 0) e19: there is no more to undo
+  state 9 e19: there is no more to undo
 ->redo
-  state 10 (to 0) e20: there is no more to redo
+  state 10 e20: there is no more to redo
 ->undo
-  state 11 (to 0) e19: there is no more to undo
+  state 11 e19: there is no more to undo
 ->undo
-  state 12 (to 0) e19: there is no more to undo
+  state 12 e19: there is no more to undo
 ->redo
-  state 13 (to 0) e20: there is no more to redo
+  state 13 e20: there is no more to redo
 ->new_phase("1","a",1,<<glass>>)
-  state 14 (to 1) ok
+  state 14 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 15 (to 0) ok
+  state 15 (to 6) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->redo
-  state 16 (to 1) ok
+  state 16 (to 14) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 17 (to 0) ok
+  state 17 (to 6) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
   containers: cid->pid->material,radioactivity
 ->redo
-  state 18 (to 1) ok
+  state 18 (to 14) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
   containers: cid->pid->material,radioactivity
 ->new_phase("2","b",5,<<glass, metal, plastic, glass>>)
-  state 19 (to 2) ok
+  state 19 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
     2->b:5,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->new_phase("3","c",2,<<glass, liquid>>)
-  state 20 (to 3) ok
+  state 20 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -75,7 +75,7 @@
     3->c:2,0,0.00,{glass,liquid}
   containers: cid->pid->material,radioactivity
 ->new_phase("4","d",5,<<metal>>)
-  state 21 (to 4) ok
+  state 21 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -84,9 +84,9 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->new_container("",[glass, 6],"1")
-  state 22 (to 5) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 22 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 23 (to 4) ok
+  state 23 (to 21) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -95,7 +95,7 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 24 (to 3) ok
+  state 24 (to 20) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -103,14 +103,14 @@
     3->c:2,0,0.00,{glass,liquid}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 25 (to 2) ok
+  state 25 (to 19) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
     2->b:5,0,0.00,{glass,metal,plastic}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 26 (to 3) ok
+  state 26 (to 20) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -118,7 +118,7 @@
     3->c:2,0,0.00,{glass,liquid}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 27 (to 4) ok
+  state 27 (to 21) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -127,13 +127,13 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 28 (to 5) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 28 (to 22) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->new_container("a",[glass, 6],"")
-  state 29 (to 6) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 29 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->new_container("69",[glass, 6],"1")
-  state 30 (to 7) e14: container radiation capacity exceeded
+  state 30 e14: container radiation capacity exceeded
 ->new_container("69",[glass, 5],"1")
-  state 31 (to 8) ok
+  state 31 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,1,5.00,{glass}
@@ -143,9 +143,9 @@
   containers: cid->pid->material,radioactivity
     69->1->glass,5.00
 ->new_container("69.999",[glass, 5],"1")
-  state 32 (to 9) e11: this container will exceed phase capacity
+  state 32 e11: this container will exceed phase capacity
 ->undo
-  state 33 (to 8) ok
+  state 33 (to 31) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,1,5.00,{glass}
@@ -155,55 +155,55 @@
   containers: cid->pid->material,radioactivity
     69->1->glass,5.00
 ->redo
-  state 34 (to 9) e11: this container will exceed phase capacity
+  state 34 (to 32) e11: this container will exceed phase capacity
 ->new_container("69.999",[glass, 5],"")
-  state 35 (to 10) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 35 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->new_container("69.999",[glass, 5]," ")
-  state 36 (to 11) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 36 e5: identifiers/names must start with A-Z, a-z or 0..9
 ->new_container("69.999",[metal, 5],"3")
-  state 37 (to 12) e13: phase does not expect this container material
+  state 37 e13: phase does not expect this container material
 ->new_container("69.999",[glass, -5.7876],"3")
-  state 38 (to 13) e18: this container radiation must not be negative
+  state 38 e18: this container radiation must not be negative
 ->new_container("69",[glass, 5],"2")
-  state 39 (to 14) e10: this container identifier already in tracker
+  state 39 e10: this container identifier already in tracker
 ->undo
-  state 40 (to 13) e18: this container radiation must not be negative
+  state 40 (to 38) e18: this container radiation must not be negative
 ->undo
-  state 41 (to 12) e13: phase does not expect this container material
+  state 41 (to 37) e13: phase does not expect this container material
 ->undo
-  state 42 (to 11) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 42 (to 36) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->undo
-  state 43 (to 10) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 43 (to 35) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 44 (to 11) e5: identifiers/names must start with A-Z, a-z or 0..9
+  state 44 (to 36) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 45 (to 12) e13: phase does not expect this container material
+  state 45 (to 37) e13: phase does not expect this container material
 ->redo
-  state 46 (to 13) e18: this container radiation must not be negative
+  state 46 (to 38) e18: this container radiation must not be negative
 ->redo
-  state 47 (to 14) e10: this container identifier already in tracker
+  state 47 (to 39) e10: this container identifier already in tracker
 ->remove_phase("1")
-  state 48 (to 15) e1: current tracker is in use
+  state 48 e1: current tracker is in use
 ->undo
-  state 49 (to 14) e10: this container identifier already in tracker
+  state 49 (to 39) e10: this container identifier already in tracker
 ->undo
-  state 50 (to 13) e10: this container identifier already in tracker
+  state 50 (to 38) e18: this container radiation must not be negative
 ->redo
-  state 51 (to 14) e10: this container identifier already in tracker
+  state 51 (to 39) e10: this container identifier already in tracker
 ->redo
-  state 52 (to 15) e1: current tracker is in use
+  state 52 (to 48) e1: current tracker is in use
 ->remove_container("420blazeit")
-  state 53 (to 16) e15: this container identifier not in tracker
+  state 53 e15: this container identifier not in tracker
 ->undo
-  state 54 (to 15) e1: current tracker is in use
+  state 54 (to 48) e1: current tracker is in use
 ->undo
-  state 55 (to 14) e1: current tracker is in use
+  state 55 (to 39) e10: this container identifier already in tracker
 ->redo
-  state 56 (to 15) e1: current tracker is in use
+  state 56 (to 48) e1: current tracker is in use
 ->redo
-  state 57 (to 16) e15: this container identifier not in tracker
+  state 57 (to 53) e15: this container identifier not in tracker
 ->remove_container("69")
-  state 58 (to 17) ok
+  state 58 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -212,13 +212,13 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 59 (to 16) e15: this container identifier not in tracker
+  state 59 (to 53) e15: this container identifier not in tracker
 ->undo
-  state 60 (to 15) e15: this container identifier not in tracker
+  state 60 (to 48) e1: current tracker is in use
 ->redo
-  state 61 (to 16) e15: this container identifier not in tracker
+  state 61 (to 53) e15: this container identifier not in tracker
 ->redo
-  state 62 (to 17) ok
+  state 62 (to 58) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -227,9 +227,9 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->remove_phase("lucazeni")
-  state 63 (to 18) e9: phase identifier not in the system
+  state 63 e9: phase identifier not in the system
 ->undo
-  state 64 (to 17) ok
+  state 64 (to 58) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -238,21 +238,13 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 65 (to 16) ok
-  max_phase_radiation: 10.00, max_container_radiation: 5.00
-  phases: pid->name:capacity,count,radiation
-    1->a:1,1,5.00,{glass}
-    2->b:5,0,0.00,{glass,metal,plastic}
-    3->c:2,0,0.00,{glass,liquid}
-    4->d:5,0,0.00,{metal}
-  containers: cid->pid->material,radioactivity
-    69->1->glass,5.00
+  state 65 (to 53) e15: this container identifier not in tracker
 ->undo
-  state 66 (to 15) e15: this container identifier not in tracker
+  state 66 (to 48) e1: current tracker is in use
 ->redo
-  state 67 (to 16) e15: this container identifier not in tracker
+  state 67 (to 53) e15: this container identifier not in tracker
 ->redo
-  state 68 (to 17) ok
+  state 68 (to 58) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -261,9 +253,9 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 69 (to 18) e9: phase identifier not in the system
+  state 69 (to 63) e9: phase identifier not in the system
 ->remove_phase("1")
-  state 70 (to 19) ok
+  state 70 ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     2->b:5,0,0.00,{glass,metal,plastic}
@@ -271,41 +263,40 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->undo
-  state 71 (to 18) e9: phase identifier not in the system
+  state 71 (to 63) e9: phase identifier not in the system
 ->undo
-  state 72 (to 17) e9: phase identifier not in the system
-->undo
-  state 73 (to 16) ok
+  state 72 (to 58) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
-    1->a:1,1,5.00,{glass}
+    1->a:1,0,0.00,{glass}
     2->b:5,0,0.00,{glass,metal,plastic}
     3->c:2,0,0.00,{glass,liquid}
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
-    69->1->glass,5.00
 ->undo
-  state 74 (to 15) e15: this container identifier not in tracker
+  state 73 (to 53) e15: this container identifier not in tracker
 ->undo
-  state 75 (to 14) e1: current tracker is in use
+  state 74 (to 48) e1: current tracker is in use
 ->undo
-  state 76 (to 13) e10: this container identifier already in tracker
+  state 75 (to 39) e10: this container identifier already in tracker
 ->undo
-  state 77 (to 12) e18: this container radiation must not be negative
+  state 76 (to 38) e18: this container radiation must not be negative
 ->undo
-  state 78 (to 11) e13: phase does not expect this container material
+  state 77 (to 37) e13: phase does not expect this container material
+->undo
+  state 78 (to 36) e5: identifiers/names must start with A-Z, a-z or 0..9
 ->redo
-  state 79 (to 12) e13: phase does not expect this container material
+  state 79 (to 37) e13: phase does not expect this container material
 ->redo
-  state 80 (to 13) e18: this container radiation must not be negative
+  state 80 (to 38) e18: this container radiation must not be negative
 ->redo
-  state 81 (to 14) e10: this container identifier already in tracker
+  state 81 (to 39) e10: this container identifier already in tracker
 ->redo
-  state 82 (to 15) e1: current tracker is in use
+  state 82 (to 48) e1: current tracker is in use
 ->redo
-  state 83 (to 16) e15: this container identifier not in tracker
+  state 83 (to 53) e15: this container identifier not in tracker
 ->redo
-  state 84 (to 17) ok
+  state 84 (to 58) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     1->a:1,0,0.00,{glass}
@@ -314,9 +305,9 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 85 (to 18) e9: phase identifier not in the system
+  state 85 (to 63) e9: phase identifier not in the system
 ->redo
-  state 86 (to 19) ok
+  state 86 (to 70) ok
   max_phase_radiation: 10.00, max_container_radiation: 5.00
   phases: pid->name:capacity,count,radiation
     2->b:5,0,0.00,{glass,metal,plastic}
@@ -324,6 +315,6 @@
     4->d:5,0,0.00,{metal}
   containers: cid->pid->material,radioactivity
 ->redo
-  state 87 (to 19) e20: there is no more to redo
+  state 87 e20: there is no more to redo
 ->redo
-  state 88 (to 19) e20: there is no more to redo
+  state 88 e20: there is no more to redo
