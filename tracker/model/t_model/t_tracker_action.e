@@ -21,7 +21,7 @@ feature -- mem
 	phase: detachable T_PHASE
 
 	prev_state_id: INTEGER
-	fresh_state: BOOLEAN
+	old_state: BOOLEAN
 
 feature --setters
 	set_error(err: STRING)
@@ -34,7 +34,6 @@ feature --setters
 		do
 			prev_error := ""
 			exec_error := ""
-			fresh_state := true
 		end
 
 	-- this is a query
@@ -46,7 +45,7 @@ feature --setters
 	apply
     	do
     		target.increment_num_actions
-			if fresh_state then
+			if not fresh_state then
 				prev_state_id := target.current_state_id
 			end
 			target.set_current_state_id(target.current_num_actions)
