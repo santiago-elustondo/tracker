@@ -9,7 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
-		redefine apply, undo end
+		redefine apply end
 create
 	make
 
@@ -37,7 +37,5 @@ feature -- comands
 
 		end
 
-	undo
-		do precursor end
 
 end
