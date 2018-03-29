@@ -34,7 +34,6 @@ feature -- commands
 			else
 				target.undo_action
 			end
-
 		end
 
 end

@@ -5,6 +5,7 @@ redo
 new_tracker(5, 50)
 undo
 <<<<<<< HEAD
+<<<<<<< HEAD
 redo
 undo
 redo
@@ -18,6 +19,15 @@ redo
 undo
 undo
 undo
+=======
+undo
+redo
+undo
+undo
+redo
+undo
+undo
+>>>>>>> parent of 9f25657... fixed double counting undo/redo
 =======
 undo
 redo
