@@ -39,7 +39,7 @@ feature { ANY } -- queries
 			Result := cursor = 1
 		end
 
-	peek: G
+	get_element: G
 		do
 			Result := implementation[cursor]
 		end
@@ -54,26 +54,24 @@ feature { ANY } -- commands
 			cursor := cursor + 1
 		end
 
-	pop_past: G
+	prev_element
 		do
-			Result := implementation[cursor]
 			cursor := cursor - 1
 		end
 
-	pop_future: G
+	next_element
 	 	do
 	 		cursor := cursor + 1
-	 		Result := implementation[cursor]
 	 	end
 
 	clear_future
 		do
-			implementation := array_slice(implementation, 1, cursor)
+			implementation := array_slice(implementation, implementation.lower, cursor)
 		end
 
 	clear_past
 		do
-			implementation := array_slice(implementation, cursor, implementation.count)
+			implementation := array_slice(implementation, cursor, implementation.upper)
 			cursor := 1
 		end
 
@@ -82,10 +80,6 @@ feature { ANY } -- commands
 			make
 		end
 
-	get_cursor: INTEGER -- can be removed once counter has been fixed
-		do
-			Result := cursor
-		end
 
 feature { NONE } -- utils
 

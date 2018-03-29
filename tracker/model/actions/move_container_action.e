@@ -44,7 +44,6 @@ feature -- commands
 	apply
     	do
     		precursor
---			set_prev_error
     		if not target.has_container (cid) then
     			set_error(error.err_con_id_not_exists)
     		elseif pid1 ~ pid2 then
@@ -71,15 +70,13 @@ feature -- commands
 
 	undo
 		do
---			precursor
-			if (exec_error ~ error.err_ok) then
+			if action_success then
 				if attached container as con then
 					target.get_phase(pid2).remove_container(con.get_cid)
 					target.get_phase(pid1).add_container(con)
 				end
 			end
 			precursor
---			target.set_error(prev_error)
 		end
 
 end

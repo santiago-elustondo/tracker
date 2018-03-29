@@ -63,7 +63,7 @@ feature --setters
 	set_prev_error
 		do
 			if target.get_history.has_past then
-				prev_error := target.get_history.peek.exec_error
+				prev_error := target.get_history.get_element.exec_error
 			else
 				prev_error := error.err_ok
 			end

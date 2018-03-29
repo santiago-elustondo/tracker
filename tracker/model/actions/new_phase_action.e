@@ -48,7 +48,6 @@ feature -- commands
 	apply
     	do
     		precursor
---			set_prev_error
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     		elseif (pid.is_empty) or else not pid [1].is_alpha_numeric then --must check length as well
@@ -74,11 +73,9 @@ feature -- commands
 
 	undo
 		do
---			precursor
-			if (exec_error ~ error.err_ok) then
+			if action_success then
 				target.remove_phase(pid)
 			end
---			target.set_error(prev_error)
 			precursor
 		end
 

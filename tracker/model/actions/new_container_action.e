@@ -50,7 +50,6 @@ feature -- commands
 	apply
 		do
 			precursor
---			set_prev_error
 			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then -- must check length as well
 				set_error(error.err_name_start)
 			elseif target.has_container(cid) then
@@ -81,11 +80,9 @@ feature -- commands
 
 	undo
 		do
---			precursor
-			if (exec_error ~ error.err_ok) then
+			if action_success then
 				target.get_phase(pid).remove_container(cid)
 			end
---			target.set_error (prev_error)
 			precursor
 		end
 

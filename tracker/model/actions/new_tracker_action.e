@@ -44,7 +44,6 @@ feature -- commands
 	apply
 		do
 			precursor
---			set_prev_error
 			if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
     		elseif max_phase_radiation < 0.0 then
@@ -65,7 +64,6 @@ feature -- commands
 	undo
 		do
 			precursor
---			target.set_error (prev_error)
 		end
 
 end

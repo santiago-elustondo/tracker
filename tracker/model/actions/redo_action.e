@@ -10,6 +10,7 @@ class
 inherit
 	T_TRACKER_ACTION
 		redefine apply end
+		
 create
 	make
 
