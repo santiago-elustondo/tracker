@@ -50,8 +50,8 @@ feature { ANY } -- commands
 	add(i: G)
 		do
 			clear_future
-			implementation.force(i, implementation.count + 1)
-			cursor := cursor + 1
+			next_element
+			implementation.force(i, cursor)
 		end
 
 	prev_element
