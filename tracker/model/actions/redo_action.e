@@ -28,8 +28,8 @@ feature -- comands
 
 	apply
 		do
-			precursor
 			if not target.get_history.has_future then
+				precursor
 				set_error(error.err_redo)
 			else
 				target.redo_action
