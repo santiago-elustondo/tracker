@@ -50,7 +50,7 @@ feature { ANY }
 			end
 		end
 
-	get_history: HISTORY[ACTION_TYPE] -- can be removed once counter is fixed
+	get_history: HISTORY[ACTION_TYPE]
 		do
 			Result := history
 		end

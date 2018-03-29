@@ -34,11 +34,6 @@ feature { ANY } -- queries
 			Result := cursor < implementation.count
 		end
 
-	is_first : BOOLEAN
-		do
-			Result := cursor = 1
-		end
-
 	get_element: G
 		do
 			Result := implementation[cursor]

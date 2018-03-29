@@ -83,7 +83,6 @@ feature -- queries
 			Result := materials
 		end
 
-
 	has_container(cid: STRING): BOOLEAN
 		do
 			Result := containers.has (cid)
