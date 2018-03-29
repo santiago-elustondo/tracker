@@ -28,12 +28,13 @@ feature -- commands
 
 	apply
 		do
+			precursor
 			if not target.get_history.has_past then
-				precursor
 				set_error(error.err_undo)
 			else
 				target.undo_action
 			end
+
 		end
 
 end
