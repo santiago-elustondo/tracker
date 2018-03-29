@@ -18,4 +18,5 @@ feature
 
 	get_mid : INTEGER_64 = 2
 
+
 end

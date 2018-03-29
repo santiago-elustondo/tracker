@@ -28,10 +28,10 @@ feature
 			create {T_PLASTIC} Result.default_create
 		end
 
+
 invariant
 	glass = glass
 	liquid = liquid
 	metal = metal
 	plastic = plastic
-
 end

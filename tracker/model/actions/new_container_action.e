@@ -46,14 +46,6 @@ feature -- commands
 
 	clear_history:BOOLEAN = FALSE
 	remember: BOOLEAN = TRUE
---		do
---			Result := action_success
---			if (action_success) then
---				result := true
---			else
---				result := false
---			end
---		end
 
 	apply
 		do

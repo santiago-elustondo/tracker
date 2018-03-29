@@ -1,8 +1,12 @@
+--new_tracker(50.0, 10.0)
+new_phase(";pid2", "compacting", 2, <<glass, metal, plastic>>)
 undo
 redo
-new_tracker(50, 10)
+undo
 undo
 redo
-new_phase("1.924","1215.6",1,<<glass>>)
+undo
 undo
 redo
+undo
+undo

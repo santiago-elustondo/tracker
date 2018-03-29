@@ -15,4 +15,5 @@ feature
 	get_mid: INTEGER_64
 		deferred end
 
+
 end

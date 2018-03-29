@@ -9,7 +9,7 @@ class
 
 inherit
 	T_TRACKER_ACTION
-
+		redefine apply, undo end
 create
 	make
 
@@ -28,6 +28,7 @@ feature -- comands
 
 	apply
 		do
+			precursor
 			if not target.get_history.has_future then
 				set_error(error.err_redo)
 			else
@@ -37,8 +38,6 @@ feature -- comands
 		end
 
 	undo
-		do
-			-- not implemented
-		end
+		do precursor end
 
 end
