@@ -45,7 +45,7 @@ feature --setters
 	apply
     	do
     		target.increment_num_actions
-			if not fresh_state then
+			if not old_state then
 				prev_state_id := target.current_state_id
 			end
 			target.set_current_state_id(target.current_num_actions)
