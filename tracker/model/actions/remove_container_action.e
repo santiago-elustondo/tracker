@@ -53,14 +53,13 @@ feature -- commands
 
 	undo
 		do
---			precursor
+			precursor
 			if (exec_error ~ error.err_ok) then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)
 				end
 			end
---			target.set_error(prev_error)
-			precursor
+			target.set_error(prev_error)
 		end
 
 end
