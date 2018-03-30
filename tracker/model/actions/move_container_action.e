@@ -50,8 +50,6 @@ feature -- commands
 	remember: BOOLEAN = TRUE
 
 	apply
-		local
-			con : T_CONTAINER
     	do
     		precursor
     		if not target.has_container (cid) then
@@ -70,29 +68,20 @@ feature -- commands
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)
---				container := target.get_phase(pid1).get_container(cid)
-				con := target.get_phase(pid1).get_container(cid)
---				if attached container as con then
+				if attached  target.get_phase(pid1).get_container(cid) as con then
 					target.get_phase(pid1).remove_container(con.get_cid)
 					target.get_phase(pid2).add_container(con)
---				end
+				end
 			end
     	end
 
 	undo
-		local
-			con: T_CONTAINER
 		do
---			if action_success then
---				if attached container as con then
---					target.get_phase(pid2).remove_container(con.get_cid)
---					target.get_phase(pid1).add_container(con)
---				end
---			end
 			if action_success then
-				con := target.get_phase(pid2).get_container(cid)
-				target.get_phase(pid2).remove_container(con.get_cid)
-				target.get_phase(pid1).add_container(con)
+				if attached container as con then
+					target.get_phase(pid2).remove_container(con.get_cid)
+					target.get_phase(pid1).add_container(con)
+				end
 			end
 			precursor
 		end
