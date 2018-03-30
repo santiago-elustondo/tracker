@@ -29,8 +29,7 @@ feature { ANY }
 			action.apply
 			if action.clear_history then
 				history.clear_all
-			end
-			if action.remember then
+			elseif action.remember then
 				history.add(action)
 			end
 		end
