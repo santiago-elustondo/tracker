@@ -27,10 +27,6 @@ feature{NONE} -- Initialization
 			cid := a_cid
 			pid1 := a_pid1
 			pid2 := a_pid2
-			c := [
-				target.get_phase (pid1).get_container (a_cid).get_props.material.get_mid,
-				target.get_phase (pid1).get_container (a_cid).get_props.radioactivity
-			]
 			set_default_error
 		end
 
@@ -39,10 +35,6 @@ feature{NONE} -- params
 	cid: STRING
 	pid1: STRING
 	pid2: STRING
-	c: TUPLE[
-		material: INTEGER_64;
-		radioactivity: VALUE
-	]
 
 feature -- commands
 
