@@ -68,7 +68,8 @@ feature -- commands
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)
-				if attached  target.get_phase(pid1).get_container(cid) as con then
+    			container := target.get_phase(pid1).get_container(cid)
+				if attached  container as con then
 					target.get_phase(pid1).remove_container(con.get_cid)
 					target.get_phase(pid2).add_container(con)
 				end
