@@ -37,5 +37,13 @@ feature
 			Result := materials [i.to_integer_32]
 		end
 
+	to_array: ARRAY[INTEGER_64]
+		do
+			create Result.make_empty
+			across materials as mat loop
+				Result.fill_with (mat.item.get_mid)
+			end
+		end
+
 
 end

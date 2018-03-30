@@ -27,6 +27,10 @@ feature{NONE} -- Initialization
 			cid := a_cid
 			pid1 := a_pid1
 			pid2 := a_pid2
+			c := [
+				target.get_phase (pid1).get_container (a_cid).get_props.material.get_mid,
+				target.get_phase (pid1).get_container (a_cid).get_props.radioactivity
+			]
 			set_default_error
 		end
 
@@ -35,6 +39,10 @@ feature{NONE} -- params
 	cid: STRING
 	pid1: STRING
 	pid2: STRING
+	c: TUPLE[
+		material: INTEGER_64;
+		radioactivity: VALUE
+	]
 
 feature -- commands
 
@@ -42,6 +50,8 @@ feature -- commands
 	remember: BOOLEAN = TRUE
 
 	apply
+		local
+			con : T_CONTAINER
     	do
     		precursor
     		if not target.has_container (cid) then
@@ -60,21 +70,29 @@ feature -- commands
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)
-				container := target.get_phase(pid1).get_container(cid)
-				if attached container as con then
+--				container := target.get_phase(pid1).get_container(cid)
+				con := target.get_phase(pid1).get_container(cid)
+--				if attached container as con then
 					target.get_phase(pid1).remove_container(con.get_cid)
 					target.get_phase(pid2).add_container(con)
-				end
+--				end
 			end
     	end
 
 	undo
+		local
+			con: T_CONTAINER
 		do
+--			if action_success then
+--				if attached container as con then
+--					target.get_phase(pid2).remove_container(con.get_cid)
+--					target.get_phase(pid1).add_container(con)
+--				end
+--			end
 			if action_success then
-				if attached container as con then
-					target.get_phase(pid2).remove_container(con.get_cid)
-					target.get_phase(pid1).add_container(con)
-				end
+				con := target.get_phase(pid2).get_container(cid)
+				target.get_phase(pid2).remove_container(con.get_cid)
+				target.get_phase(pid1).add_container(con)
 			end
 			precursor
 		end
