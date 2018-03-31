@@ -38,15 +38,22 @@ feature{NONE} -- cmds
 feature -- commands
 
 	add_container(a_container: T_CONTAINER)
-
 		do
 			a_container.set_pid(current.get_pid)
 			containers.put(a_container, a_container.get_cid)
+		ensure
+			container_exists: has_container(a_container.get_cid)
+			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
 		end
 
 	remove_container(a_cid: STRING)
+		require
+			cid_is_not_empty: not cid.is_empty
+			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
 		do
 			containers.remove(a_cid)
+		ensure
+			container_doesnt_exist(a_cid)
 		end
 
 

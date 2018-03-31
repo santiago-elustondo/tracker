@@ -47,6 +47,10 @@ feature -- commands
 		end
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
+		require
+			max_phase_rad_is_positive: not max_phase_radiation < 0.0
+    		max_container_rad_is_positive: not max_container_radiation < 0.0
+			max_phase_rad_is_not_smaller_than_max_container_rad: not max_container_radiation > max_phase_radiation
 		do
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
@@ -55,11 +59,17 @@ feature -- commands
 	add_phase(a_phase: T_PHASE)
 		do
 			phases.put(a_phase, a_phase.get_pid)
+		ensure
+			phase_exists: has_phase(a_pid)
 		end
 
 	remove_phase(a_pid: STRING)
+		require
+			phase_exists: has_phase(a_pid)
 		do
 			phases.remove(a_pid)
+		ensure
+			phase_no_longer_exists: not has_phase(a_pid)
 		end
 
 	set_error(a_error: STRING)
@@ -123,28 +133,39 @@ feature -- queries
 		end
 
 	has_phase(pid: STRING): BOOLEAN
+		require
+			pid_is_not_empty: not pid.is_empty
+			pis_starts_with_letter_or_number: pid.at(1).is_alpha_numeric
 		do
-			Result := phases.has (pid)
+			Result := phases.has(pid)
 		end
 
 	get_phase(pid: STRING): T_PHASE
+		require
+			pid_exists: current.has_phase(pid)
 		do
-			check attached phases.item (pid) as p then
+			check attached phases.item(pid) as p then
 				Result := p
 			end
 		end
 
 	has_container(cid: STRING): BOOLEAN
+		require
+			cid_is_not_empty: not cid.is_empty
+			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
 		do
 			Result := across phases as p some
-				p.item.has_container (cid)
+				p.item.has_container(cid)
 			end
 		end
 
 	find_container(cid: STRING) : detachable T_PHASE
+		require
+			cid_is_not_empty: not cid.is_empty
+			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
 		do
 			across phases as p loop
-				if p.item.has_container (cid) then
+				if p.item.has_container(cid) then
 					Result := p.item
 				end
 			end
