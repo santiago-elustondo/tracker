@@ -41,7 +41,7 @@ feature -- commands
 		require
 			container_doesnt_exist: not get_containers.has (a_container.get_cid)
 			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
-			radioactivity_non_negative: a_container.get_props.radioactivity > 0.0
+			radioactivity_non_negative: not (a_container.get_props.radioactivity < 0.0)
 			max_capacity_not_exceeded: not max_capacity
 			material_expected: get_materials.material_expected (a_container.get_props.material.get_mid)
 		do
