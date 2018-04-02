@@ -185,8 +185,7 @@ feature -- queries
 
 	has_container(cid: STRING): BOOLEAN
 		require
-			cid_is_not_empty: not cid.is_empty
-			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
+			cid_is_valid: not cid.is_empty and then cid[1].is_alpha_numeric
 		do
 			Result := across phases as p some
 				p.item.has_container(cid)
@@ -195,8 +194,7 @@ feature -- queries
 
 	find_container(cid: STRING) : detachable T_PHASE
 		require
-			cid_is_not_empty: not cid.is_empty
-			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
+			cid_is_valid: not cid.is_empty and then cid[1].is_alpha_numeric
 		do
 			across phases as p loop
 				if p.item.has_container(cid) then
