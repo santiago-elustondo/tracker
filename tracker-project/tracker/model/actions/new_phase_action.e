@@ -50,11 +50,11 @@ feature -- commands
     		precursor
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
-    		elseif (pid.is_empty) or else not pid [1].is_alpha_numeric then --must check length as well
+    		elseif (pid.is_empty) or else not pid [1].is_alpha_numeric then
     			set_error(error.err_name_start)
     		elseif target.has_phase (pid) then
     			set_error(error.err_phase_id_exists)
-    		elseif (phase_name.is_empty) or else not phase_name [1].is_alpha_numeric then --must check length as well
+    		elseif (phase_name.is_empty) or else not phase_name [1].is_alpha_numeric then
     			set_error(error.err_name_start)
 	   		elseif capacity <= 0 then
 				set_error(error.err_phase_cap_negative)

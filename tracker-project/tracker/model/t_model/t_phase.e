@@ -38,6 +38,12 @@ feature{NONE} -- cmds
 feature -- commands
 
 	add_container(a_container: T_CONTAINER)
+		require
+			container_doesnt_exist: not get_containers.has (a_container.get_cid)
+			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
+			radioactivity_non_negative: a_container.get_props.radioactivity > 0.0
+			max_capacity_not_exceeded: not max_capacity
+			material_expected: get_materials.material_expected (a_container.get_props.material.get_mid)
 		do
 			a_container.set_pid(current.get_pid)
 			containers.put(a_container, a_container.get_cid)
@@ -48,12 +54,12 @@ feature -- commands
 
 	remove_container(a_cid: STRING)
 		require
-			cid_is_not_empty: not cid.is_empty
-			cid_starts_with_letter_or_number: not cid[1].is_alpha_numeric
+			cid_is_valid: not a_cid.is_empty and then a_cid[1].is_alpha_numeric
+			has_container: get_containers.has (a_cid)
 		do
 			containers.remove(a_cid)
 		ensure
-			container_doesnt_exist(a_cid)
+			container_removed: not get_containers.has (a_cid)
 		end
 
 
@@ -61,16 +67,22 @@ feature -- queries
 	get_pid: STRING
 		do
 			Result := pid
+		ensure
+			pid = old pid
 		end
 
 	get_name: STRING
 		do
 			Result := name
+		ensure
+			name = old name
 		end
 
 	get_capacity: INTEGER_64
 		do
 			Result := capacity
+		ensure
+			capacity = old capacity
 		end
 
 	get_radiation: VALUE
@@ -78,21 +90,29 @@ feature -- queries
 			across containers as c loop
 				Result := Result + c.item.get_props.radioactivity
 			end
+		ensure
+			containers = old containers
 		end
 
 	get_count: INTEGER_64
 		do
 			Result := containers.count
+		ensure
+			containers.count = old containers.count
 		end
 
 	get_materials: T_MATERIAL_SET
 		do
 			Result := materials
+		ensure
+			materials = old materials
 		end
 
 	has_container(cid: STRING): BOOLEAN
 		do
 			Result := containers.has (cid)
+		ensure
+			containers = old containers
 		end
 
 	get_container(cid: STRING): T_CONTAINER
@@ -100,16 +120,23 @@ feature -- queries
 			check attached containers.item (cid) as c then
 				Result := c
 			end
+		ensure
+			containers = old containers
 		end
 
 	get_containers: STRING_TABLE[T_CONTAINER]
 		do
 			Result := containers
+		ensure
+			containers = old containers
 		end
 
 	max_capacity: BOOLEAN
 		do
 			Result := (get_count = get_capacity)
+		ensure
+			get_count = old get_count
+			get_capacity = old get_capacity
 		end
 
 	is_less alias "<" (other: like current): BOOLEAN

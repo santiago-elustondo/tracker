@@ -50,11 +50,11 @@ feature -- commands
 	apply
 		do
 			precursor
-			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then -- must check length as well
+			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then
 				set_error(error.err_name_start)
 			elseif target.has_container(cid) then
 				set_error(error.err_con_id_exists)
-			elseif (pid.is_empty) or else not pid[1].is_alpha_numeric then -- must check length as well
+			elseif (pid.is_empty) or else not pid[1].is_alpha_numeric then
 				set_error(error.err_name_start)
 			elseif not target.has_phase (pid) then
 				set_error(error.err_phase_id_not_exists)

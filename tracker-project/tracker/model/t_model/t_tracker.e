@@ -48,24 +48,33 @@ feature -- commands
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
-			max_phase_rad_is_positive: not max_phase_radiation < 0.0
-    		max_container_rad_is_positive: not max_container_radiation < 0.0
-			max_phase_rad_is_not_smaller_than_max_container_rad: not max_container_radiation > max_phase_radiation
+			tracker_not_in_use : not tracker_in_use
+			max_phase_rad_is_positive: not (max_phase_rad < 0.0)
+    		max_container_rad_is_positive: not (max_container_rad < 0.0)
+			max_phase_rad_is_not_smaller_than_max_container_rad: not (max_container_rad > max_phase_rad)
 		do
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		end
 
 	add_phase(a_phase: T_PHASE)
+		require
+			tracker_not_in_use : not tracker_in_use
+			pid_is_valid: not a_phase.get_pid.is_empty and then a_phase.get_pid[1].is_alpha_numeric
+			name_is_valid: not a_phase.get_name.is_empty and then a_phase.get_name[1].is_alpha_numeric
+			phase_not_exists: not has_phase (a_phase.get_pid)
+			capacity_not_negative: not (a_phase.get_capacity <= 0)
+			materials_expected: not (a_phase.get_materials.get_count = 0)
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
-			phase_exists: has_phase(a_pid)
+			phase_exists: has_phase(a_phase.get_pid)
 		end
 
 	remove_phase(a_pid: STRING)
 		require
 			phase_exists: has_phase(a_pid)
+			tracker_not_in_use : not tracker_in_use
 		do
 			phases.remove(a_pid)
 		ensure
@@ -75,16 +84,22 @@ feature -- commands
 	set_error(a_error: STRING)
 		do
 			error := a_error
+		ensure
+			error = a_error
 		end
 
 	set_current_state_id(a_id: INTEGER)
 		do
 			current_state_id := a_id
+		ensure
+			current_state_id = a_id
 		end
 
 	increment_num_actions
 		do
 			current_num_actions := current_num_actions + 1
+		ensure
+			current_num_actions = old current_num_actions + 1
 		end
 
 
@@ -95,41 +110,58 @@ feature -- queries
 			Result := across phases as p some
 				p.item.get_count /= 0
 			end
+		ensure
+			phases = old phases
 		end
 
 	get_current_num_actions: INTEGER
 		do
 			Result := current_num_actions
+		ensure
+			current_num_actions = old current_num_actions
 		end
 
 	get_current_state_id: INTEGER
 		do
 			Result := current_state_id
+		ensure
+			current_state_id = old current_state_id
 		end
 
 	get_error: STRING
 		do
 			Result := error
+		ensure
+			error = old error
 		end
 
 	get_max_phase_rad: VALUE
 		do
 			Result := max_phase_rad
+		ensure
+			max_phase_rad = old max_phase_rad
 		end
 
 	get_max_container_rad: VALUE
 		do
 			Result := max_container_rad
+		ensure
+			max_container_rad = old max_container_rad
 		end
 
 	get_phase_rad_exceeded(pid: STRING; rad: VALUE) : BOOLEAN
 		do
 			Result := (get_phase(pid).get_radiation + rad) > get_max_phase_rad
+		ensure
+			get_phase(pid).get_radiation = old get_phase(pid).get_radiation
+			max_phase_rad = old max_phase_rad
 		end
 
 	get_container_rad_exceeded(rad: VALUE) : BOOLEAN
 		do
 			Result := rad > get_max_container_rad
+		ensure
+			max_container_rad = old max_container_rad
 		end
 
 	has_phase(pid: STRING): BOOLEAN
@@ -138,6 +170,8 @@ feature -- queries
 			pis_starts_with_letter_or_number: pid.at(1).is_alpha_numeric
 		do
 			Result := phases.has(pid)
+		ensure
+			phases = old phases
 		end
 
 	get_phase(pid: STRING): T_PHASE

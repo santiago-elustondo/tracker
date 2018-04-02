@@ -44,6 +44,8 @@ feature -- commands
 	set_pid(a_pid: STRING)
 		do
 			pid := a_pid
+		ensure
+			pid = a_pid
 		end
 
 feature -- queries
@@ -51,16 +53,22 @@ feature -- queries
 	get_props : TUPLE [material: T_MATERIAL; radioactivity: VALUE]
 		do
 			Result := props
+		ensure
+			props = old props
 		end
 
 	get_cid : STRING
 		do
 			Result := cid
+		ensure
+			cid = old cid
 		end
 
 	get_pid : STRING
 		do
 			Result := pid
+		ensure
+			pid = old pid
 		end
 
 	is_less alias "<" (other: like current): BOOLEAN

@@ -52,7 +52,7 @@ feature -- commands
 
 	undo
 		do
-			if (exec_error ~ error.err_ok) then
+			if action_success then
 				if (attached phase as p) and then (attached container as con) then
 					p.add_container (con)
 				end
