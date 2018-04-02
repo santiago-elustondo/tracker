@@ -45,7 +45,7 @@ feature -- Tests
 		do
 			-- add your tests here
 			-- add cluster for tests
-			-- add_test (create {MY_TEST}.make)
+			 add_test (create {STUDENT_TESTS}.make)
 		end
 
 feature -- Constructor
