@@ -181,8 +181,6 @@ feature -- queries
 		end
 
 	has_container(cid: STRING): BOOLEAN
-		require
-			cid_is_valid: not cid.is_empty and then cid[1].is_alpha_numeric
 		do
 			Result := across phases as p some
 				p.item.has_container(cid)
