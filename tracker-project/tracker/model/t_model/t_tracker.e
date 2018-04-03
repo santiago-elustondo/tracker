@@ -165,9 +165,6 @@ feature -- queries
 		end
 
 	has_phase(pid: STRING): BOOLEAN
-		require
-			pid_is_not_empty: not pid.is_empty
-			pis_starts_with_letter_or_number: pid.at(1).is_alpha_numeric
 		do
 			Result := phases.has(pid)
 		ensure
