@@ -1,10 +1,10 @@
 #!/bin/sh
 
-student=../tests/acceptance/student
-instructor=../tests/acceptance/instructor
+student=../tracker-project/tests/acceptance/student
+instructor=../tracker-project/tests/acceptance/instructor
 s_results=./my_tests/student
 i_results=./my_tests/instructor
-tracker=../EIFGENs/tracker/W_code/tracker
+tracker=../tracker-project/EIFGENs/tracker/W_code/tracker
 
 mkdir -p $s_results
 mkdir -p $i_results
