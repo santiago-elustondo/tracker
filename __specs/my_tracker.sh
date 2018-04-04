@@ -6,7 +6,7 @@ s_results=./my_tests/student
 i_results=./my_tests/instructor
 	if [[ "$OSTYPE" == "linux-gnu" ]]; then
         tracker=../tracker-project/EIFGENs/tracker/W_code/tracker.exe
-	elif [[ "$OSTYPE" == "linux" ]]; then
+	else
         tracker=../tracker-project/EIFGENs/tracker/W_code/tracker
 	fi
 
