@@ -60,11 +60,15 @@ feature { ANY } -- commands
 	prev_element
 		do
 			cursor := cursor - 1
+	 	ensure
+	 		cursor = old cursor - 1
 		end
 
 	next_element
 	 	do
 	 		cursor := cursor + 1
+	 	ensure
+	 		cursor = old cursor + 1
 	 	end
 
 	clear_future
@@ -72,6 +76,7 @@ feature { ANY } -- commands
 			implementation := array_slice(implementation, implementation.lower, cursor)
 		ensure
 			no_future: not has_future
+			cursor_end_position: cursor = implementation.count
 		end
 
 	clear_past
@@ -80,6 +85,7 @@ feature { ANY } -- commands
 			cursor := 1
 		ensure
 			no_past: not has_past
+			cursor_start_position: cursor = 1
 		end
 
 	clear_all
@@ -88,6 +94,8 @@ feature { ANY } -- commands
 		ensure
 			no_past: not has_past
 			no_future: not has_future
+			cursor_end_position: cursor = implementation.count
+			cursor_start_position: cursor = 0
 		end
 
 
