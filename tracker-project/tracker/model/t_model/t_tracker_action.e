@@ -15,7 +15,7 @@ deferred class
 inherit
 	ACTION [T_TRACKER]
 
-feature { NONE } -- commands
+feature { HISTORICAL } -- commands
 
 	apply
     	do

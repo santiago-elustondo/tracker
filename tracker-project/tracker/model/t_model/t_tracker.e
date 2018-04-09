@@ -32,7 +32,7 @@ feature{ NONE } -- Initialization
 			current_state_id := 0;
 		end
 
-feature { ANY }-- commands
+feature { ETF_MODEL_FACADE }-- commands
 
 	-- this feature needs to be available to
 	-- the class that instantiates T_TRACKER
@@ -46,9 +46,9 @@ feature { T_TRACKER_ACTION } -- commands
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
 			tracker_not_in_use : not tracker_in_use
-			max_phase_rad_is_positive: not (max_phase_rad < 0.0)
-    		max_container_rad_is_positive: not (max_container_rad < 0.0)
-			max_phase_rad_is_not_smaller_than_max_container_rad: not (max_container_rad > max_phase_rad)
+			max_phase_rad_is_positive: not (get_max_phase_rad < 0.0)
+    		max_container_rad_is_positive: not (get_max_container_rad < 0.0)
+			max_phase_rad_is_not_smaller_than_max_container_rad: not (get_max_container_rad > get_max_phase_rad)
 		do
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
@@ -99,7 +99,7 @@ feature { T_TRACKER_ACTION } -- commands
 			current_num_actions = old current_num_actions + 1
 		end
 
-feature { T_TRACKER_ACTION } -- state
+feature { NONE } -- state
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
@@ -226,7 +226,7 @@ feature -- print
 			Result.append (print_containers)
 		end
 
-	print_state : STRING -- this method needs to be replaced
+	print_state : STRING
 		do
 			Create Result.make_from_string ("  state ")
 			Result.append (get_current_num_actions.out)
