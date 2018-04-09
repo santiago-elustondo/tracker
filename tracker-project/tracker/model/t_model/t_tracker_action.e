@@ -4,43 +4,18 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
+
+-- this is the deferred parent class for all the tracker ACTIONS
+-- it contains TRACKER-specific behaviour and utilitis shared by all TRACKER actions
+-- TRACKER commands are accessible only to classes inheriting from T_TRACKER_ACTION,
+--   as the HISTORICAL pattern prescribes.
 deferred class
 	T_TRACKER_ACTION
 
 inherit
 	ACTION [T_TRACKER]
 
-feature
-	error: ERROR_HANDLING
-
-feature -- mem
-
-	prev_error: STRING
-	exec_error: STRING
-	container: detachable T_CONTAINER
-	phase: detachable T_PHASE
-
-	prev_state_id: INTEGER
-	post_state_id: INTEGER
-
-feature --setters
-	set_error(err: STRING)
-		do
-			exec_error := err
-			target.set_error(exec_error)
-		end
-
-	set_default_error
-		do
-			prev_error := error.err_ok
-			exec_error := error.err_ok
-		end
-
-	-- this is a query
-	action_success: BOOLEAN
-		do
-			result := exec_error ~ error.err_ok
-		end
+feature { T_TRACKER_ACTION } -- commands
 
 	apply
     	do
@@ -58,6 +33,39 @@ feature --setters
 			target.increment_num_actions
 			target.set_current_state_id(prev_state_id)
 			set_error (prev_error)
+		end
+		
+feature { NONE } -- private state
+
+	-- these variables exist to remember things about the action taken.
+	-- tracker requirements necessitate certain specific behaviour when doing undo/redo
+	error: ERROR_HANDLING
+	prev_error: STRING
+	exec_error: STRING
+	container: detachable T_CONTAINER
+	phase: detachable T_PHASE
+	prev_state_id: INTEGER
+	post_state_id: INTEGER
+
+feature { NONE } -- private queries
+
+	action_success: BOOLEAN
+		do
+			result := exec_error ~ error.err_ok
+		end
+
+feature { NONE } -- private commands
+
+	set_error(err: STRING)
+		do
+			exec_error := err
+			target.set_error(exec_error)
+		end
+
+	set_default_error
+		do
+			prev_error := error.err_ok
+			exec_error := error.err_ok
 		end
 
 	set_prev_error
