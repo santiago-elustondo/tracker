@@ -40,7 +40,7 @@ feature{NONE} -- Initialization
 			]
 		end
 
-feature -- commands
+feature{T_TRACKER} -- commands
 	set_pid(a_pid: STRING)
 		do
 			pid := a_pid
