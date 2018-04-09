@@ -45,10 +45,9 @@ feature{T_TRACKER_ACTION} -- commands
 			max_capacity_not_exceeded: not max_capacity
 			material_expected: get_materials.material_expected (a_container.get_props.material.get_mid)
 		do
-			a_container.set_pid(current.get_pid)
 			containers.put(a_container, a_container.get_cid)
 		ensure
-			container_exists: has_container(a_container.get_cid)
+			container_exists: get_containers.has(a_container.get_cid)
 			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
 			container_count_increased: get_containers.count = old get_containers.count + 1
 		end
@@ -60,8 +59,8 @@ feature{T_TRACKER_ACTION} -- commands
 		do
 			containers.remove(a_cid)
 		ensure
-			container_removed: not has_container(a_cid)
-			container_count_decreased: get_containers.count = old get_containers.count -1
+			container_removed: not get_containers.has (a_cid)
+			container_count_decreased: get_containers.count = old get_containers.count - 1
 		end
 
 
@@ -103,12 +102,7 @@ feature -- queries
 			materials ~ old materials
 		end
 
-	has_container(cid: STRING): BOOLEAN
-		do
-			Result := containers.has (cid)
-		ensure
-			containers ~ old containers
-		end
+
 
 	get_container(cid: STRING): T_CONTAINER
 		do

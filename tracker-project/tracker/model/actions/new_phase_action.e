@@ -52,7 +52,7 @@ feature -- commands
     			set_error(error.err_tracker_in_use)
     		elseif (pid.is_empty) or else not pid [1].is_alpha_numeric then
     			set_error(error.err_name_start)
-    		elseif target.has_phase (pid) then
+    		elseif target.get_phases.has (pid) then
     			set_error(error.err_phase_id_exists)
     		elseif (phase_name.is_empty) or else not phase_name [1].is_alpha_numeric then
     			set_error(error.err_name_start)

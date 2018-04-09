@@ -48,9 +48,9 @@ feature -- commands
     			set_error(error.err_con_id_not_exists)
     		elseif pid1 ~ pid2 then
     			set_error(error.err_phase_id_same)
-			elseif not (target.has_phase (pid1) and target.has_phase (pid2)) then
+			elseif not (target.get_phases.has (pid1) and target.get_phases.has (pid2)) then
 				set_error(error.err_phase_id_not_exists)
-			elseif not(target.get_phase (pid1).has_container (cid)) then
+			elseif not(target.get_phase (pid1).get_containers.has (cid)) then
 				set_error(error.err_con_id_not_in_phase)
 			elseif target.get_phase (pid2).max_capacity then
 				set_error(error.err_con_exceed_phase_cap)

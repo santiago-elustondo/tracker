@@ -40,7 +40,7 @@ feature
     		precursor
     		if target.tracker_in_use then
     			set_error(error.err_tracker_in_use)
-			elseif not target.has_phase (pid) then
+			elseif not target.get_phases.has (pid) then
 				set_error(error.err_phase_id_not_exists)
 			else
 				set_error(error.err_ok)

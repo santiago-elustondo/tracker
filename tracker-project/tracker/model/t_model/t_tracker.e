@@ -61,32 +61,45 @@ feature { T_TRACKER_ACTION } -- commands
 			tracker_not_in_use : not tracker_in_use
 			pid_is_valid: not a_phase.get_pid.is_empty and then a_phase.get_pid[1].is_alpha_numeric
 			name_is_valid: not a_phase.get_name.is_empty and then a_phase.get_name[1].is_alpha_numeric
-			phase_not_exists: not has_phase (a_phase.get_pid)
+			phase_not_exists: not get_phases.has (a_phase.get_pid)
 			capacity_not_negative: not (a_phase.get_capacity <= 0)
 			materials_expected: not (a_phase.get_materials.get_count = 0)
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
-			phase_exists: has_phase(a_phase.get_pid)
+			phase_exists: get_phases.has(a_phase.get_pid)
 			phases_count_increased: get_phases.count = old get_phases.count + 1
 		end
 
 	remove_phase(a_pid: STRING)
 		require
-			phase_exists: has_phase(a_pid)
+			phase_exists: get_phases.has(a_pid)
 			tracker_not_in_use : not tracker_in_use
 		do
 			phases.remove(a_pid)
 		ensure
-			phase_no_longer_exists: not has_phase(a_pid)
+			phase_no_longer_exists: not get_phases.has(a_pid)
 			phases_count_decreased: get_phases.count = old get_phases.count - 1
 		end
 
 	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
+		require
+			container_doesnt_exist: get_phase(a_pid1).get_containers.has (a_container.get_cid)
+			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
+			radioactivity_non_negative: not (a_container.get_props.radioactivity < 0.0)
+			max_capacity_not_exceeded: not get_phase(a_pid2).max_capacity
+			material_expected: get_phase(a_pid2).get_materials.material_expected (a_container.get_props.material.get_mid)
+			has_container: get_phase(a_pid1).get_containers.has_item (a_container)
 		do
 			a_container.set_pid (a_pid2)
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
 			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
+		ensure
+			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
+			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
+			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1
+			container_count_increased_old: get_phase(a_pid1).get_containers.count = old get_phase(a_pid1).get_containers.count - 1
+			container_has_correct_pid: get_phase(a_pid2).get_container(a_container.get_cid).get_pid ~ a_pid2
 		end
 
 	set_error(a_error: STRING)
@@ -181,16 +194,9 @@ feature -- public queries
 			max_container_rad = old max_container_rad
 		end
 
-	has_phase(pid: STRING): BOOLEAN
-		do
-			Result := phases.has(pid)
-		ensure
-			phases = old phases
-		end
-
 	get_phase(pid: STRING): T_PHASE
 		require
-			pid_exists: current.has_phase(pid)
+			pid_exists: current.get_phases.has(pid)
 		do
 			check attached phases.item(pid) as p then
 				Result := p
@@ -205,7 +211,7 @@ feature -- public queries
 	find_container(cid: STRING) : detachable T_PHASE
 		do
 			across phases as p loop
-				if p.item.has_container(cid) then
+				if p.item.get_containers.has (cid) then
 					Result := p.item
 				end
 			end
