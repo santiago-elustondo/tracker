@@ -15,7 +15,7 @@ deferred class
 inherit
 	ACTION [T_TRACKER]
 
-feature { HISTORICAL } -- commands
+feature { NONE } -- commands
 
 	apply
     	do
@@ -35,7 +35,7 @@ feature { HISTORICAL } -- commands
 			set_error (prev_error)
 		end
 
-feature { T_TRACKER_ACTION } -- private state
+feature { NONE } -- private state
 
 	-- these variables exist to remember things about the action taken.
 	-- tracker requirements necessitate certain specific behaviour when doing undo/redo
@@ -54,7 +54,13 @@ feature { T_TRACKER_ACTION } -- private queries
 			result := exec_error ~ error.err_ok
 		end
 
-feature { T_TRACKER_ACTION } -- private commands
+	get_exec_error: STRING
+		do
+			result := exec_error
+		end
+
+
+feature { NONE } -- private commands
 
 	set_error(err: STRING)
 		do
@@ -71,7 +77,7 @@ feature { T_TRACKER_ACTION } -- private commands
 	set_prev_error
 		do
 			if target.get_history.has_past then
-				prev_error := target.get_history.get_element.exec_error
+				prev_error := target.get_history.get_element.get_exec_error
 			else
 				prev_error := error.err_ok
 			end
