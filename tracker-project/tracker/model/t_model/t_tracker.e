@@ -4,6 +4,9 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
+-- this is the Tracker application's central state repository.
+-- it conforms to the perscribed access pattern of `historical_lib`,
+--    in order to leverage it's undo/redo functionality.
 class
 	T_TRACKER
 
@@ -15,10 +18,10 @@ inherit
 			out
 		end
 
-create {T_TRACKER_ACCESS}
+create { ANY }
 	make, reset
 
-feature
+feature { ANY }
 
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
@@ -28,7 +31,7 @@ feature
 	current_num_actions: INTEGER;
 	current_state_id: INTEGER;
 
-feature{NONE} -- Initialization
+feature{ NONE } -- Initialization
 
 	make
 		do
@@ -39,7 +42,7 @@ feature{NONE} -- Initialization
 			current_state_id := 0;
 		end
 
-feature -- commands
+feature { ANY }-- commands
 
 	reset
 		do
