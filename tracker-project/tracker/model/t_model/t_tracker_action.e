@@ -42,7 +42,7 @@ feature { NONE } -- private state
 	error: ERROR_HANDLING
 	prev_error: STRING
 	exec_error: STRING
---	container: detachable T_CONTAINER
+	container: detachable T_CONTAINER
 	phase: detachable T_PHASE
 	prev_state_id: INTEGER
 	post_state_id: INTEGER
