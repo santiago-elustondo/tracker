@@ -102,8 +102,6 @@ feature -- queries
 			materials ~ old materials
 		end
 
-
-
 	get_container(cid: STRING): T_CONTAINER
 		do
 			check attached containers.item (cid) as c then
