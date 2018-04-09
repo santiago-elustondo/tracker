@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 student=../tracker-project/tests/acceptance/student
 instructor=../tracker-project/tests/acceptance/instructor
 s_results=./my_tests/student
 i_results=./my_tests/instructor
 	if [[ "$OSTYPE" == "linux-gnu" ]]; then
-        tracker=../tracker-project/EIFGENs/tracker/W_code/tracker.exe
+       		 tracker=../tracker-project/EIFGENs/tracker/W_code/tracker.exe
 	else
-        tracker=../tracker-project/EIFGENs/tracker/W_code/tracker
+       		 tracker=../tracker-project/EIFGENs/tracker/W_code/tracker
 	fi
 
 

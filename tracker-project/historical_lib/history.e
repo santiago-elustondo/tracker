@@ -52,7 +52,7 @@ feature { ANY } -- commands
 			next_element
 			implementation.force(item, cursor)
 		ensure
-			cursor_incremented: old cursor = cursor + 1
+			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
 		end
@@ -114,5 +114,5 @@ feature { NONE } -- utils
 invariant
 	cursor_is_non_negative: cursor >= 0
 	cursor_is_not_larger_than_history_count: cursor <= implementation.count
-	no_future_if_max_cursor: cursor < implementation.count or not has_future
+	no_future_if_max_cursor: has_future implies (cursor < implementation.count)
 end
