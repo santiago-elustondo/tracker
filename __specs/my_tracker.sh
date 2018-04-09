@@ -30,4 +30,4 @@ do
   diff -qs $s_results/expected.$(basename $i) $s_results/actual.$(basename $i)
 done
 
-rm -f $s_results/* $i_results/*
+# rm -f $s_results/* $i_results/*

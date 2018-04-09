@@ -44,7 +44,7 @@ feature -- commands
 	apply
     	do
     		precursor
-    		if not target.has_container (cid) then
+       		if not (attached target.find_container (cid) as p) then
     			set_error(error.err_con_id_not_exists)
     		elseif pid1 ~ pid2 then
     			set_error(error.err_phase_id_same)
@@ -60,21 +60,14 @@ feature -- commands
     			set_error(error.err_phase_mat_not_expected)
     		else
     			set_error(error.err_ok)
-    			container := target.get_phase(pid1).get_container(cid)
-				if attached  container as con then
-					target.get_phase(pid1).remove_container(con.get_cid)
-					target.get_phase(pid2).add_container(con)
-				end
+				target.move_container (p.get_container (cid), pid1, pid2)
 			end
     	end
 
 	undo
 		do
 			if action_success then
-				if attached container as con then
-					target.get_phase(pid2).remove_container(con.get_cid)
-					target.get_phase(pid1).add_container(con)
-				end
+				target.move_container (target.get_phase(pid2).get_container(cid), pid2, pid1)
 			end
 			precursor
 		end

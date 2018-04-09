@@ -43,7 +43,7 @@ feature { ETF_MODEL_FACADE }-- commands
 
 feature { T_TRACKER_ACTION } -- commands
 
-	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
+	new_tracker(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
 			tracker_not_in_use : not tracker_in_use
 			max_phase_rad_is_positive: not (get_max_phase_rad < 0.0)
@@ -52,6 +52,8 @@ feature { T_TRACKER_ACTION } -- commands
 		do
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
+		ensure
+			phases_count_unchanged: get_phases.count = old get_phases.count
 		end
 
 	add_phase(a_phase: T_PHASE)
@@ -66,6 +68,7 @@ feature { T_TRACKER_ACTION } -- commands
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
 			phase_exists: has_phase(a_phase.get_pid)
+			phases_count_increased: get_phases.count = old get_phases.count + 1
 		end
 
 	remove_phase(a_pid: STRING)
@@ -76,6 +79,14 @@ feature { T_TRACKER_ACTION } -- commands
 			phases.remove(a_pid)
 		ensure
 			phase_no_longer_exists: not has_phase(a_pid)
+			phases_count_decreased: get_phases.count = old get_phases.count - 1
+		end
+
+	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
+		do
+			a_container.set_pid (a_pid2)
+			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
+			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
 		end
 
 	set_error(a_error: STRING)
@@ -114,7 +125,7 @@ feature -- public queries
 	tracker_in_use: BOOLEAN
 		do
 			Result := across phases as p some
-				p.item.get_count /= 0
+				p.item.get_containers.count /= 0
 			end
 		ensure
 			phases = old phases
@@ -186,16 +197,12 @@ feature -- public queries
 			end
 		end
 
-	has_container(cid: STRING): BOOLEAN
+	get_phases : STRING_TABLE[T_PHASE]
 		do
-			Result := across phases as p some
-				p.item.has_container(cid)
-			end
+			Result := phases
 		end
 
 	find_container(cid: STRING) : detachable T_PHASE
-		require
-			cid_is_valid: not cid.is_empty and then cid[1].is_alpha_numeric
 		do
 			across phases as p loop
 				if p.item.has_container(cid) then

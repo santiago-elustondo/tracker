@@ -52,7 +52,8 @@ feature -- commands
 			precursor
 			if (cid.is_empty) or else (not cid[1].is_alpha_numeric) then
 				set_error(error.err_name_start)
-			elseif target.has_container(cid) then
+--			elseif target.get_phase(pid).has_container(cid) then
+			elseif attached target.find_container (cid) then
 				set_error(error.err_con_id_exists)
 			elseif (pid.is_empty) or else not pid[1].is_alpha_numeric then
 				set_error(error.err_name_start)

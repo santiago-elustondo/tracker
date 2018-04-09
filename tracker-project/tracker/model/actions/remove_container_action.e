@@ -23,6 +23,7 @@ feature{NONE} -- Initialization
 		do
 			set_target(a_target)
 			cid := a_cid
+			phase := target.find_container (a_cid)
 			set_default_error
 		end
 
@@ -38,15 +39,12 @@ feature -- commands
 	apply
     	do
     		precursor
-    		if not target.has_container (cid) then
-    			set_error(error.err_con_id_not_exists)
+			if not (attached phase as p) then
+				set_error(error.err_con_id_not_exists)
     		else
     			set_error(error.err_ok)
-    			phase := target.find_container (cid)
-    			if attached phase as p then
-    				container := p.get_container (cid)
-					p.remove_container (cid)
-				end
+    			container := p.get_container (cid)
+				p.remove_container (cid)
 			end
     	end
 

@@ -35,7 +35,7 @@ feature{NONE} -- cmds
 			create containers.make(10)
 		end
 
-feature -- commands
+feature{T_TRACKER_ACTION} -- commands
 
 	add_container(a_container: T_CONTAINER)
 		require
@@ -50,6 +50,7 @@ feature -- commands
 		ensure
 			container_exists: has_container(a_container.get_cid)
 			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
+			container_count_increased: get_containers.count = old get_containers.count + 1
 		end
 
 	remove_container(a_cid: STRING)
@@ -59,7 +60,8 @@ feature -- commands
 		do
 			containers.remove(a_cid)
 		ensure
-			container_removed: not get_containers.has (a_cid)
+			container_removed: not has_container(a_cid)
+			container_count_decreased: get_containers.count = old get_containers.count -1
 		end
 
 
@@ -91,28 +93,21 @@ feature -- queries
 				Result := Result + c.item.get_props.radioactivity
 			end
 		ensure
-			containers = old containers
-		end
-
-	get_count: INTEGER_64
-		do
-			Result := containers.count
-		ensure
-			containers.count = old containers.count
+			containers ~ old containers
 		end
 
 	get_materials: T_MATERIAL_SET
 		do
 			Result := materials
 		ensure
-			materials = old materials
+			materials ~ old materials
 		end
 
 	has_container(cid: STRING): BOOLEAN
 		do
 			Result := containers.has (cid)
 		ensure
-			containers = old containers
+			containers ~ old containers
 		end
 
 	get_container(cid: STRING): T_CONTAINER
@@ -121,22 +116,22 @@ feature -- queries
 				Result := c
 			end
 		ensure
-			containers = old containers
+			containers ~ old containers
 		end
 
 	get_containers: STRING_TABLE[T_CONTAINER]
 		do
 			Result := containers
 		ensure
-			containers = old containers
+			containers ~ old containers
 		end
 
 	max_capacity: BOOLEAN
 		do
-			Result := (get_count = get_capacity)
+			Result := (get_containers.count = get_capacity)
 		ensure
-			get_count = old get_count
-			get_capacity = old get_capacity
+			get_containers.count = old get_containers.count
+			get_capacity ~ old get_capacity
 		end
 
 	is_less alias "<" (other: like current): BOOLEAN
@@ -159,7 +154,7 @@ feature -- print
 			Result.append ("->")
 			Result.append (get_name + ":")
 			Result.append (get_capacity.out + ",")
-			Result.append (get_count.out + ",")
+			Result.append (get_containers.count.out + ",")
 			Result.append (get_radiation.out + ",{")
 			across 1 |..| (materials.get_count - 1) as i loop
 				Result.append(materials[i.item].get_name+ ",")

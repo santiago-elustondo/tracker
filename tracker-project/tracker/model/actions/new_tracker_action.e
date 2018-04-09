@@ -54,7 +54,7 @@ feature -- commands
 				set_error(error.err_max_con_greater_max_rad)
 			else
 				set_error(error.err_ok)
-				target.wipe_out(
+				target.new_tracker(
 					max_phase_radiation,
 					max_container_radiation
 				)
