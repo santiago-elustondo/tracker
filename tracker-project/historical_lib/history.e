@@ -3,6 +3,10 @@ note
 	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
+
+-- this is a general purpose utility class for keeping track of
+--   an ordered history of like-items, with the ability to backtrack.
+-- it will accept and hold items of a generic type in chronological order.
 class
 	HISTORY[G]
 
@@ -42,11 +46,15 @@ feature { ANY } -- queries
 
 feature { ANY } -- commands
 
-	add(i: G)
+	add(item: G)
 		do
 			clear_future
 			next_element
-			implementation.force(i, cursor)
+			implementation.force(item, cursor)
+		ensure
+			cursor_incremented: old cursor = cursor + 1
+			current_item_is_new_one: get_element = item
+			no_future: not has_future
 		end
 
 	prev_element
@@ -62,22 +70,32 @@ feature { ANY } -- commands
 	clear_future
 		do
 			implementation := array_slice(implementation, implementation.lower, cursor)
+		ensure
+			no_future: not has_future
 		end
 
 	clear_past
 		do
 			implementation := array_slice(implementation, cursor, implementation.upper)
 			cursor := 1
+		ensure
+			no_past: not has_past
 		end
 
 	clear_all
 		do
 			make
+		ensure
+			no_past: not has_past
+			no_future: not has_future
 		end
 
 
 feature { NONE } -- utils
 
+	-- utility for retrieving a subsection of an array.
+	-- indexes are inclusive, which means the item at `a_end_index` will be included
+	--   in the resulting sub-array
 	array_slice(a_array:ARRAY[G]; a_start_index:INTEGER; a_end_index:INTEGER): ARRAY[G]
 		local
 			i:INTEGER
@@ -93,4 +111,8 @@ feature { NONE } -- utils
 			end
 		end
 
+invariant
+	cursor_is_non_negative: cursor >= 0
+	cursor_is_not_larger_than_history_count: cursor <= implementation.count
+	no_future_if_max_cursor: cursor < implementation.count or not has_future
 end
