@@ -21,16 +21,6 @@ inherit
 create { ANY }
 	make, reset
 
-feature { ANY }
-
-	max_phase_rad: VALUE
-	max_container_rad: VALUE
-	phases: STRING_TABLE[T_PHASE]
-	error: STRING
-
-	current_num_actions: INTEGER;
-	current_state_id: INTEGER;
-
 feature{ NONE } -- Initialization
 
 	make
@@ -44,10 +34,14 @@ feature{ NONE } -- Initialization
 
 feature { ANY }-- commands
 
+	-- this feature needs to be available to
+	-- the class that instantiates T_TRACKER
 	reset
 		do
 			make
 		end
+
+feature { T_TRACKER_ACTION } -- commands
 
 	wipe_out(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
@@ -105,8 +99,17 @@ feature { ANY }-- commands
 			current_num_actions = old current_num_actions + 1
 		end
 
+feature { T_TRACKER_ACTION } -- state
 
-feature -- queries
+	max_phase_rad: VALUE
+	max_container_rad: VALUE
+	phases: STRING_TABLE[T_PHASE]
+	error: STRING
+
+	current_num_actions: INTEGER;
+	current_state_id: INTEGER;
+
+feature -- public queries
 
 	tracker_in_use: BOOLEAN
 		do
