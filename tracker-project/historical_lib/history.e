@@ -68,7 +68,10 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			current ~ (old current.deep_twin.added (item))
+			new_history_is_equal_except_for_new_item: arrays_have_same_items(
+				array_slice(implementation, 1, implementation.count - 1),
+				old implementation
+			)
 		end
 
 	prev_element
@@ -146,6 +149,29 @@ feature { NONE } -- utils
 			loop
 				Result.force(a_array[a_start_index + i + 1], i + 2)
 				i := i + 1
+			end
+		end
+
+	-- utility class for comparing arrays
+
+	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
+		local
+			i: INTEGER
+		do
+			result := true
+			if not ( a_array.count = a_array_2.count ) then
+				result := false
+			else
+				from
+					i := 1
+				until
+					i > a_array.count
+				loop
+					if not ( a_array[i] = a_array_2[i] ) then
+						result := false
+					end
+					i := i + 1
+				end
 			end
 		end
 
