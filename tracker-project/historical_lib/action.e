@@ -14,7 +14,7 @@ deferred class
 feature --private
 	target: TARGET_MODEL
 
-feature
+feature{HISTORICAL}
 	set_target(a_target: TARGET_MODEL)
 		do target := a_target end
 

@@ -18,7 +18,7 @@ feature { NONE } --state
 	cursor: INTEGER
 
 
-feature { ANY } -- constructors
+feature { NONE } -- constructors
 
 	make
 		do
@@ -26,7 +26,7 @@ feature { ANY } -- constructors
 			cursor := 0
 		end
 
-feature { ANY } -- queries
+feature -- queries
 
 	has_past: BOOLEAN
 		do
@@ -44,7 +44,7 @@ feature { ANY } -- queries
 		end
 
 
-feature { ANY } -- commands
+feature { HISTORICAL } -- commands
 
 	add(item: G)
 		do
@@ -58,6 +58,8 @@ feature { ANY } -- commands
 		end
 
 	prev_element
+		require
+			not_first: has_past
 		do
 			cursor := cursor - 1
 	 	ensure

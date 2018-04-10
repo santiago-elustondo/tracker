@@ -10,9 +10,11 @@ class
 create
 	make
 
-feature
+feature{NONE}
 
 	materials: LINKED_SET[T_MATERIAL]
+
+feature{NONE} -- Initialization
 
 	make(a_materials: ARRAY[INTEGER_64])
 		do
@@ -21,6 +23,8 @@ feature
 				materials.put ((create {T_MATERIAL_FACTORY}.default_create).parse_material(m.item))
 			end
 		end
+
+feature --queries
 
 	get_count : INTEGER
 		do
@@ -36,14 +40,5 @@ feature
 		do
 			Result := materials [i.to_integer_32]
 		end
-
-	to_array: ARRAY[INTEGER_64]
-		do
-			create Result.make_empty
-			across materials as mat loop
-				Result.fill_with (mat.item.get_mid)
-			end
-		end
-
 
 end

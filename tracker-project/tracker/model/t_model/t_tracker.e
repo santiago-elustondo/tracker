@@ -140,6 +140,7 @@ feature -- public queries
 			Result := across phases as p some
 				p.item.get_containers.count /= 0
 			end
+
 		ensure
 			phases = old phases
 		end
@@ -196,7 +197,7 @@ feature -- public queries
 
 	get_phase(pid: STRING): T_PHASE
 		require
-			pid_exists: current.get_phases.has(pid)
+			pid_exists: get_phases.has(pid)
 		do
 			check attached phases.item(pid) as p then
 				Result := p
