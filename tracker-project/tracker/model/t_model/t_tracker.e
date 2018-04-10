@@ -63,7 +63,7 @@ feature { T_TRACKER_ACTION } -- commands
 			name_is_valid: not a_phase.get_name.is_empty and then a_phase.get_name[1].is_alpha_numeric
 			phase_not_exists: not get_phases.has (a_phase.get_pid)
 			capacity_not_negative: not (a_phase.get_capacity <= 0)
-			materials_expected: not (a_phase.get_materials.get_count = 0)
+			materials_expected: not (a_phase.get_materials.count = 0)
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure

@@ -26,7 +26,7 @@ feature{NONE} -- Initialization
 
 feature --queries
 
-	get_count : INTEGER
+	count : INTEGER
 		do
 			Result := materials.count
 		end
