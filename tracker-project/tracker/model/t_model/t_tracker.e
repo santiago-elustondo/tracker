@@ -140,44 +140,45 @@ feature -- public queries
 			Result := across phases as p some
 				p.item.get_containers.count /= 0
 			end
-
 		ensure
-			phases = old phases
+			result = across phases as p some
+				p.item.get_containers.count /= 0
+			end
 		end
 
 	get_current_num_actions: INTEGER
 		do
 			Result := current_num_actions
 		ensure
-			current_num_actions = old current_num_actions
+			result = current_num_actions
 		end
 
 	get_current_state_id: INTEGER
 		do
 			Result := current_state_id
 		ensure
-			current_state_id = old current_state_id
+			result = current_state_id
 		end
 
 	get_error: STRING
 		do
 			Result := error
 		ensure
-			error = old error
+			result = error
 		end
 
 	get_max_phase_rad: VALUE
 		do
 			Result := max_phase_rad
 		ensure
-			max_phase_rad = old max_phase_rad
+			result = max_phase_rad
 		end
 
 	get_max_container_rad: VALUE
 		do
 			Result := max_container_rad
 		ensure
-			max_container_rad = old max_container_rad
+			result = max_container_rad
 		end
 
 	get_phase_rad_exceeded(pid: STRING; rad: VALUE) : BOOLEAN
@@ -185,14 +186,14 @@ feature -- public queries
 			Result := (get_phase(pid).get_radiation + rad) > get_max_phase_rad
 		ensure
 			get_phase(pid).get_radiation = old get_phase(pid).get_radiation
-			max_phase_rad = old max_phase_rad
+			result = ((get_phase(pid).get_radiation + rad) > get_max_phase_rad)
 		end
 
 	get_container_rad_exceeded(rad: VALUE) : BOOLEAN
 		do
 			Result := rad > get_max_container_rad
 		ensure
-			max_container_rad = old max_container_rad
+			result = (rad > max_container_rad)
 		end
 
 	get_phase(pid: STRING): T_PHASE
@@ -207,6 +208,8 @@ feature -- public queries
 	get_phases : STRING_TABLE[T_PHASE]
 		do
 			Result := phases
+		ensure
+			result = phases
 		end
 
 	find_container(cid: STRING) : detachable T_PHASE

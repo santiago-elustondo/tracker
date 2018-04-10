@@ -69,21 +69,21 @@ feature -- queries
 		do
 			Result := pid
 		ensure
-			pid = old pid
+			result = pid
 		end
 
 	get_name: STRING
 		do
 			Result := name
 		ensure
-			name = old name
+			result = name
 		end
 
 	get_capacity: INTEGER_64
 		do
 			Result := capacity
 		ensure
-			capacity = old capacity
+			result = capacity
 		end
 
 	get_radiation: VALUE
@@ -91,15 +91,13 @@ feature -- queries
 			across containers as c loop
 				Result := Result + c.item.get_props.radioactivity
 			end
-		ensure
-			containers ~ old containers
 		end
 
 	get_materials: T_MATERIAL_SET
 		do
 			Result := materials
 		ensure
-			materials ~ old materials
+			result = materials
 		end
 
 	get_container(cid: STRING): T_CONTAINER
@@ -107,15 +105,13 @@ feature -- queries
 			check attached containers.item (cid) as c then
 				Result := c
 			end
-		ensure
-			containers ~ old containers
 		end
 
 	get_containers: STRING_TABLE[T_CONTAINER]
 		do
 			Result := containers
 		ensure
-			containers ~ old containers
+			result = containers
 		end
 
 	max_capacity: BOOLEAN
@@ -123,7 +119,7 @@ feature -- queries
 			Result := (get_containers.count = get_capacity)
 		ensure
 			get_containers.count = old get_containers.count
-			get_capacity ~ old get_capacity
+			result = (get_containers.count = get_capacity)
 		end
 
 	is_less alias "<" (other: like current): BOOLEAN
@@ -136,7 +132,6 @@ feature -- queries
 				Result := current.get_name < other.get_name
 			end
 		end
-
 
 feature -- print
 	print_phase : STRING
