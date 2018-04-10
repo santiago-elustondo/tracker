@@ -42,4 +42,19 @@ feature --queries
 			Result := materials [i.to_integer_32]
 		end
 
+	element_count(mat: T_MATERIAL): INTEGER
+		do
+			across 1 |..| count as i loop
+				if materials[i.item] = mat then Result := Result + 1 end
+			end
+		end
+
+invariant
+	all_elements_unique:
+		across 1 |..| count as i all
+			across 1 |..| count as j all
+				(i.item /= j.item) implies (materials[i.item] /= materials[j.item])
+			end
+	 	end
+
 end

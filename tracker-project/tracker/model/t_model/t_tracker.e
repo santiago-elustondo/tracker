@@ -295,5 +295,8 @@ feature -- print
 				Result.append (print_tracker)
 			end
 		end
-
+invariant
+	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end
+	phase_rad_not_exceeded: across get_phases as p all p.item.get_radiation <= get_max_phase_rad end
+	con_rad_not_exceeded: across get_phases as p all (across p.item.get_containers as c all not get_container_rad_exceeded (c.item.get_props.radioactivity) end) end
 end

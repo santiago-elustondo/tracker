@@ -68,10 +68,10 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			new_history_is_equal_except_for_new_item: arrays_have_same_items(
-				array_slice(implementation, 1, implementation.count - 1),
-				old implementation
-			)
+--			new_history_is_equal_except_for_new_item: arrays_have_same_items(
+--				array_slice(implementation, 1, implementation.count - 1),
+--				old implementation
+--			)
 		end
 
 	prev_element

@@ -1,1 +1,212 @@
-Error: current mode is ETF GUI (no command line arguments).
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->new_tracker(3,3)
+  state 1 ok
+  max_phase_radiation: 3.00, max_container_radiation: 3.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->new_container("fortnite",[metal, 2],"ihate")
+  state 2 e9: phase identifier not in the system
+->new_tracker(2,2)
+  state 3 ok
+  max_phase_radiation: 2.00, max_container_radiation: 2.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->new_phase("pid4","Unpacking",-1,<<glass>>)
+  state 4 e7: phase capacity must be a positive integer
+->redo
+  state 5 e20: there is no more to redo
+->redo
+  state 6 e20: there is no more to redo
+->redo
+  state 7 e20: there is no more to redo
+->undo
+  state 8 (to 3) ok
+  max_phase_radiation: 2.00, max_container_radiation: 2.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 9 e19: there is no more to undo
+->undo
+  state 10 e19: there is no more to undo
+->undo
+  state 11 e19: there is no more to undo
+->redo
+  state 12 (to 4) e7: phase capacity must be a positive integer
+->redo
+  state 13 e20: there is no more to redo
+->redo
+  state 14 e20: there is no more to redo
+->redo
+  state 15 e20: there is no more to redo
+->undo
+  state 16 (to 3) ok
+  max_phase_radiation: 2.00, max_container_radiation: 2.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 17 e19: there is no more to undo
+->undo
+  state 18 e19: there is no more to undo
+->undo
+  state 19 e19: there is no more to undo
+->undo
+  state 20 e19: there is no more to undo
+->new_tracker(9,5)
+  state 21 ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->new_phase("pid4","Unpacking",2,<<glass, metal>>)
+  state 22 ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 5],"pid4")
+  state 23 ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,1,5.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+    cid1->pid4->glass,5.00
+->new_container("cid2",[metal, 5],"pid4")
+  state 24 e12: this container will exceed phase safe radiation
+->undo
+  state 25 (to 23) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,1,5.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+    cid1->pid4->glass,5.00
+->undo
+  state 26 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 5.1],"pid4")
+  state 27 e14: container radiation capacity exceeded
+->new_container("cid2",[metal, 4.9999999],"pid4")
+  state 28 ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,1,5.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+    cid2->pid4->metal,5.00
+->undo
+  state 29 (to 27) e14: container radiation capacity exceeded
+->undo
+  state 30 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 4.999999999999995],"pid4")
+  state 31 ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,1,5.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+    cid1->pid4->glass,5.00
+->new_container("cid2",[metal, 4.999999999999995],"pid4")
+  state 32 e12: this container will exceed phase safe radiation
+->undo
+  state 33 (to 31) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,1,5.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+    cid1->pid4->glass,5.00
+->undo
+  state 34 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[plastic, 5],"pid3")
+  state 35 e9: phase identifier not in the system
+->new_container("cid1",[plastic, 5],"pid3")
+  state 36 e9: phase identifier not in the system
+->undo
+  state 37 (to 35) e9: phase identifier not in the system
+->undo
+  state 38 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, -5],"pid4")
+  state 39 e18: this container radiation must not be negative
+->new_container("cid2",[metal, 14],"pid4")
+  state 40 e14: container radiation capacity exceeded
+->undo
+  state 41 (to 39) e18: this container radiation must not be negative
+->undo
+  state 42 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container(";0cid1",[plastic, -5],";pid3")
+  state 43 e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_container(";0cid1",[plastic, -5],";pid3")
+  state 44 e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 45 (to 43) e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 46 (to 22) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 47 (to 21) ok
+  max_phase_radiation: 9.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 48 e19: there is no more to undo
+->undo
+  state 49 e19: there is no more to undo
+->undo
+  state 50 e19: there is no more to undo
+->new_tracker(5,4)
+  state 51 ok
+  max_phase_radiation: 5.00, max_container_radiation: 4.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->new_phase("pid4","Unpacking",2,<<glass, metal>>)
+  state 52 ok
+  max_phase_radiation: 5.00, max_container_radiation: 4.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 5],"pid4")
+  state 53 e14: container radiation capacity exceeded
+->new_container("cid2",[metal, 5],"pid4")
+  state 54 e14: container radiation capacity exceeded
+->new_phase("pid5","UnGPAing",1,<<glass, metal>>)
+  state 55 ok
+  max_phase_radiation: 5.00, max_container_radiation: 4.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+    pid5->UnGPAing:1,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->move_container("cid1","pid4","pid5")
+  state 56 e15: this container identifier not in tracker
+->move_container("cid2","pid4","pid5")
+  state 57 e15: this container identifier not in tracker
+->undo
+  state 58 (to 56) e15: this container identifier not in tracker
+->undo
+  state 59 (to 55) ok
+  max_phase_radiation: 5.00, max_container_radiation: 4.00
+  phases: pid->name:capacity,count,radiation
+    pid4->Unpacking:2,0,0.00,{glass,metal}
+    pid5->UnGPAing:1,0,0.00,{glass,metal}
+  containers: cid->pid->material,radioactivity
+->move_container("cid1","pid4","pid5")
+  state 60 e15: this container identifier not in tracker
