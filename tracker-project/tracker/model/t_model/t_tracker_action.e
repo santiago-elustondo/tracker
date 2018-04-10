@@ -83,4 +83,8 @@ feature { NONE } -- private commands
 			end
 		end
 
+invariant
+	prev_state_not_beyond_model: prev_state_id <= target.get_current_num_actions
+	future_implies_not_last: target.get_history.has_future implies (prev_state_id < target.get_current_num_actions)
+	past_implies_not_first: target.get_history.has_past implies (0 < target.get_current_num_actions)
 end
