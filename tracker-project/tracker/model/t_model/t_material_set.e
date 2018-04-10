@@ -19,6 +19,7 @@ feature{NONE} -- Initialization
 	make(a_materials: ARRAY[INTEGER_64])
 		do
 			create materials.make
+			materials.compare_objects
 			across a_materials as m loop
 				materials.put ((create {T_MATERIAL_FACTORY}.default_create).parse_material(m.item))
 			end

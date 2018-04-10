@@ -27,6 +27,7 @@ feature{ NONE } -- Initialization
 		do
 			precursor
 			create phases.make (10)
+			phases.compare_objects
 			error := {ERROR_HANDLING}.err_ok
 			current_num_actions := 0;
 			current_state_id := 0;
@@ -54,6 +55,7 @@ feature { T_TRACKER_ACTION } -- commands
 			max_container_rad := a_max_container_rad
 		ensure
 			phases_count_unchanged: get_phases.count = old get_phases.count
+
 		end
 
 	add_phase(a_phase: T_PHASE)

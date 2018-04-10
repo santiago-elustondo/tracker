@@ -23,6 +23,7 @@ feature { NONE } -- constructors
 	make
 		do
 			create implementation.make_empty
+			implementation.compare_objects
 			cursor := 0
 		end
 
@@ -43,8 +44,20 @@ feature -- queries
 			Result := implementation[cursor]
 		end
 
+	added alias "|->"(item: G): like current
+		do
+			Result := current.deep_twin
+			Result.clear_future
+			Result.next_element
+			Result.get_implementation.force (item, result.get_cursor)
+		ensure
+			cursor_incremented: result.get_cursor = old result.get_cursor + 1
+			current_item_is_new_one: result.get_element = item
+			no_future: not result.has_future
+		end
 
-feature { HISTORICAL } -- commands
+
+feature { HISTORICAL, HISTORY } -- commands
 
 	add(item: G)
 		do
@@ -55,6 +68,7 @@ feature { HISTORICAL } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
+			current ~ (old current.deep_twin.added (item))
 		end
 
 	prev_element
@@ -100,6 +114,19 @@ feature { HISTORICAL } -- commands
 			cursor_start_position: cursor = 0
 		end
 
+feature{ HISTORY }
+
+	get_implementation: ARRAY[G]
+		do
+			Result := implementation
+		end
+
+	get_cursor: INTEGER
+		do
+			Result := cursor
+		end
+
+
 
 feature { NONE } -- utils
 
@@ -111,6 +138,7 @@ feature { NONE } -- utils
 			i:INTEGER
 		do
 			create Result.make_empty
+			result.compare_objects
 			from
 				i := -1
 			until

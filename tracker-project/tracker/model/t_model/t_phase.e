@@ -33,6 +33,7 @@ feature{NONE} -- cmds
 			capacity := a_capacity
 			create materials.make(a_materials)
 			create containers.make(10)
+			containers.compare_objects
 		end
 
 feature{T_TRACKER_ACTION} -- commands

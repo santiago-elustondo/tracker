@@ -34,7 +34,8 @@ feature { NONE }
 			create history.make
 		end
 
-feature { ACTION, ETF_COMMAND }
+feature { T_TRACKER_ACTION, ETF_COMMAND }
+--feature { ANY }
 
 	do_action(action: ACTION_TYPE)
 		do
