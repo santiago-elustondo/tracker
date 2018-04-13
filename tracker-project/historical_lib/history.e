@@ -52,22 +52,26 @@ feature -- queries
 		do
 			Result := current.deep_twin
 			Result.add (item)
-		ensure
-			cursor_incremented: result.cursor = old result.cursor + 1
-			current_item_is_new_one: result.get_element = item
-			no_future: not result.has_future
+--		ensure
+--			cursor_incremented: result.cursor = old result.cursor + 1
+--			current_item_is_new_one: result.get_element = item
+--			no_future: not not has_future
 		end
 
 	no_future: like current
 		do
 			Result := current.deep_twin
 			Result.clear_future
+--		ensure
+--			cursor_end_position: result.cursor = result.implementation.count
 		end
 
 	no_past: like current
 		do
 			Result := current.deep_twin
 			Result.clear_past
+--		ensure
+--			cursor_start_position: cursor = 1
 		end
 
 
@@ -83,7 +87,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			item_added: current ~ (old current.deep_twin) |-> (item)
+			item_added: current ~ (old current.deep_twin |-> (item))
 		end
 
 	prev_element

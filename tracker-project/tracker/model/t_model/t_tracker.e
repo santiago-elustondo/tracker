@@ -82,7 +82,7 @@ feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 		ensure
 			phase_exists: get_phases.has(a_phase.get_pid)
 			phases_count_increased: get_phases.count = old get_phases.count + 1
-			phase_added: current ~ (old current.deep_twin) |-> (a_phase)
+			phase_added: current ~ old current.deep_twin |-> (a_phase)
 		end
 
 	remove_phase(a_pid: STRING)
@@ -94,7 +94,7 @@ feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 		ensure
 			phase_no_longer_exists: not get_phases.has(a_pid)
 			phases_count_decreased: get_phases.count = old get_phases.count - 1
-			phase_removed: current ~ (old current.deep_twin) |-/> (a_pid)
+			phase_removed: current ~ old current.deep_twin |-/> (a_pid)
 		end
 
 	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
@@ -110,8 +110,8 @@ feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
 			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
 		ensure
-			phase_moved: (get_phase(a_pid2) ~ (old get_phase(a_pid2).deep_twin) |-> (a_container))
-				and (get_phase(a_pid1) ~ (old get_phase(a_pid1).deep_twin) |-/> (a_container.get_cid))
+			phase_moved: (get_phase(a_pid2) ~ old get_phase(a_pid2).deep_twin |-> (a_container))
+				and (get_phase(a_pid1) ~ old get_phase(a_pid1).deep_twin |-/> (a_container.get_cid))
 			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
 			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
 			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1

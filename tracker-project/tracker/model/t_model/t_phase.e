@@ -52,7 +52,7 @@ feature{T_TRACKER_ACTION, T_PHASE} -- commands
 			container_exists: get_containers.has(a_container.get_cid)
 			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
 			container_count_increased: get_containers.count = old get_containers.count + 1
-			container_added: current ~ (old current.deep_twin) |-> (a_container)
+			container_added: current ~ old current.deep_twin |-> (a_container)
 		end
 
 	remove_container(a_cid: STRING)
@@ -64,7 +64,7 @@ feature{T_TRACKER_ACTION, T_PHASE} -- commands
 		ensure
 			container_removed: not get_containers.has (a_cid)
 			container_count_decreased: get_containers.count = old get_containers.count - 1
-			container_removed: current ~ (old current.deep_twin) |-/> (a_cid)
+			container_removed: current ~ old current.deep_twin |-/> (a_cid)
 		end
 
 feature {T_PHASE}
