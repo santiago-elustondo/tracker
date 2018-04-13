@@ -15,12 +15,23 @@ inherit
 	HISTORICAL[T_TRACKER_ACTION]
 		redefine
 			make,
-			out
+			out,
+			is_equal
 		end
-	
+
 
 create { ANY }
 	make, reset
+
+feature { NONE } -- state
+
+	error: STRING
+	max_phase_rad: VALUE
+	max_container_rad: VALUE
+	phases: STRING_TABLE[T_PHASE]
+
+	current_num_actions: INTEGER;
+	current_state_id: INTEGER;
 
 feature{ NONE } -- Initialization
 
@@ -43,7 +54,7 @@ feature { ETF_MODEL_FACADE }-- commands
 			make
 		end
 
-feature { T_TRACKER_ACTION } -- commands
+feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 
 	new_tracker(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
@@ -55,8 +66,7 @@ feature { T_TRACKER_ACTION } -- commands
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		ensure
-			phases_count_unchanged: get_phases.count = old get_phases.count
-
+			phases_unchanged: phases ~ old get_phases.deep_twin
 		end
 
 	add_phase(a_phase: T_PHASE)
@@ -72,6 +82,7 @@ feature { T_TRACKER_ACTION } -- commands
 		ensure
 			phase_exists: get_phases.has(a_phase.get_pid)
 			phases_count_increased: get_phases.count = old get_phases.count + 1
+			phase_added: current ~ (old current.deep_twin) |-> (a_phase)
 		end
 
 	remove_phase(a_pid: STRING)
@@ -83,6 +94,7 @@ feature { T_TRACKER_ACTION } -- commands
 		ensure
 			phase_no_longer_exists: not get_phases.has(a_pid)
 			phases_count_decreased: get_phases.count = old get_phases.count - 1
+			phase_removed: current ~ (old current.deep_twin) |-/> (a_pid)
 		end
 
 	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
@@ -98,6 +110,8 @@ feature { T_TRACKER_ACTION } -- commands
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
 			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
 		ensure
+			phase_moved: (get_phase(a_pid2) ~ (old get_phase(a_pid2).deep_twin) |-> (a_container))
+				and (get_phase(a_pid1) ~ (old get_phase(a_pid1).deep_twin) |-/> (a_container.get_cid))
 			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
 			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
 			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1
@@ -126,15 +140,20 @@ feature { T_TRACKER_ACTION } -- commands
 			current_num_actions = old current_num_actions + 1
 		end
 
-feature { NONE } -- state
+feature{T_TRACKER}
+	phases_added alias "|->"(a_phase: T_PHASE): like current
+		do
+			Result := current.deep_twin
+			Result.add_phase(a_phase)
+		end
 
-	max_phase_rad: VALUE
-	max_container_rad: VALUE
-	phases: STRING_TABLE[T_PHASE]
-	error: STRING
+	phase_removed alias "|-/>"(a_pid: STRING): like current
+		do
+			Result := current.deep_twin
+			Result.remove_phase(a_pid)
+		end
 
-	current_num_actions: INTEGER;
-	current_state_id: INTEGER;
+--	container_move aliad |
 
 feature -- public queries
 
@@ -221,6 +240,27 @@ feature -- public queries
 				if p.item.get_containers.has (cid) then
 					Result := p.item
 				end
+			end
+		end
+
+	is_equal (other: like current): BOOLEAN
+		do
+			if current = other then
+				Result := true
+			elseif current_num_actions /= other.get_current_num_actions then
+				Result := false
+			elseif current_state_id /= other.get_current_state_id then
+				Result := false
+			elseif error /~ other.get_error then
+				Result := false
+			elseif max_phase_rad /= other.get_max_phase_rad then
+				Result := false
+			elseif max_container_rad /= other.get_max_container_rad then
+				Result := false
+			elseif phases /~ other.get_phases then
+				Result := false
+			else
+				Result := true
 			end
 		end
 

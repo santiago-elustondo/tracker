@@ -58,6 +58,18 @@ feature -- queries
 			no_future: not result.has_future
 		end
 
+	no_future: like current
+		do
+			Result := current.deep_twin
+			Result.clear_future
+		end
+
+	no_past: like current
+		do
+			Result := current.deep_twin
+			Result.clear_past
+		end
+
 
 
 feature { HISTORICAL, HISTORY } -- commands
@@ -71,7 +83,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			current ~ (old current.deep_twin) |-> (item)
+			item_added: current ~ (old current.deep_twin) |-> (item)
 		end
 
 	prev_element
@@ -94,8 +106,8 @@ feature { HISTORICAL, HISTORY } -- commands
 		do
 			implementation := array_slice(implementation, implementation.lower, cursor)
 		ensure
-			no_future: not has_future
 			cursor_end_position: cursor = implementation.count
+			no_future: current ~ old current.deep_twin.no_future
 		end
 
 	clear_past
@@ -103,7 +115,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			implementation := array_slice(implementation, cursor, implementation.upper)
 			cursor := 1
 		ensure
-			no_past: not has_past
+			no_past: current ~ old current.deep_twin.no_past
 			cursor_start_position: cursor = 1
 		end
 
@@ -143,7 +155,6 @@ feature { NONE } -- utils
 			i:INTEGER
 		do
 			create Result.make_empty
---			create Result.make_from_array (a_array.subarray (a_start_index, a_end_index))
 			Result.compare_objects
 			from
 				i := -1

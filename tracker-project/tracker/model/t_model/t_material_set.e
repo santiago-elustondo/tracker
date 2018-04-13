@@ -7,22 +7,24 @@ note
 class
 	T_MATERIAL_SET
 
+inherit
+	ANY
+		redefine is_equal end
+
 create
 	make
 
-feature{NONE}
+feature{T_MATERIAL_SET}
 
-	materials: LINKED_SET[T_MATERIAL]
+	materials: LIST[T_MATERIAL]
 
 feature{NONE} -- Initialization
 
 	make(a_materials: ARRAY[INTEGER_64])
 		do
-			create materials.make
-			materials.compare_objects
-			across a_materials as m loop
-				materials.put ((create {T_MATERIAL_FACTORY}.default_create).parse_material(m.item))
-			end
+			materials := add_materials(a_materials)
+		ensure
+			current ~ (old current.deep_twin) |-> (a_materials)
 		end
 
 feature --queries
@@ -42,12 +44,27 @@ feature --queries
 			Result := materials [i.to_integer_32]
 		end
 
-	element_count(mat: T_MATERIAL): INTEGER
+	elements_added alias "|->"(a_materials: ARRAY[INTEGER_64]) : like current
 		do
-			across 1 |..| count as i loop
-				if materials[i.item] = mat then Result := Result + 1 end
+			create Result.make (a_materials)
+		end
+
+	is_equal(other: like current): BOOLEAN
+		do
+			Result := materials ~ other.materials
+		end
+
+feature {NONE} --commands
+
+	add_materials(a_materials: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
+		do
+			create Result.make
+			across a_materials as m loop
+				Result.put ((create {T_MATERIAL_FACTORY}.default_create).parse_material(m.item))
 			end
 		end
+
+
 
 invariant
 	all_elements_unique:

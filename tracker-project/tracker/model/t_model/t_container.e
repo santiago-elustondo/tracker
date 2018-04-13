@@ -9,6 +9,7 @@ class
 
 inherit
 	COMPARABLE
+		redefine is_equal end
 
 create
 	make
@@ -79,6 +80,23 @@ feature -- queries
 				Result := True
 			elseif current.get_cid ~ other.get_cid then
 				Result := current.get_pid < other.get_pid
+			end
+		end
+
+	is_equal (other: like current): BOOLEAN
+		do
+			if current = other then
+				Result := true
+			elseif cid /~ other.get_cid then
+				Result := false
+			elseif pid /~ other.get_pid then
+				Result := false
+			elseif props.material /~ other.get_props.material then
+				Result := false
+			elseif props.radioactivity /~ other.get_props.radioactivity then
+				Result := false
+			else
+				Result := true
 			end
 		end
 
