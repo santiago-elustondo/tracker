@@ -17,6 +17,7 @@ inherit
 			make,
 			out
 		end
+	
 
 create { ANY }
 	make, reset

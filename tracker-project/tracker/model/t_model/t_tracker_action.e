@@ -14,6 +14,7 @@ deferred class
 
 inherit
 	ACTION [T_TRACKER]
+		redefine is_equal end
 
 feature { HISTORICAL } -- commands
 
@@ -35,7 +36,7 @@ feature { HISTORICAL } -- commands
 			set_error (prev_error)
 		end
 
-feature { NONE } -- private state
+feature { T_TRACKER_ACTION } -- private state
 
 	-- these variables exist to remember things about the action taken.
 	-- tracker requirements necessitate certain specific behaviour when doing undo/redo
@@ -57,6 +58,27 @@ feature { T_TRACKER_ACTION } -- private queries
 	get_exec_error: STRING
 		do
 			result := exec_error
+		end
+
+	is_equal(other: like current): BOOLEAN
+		do
+			if current = other then
+				Result := true
+			elseif prev_state_id /= other.prev_state_id then
+				Result := false
+			elseif post_state_id /= other.post_state_id then
+				Result := false
+			elseif exec_error /~ other.exec_error then
+				Result := false
+			elseif prev_error /~ other.prev_error then
+				Result := false
+			elseif container /~ other.container then
+				Result := false
+			elseif phase /~ other.phase then
+				Result := false
+			else
+				Result := true
+			end
 		end
 
 

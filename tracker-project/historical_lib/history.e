@@ -10,10 +10,14 @@ note
 class
 	HISTORY[G]
 
+inherit
+	ANY
+		redefine is_equal end
+
 create
 	make
 
-feature { NONE } --state
+feature { HISTORY } --state
 	implementation: ARRAY[G];
 	cursor: INTEGER
 
@@ -47,14 +51,13 @@ feature -- queries
 	added alias "|->"(item: G): like current
 		do
 			Result := current.deep_twin
-			Result.clear_future
-			Result.next_element
-			Result.get_implementation.force (item, result.get_cursor)
+			Result.add (item)
 		ensure
-			cursor_incremented: result.get_cursor = old result.get_cursor + 1
+			cursor_incremented: result.cursor = old result.cursor + 1
 			current_item_is_new_one: result.get_element = item
 			no_future: not result.has_future
 		end
+
 
 
 feature { HISTORICAL, HISTORY } -- commands
@@ -68,10 +71,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
---			new_history_is_equal_except_for_new_item: arrays_have_same_items(
---				array_slice(implementation, 1, implementation.count - 1),
---				old implementation
---			)
+			current ~ (old current.deep_twin) |-> (item)
 		end
 
 	prev_element
@@ -119,16 +119,18 @@ feature { HISTORICAL, HISTORY } -- commands
 
 feature{ HISTORY }
 
-	get_implementation: ARRAY[G]
+	is_equal(other: like current): BOOLEAN
 		do
-			Result := implementation
+			if current = other then
+				Result := true
+			elseif cursor /= other.cursor then
+				Result := false
+			elseif implementation /~ other.implementation then
+				Result := false
+			else
+				Result := true
+			end
 		end
-
-	get_cursor: INTEGER
-		do
-			Result := cursor
-		end
-
 
 
 feature { NONE } -- utils
@@ -141,7 +143,8 @@ feature { NONE } -- utils
 			i:INTEGER
 		do
 			create Result.make_empty
-			result.compare_objects
+--			create Result.make_from_array (a_array.subarray (a_start_index, a_end_index))
+			Result.compare_objects
 			from
 				i := -1
 			until
@@ -154,24 +157,32 @@ feature { NONE } -- utils
 
 	-- utility class for comparing arrays
 
+--	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
+--		local
+--			i: INTEGER
+--		do
+--			result := true
+--			if not ( a_array.count = a_array_2.count ) then
+--				result := false
+--			else
+--				from
+--					i := 1
+--				until
+--					i > a_array.count
+--				loop
+--					if not ( a_array[i] = a_array_2[i] ) then
+--						result := false
+--					end
+--					i := i + 1
+--				end
+--			end
+--		end
+
 	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
-		local
-			i: INTEGER
 		do
-			result := true
-			if not ( a_array.count = a_array_2.count ) then
-				result := false
-			else
-				from
-					i := 1
-				until
-					i > a_array.count
-				loop
-					if not ( a_array[i] = a_array_2[i] ) then
-						result := false
-					end
-					i := i + 1
-				end
+			Result := (a_array.count = a_array_2.count)
+			if result then
+				result := across 1 |..| a_array.count as a all a_array[a.item] = a_array_2[a.item] end
 			end
 		end
 
