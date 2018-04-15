@@ -277,7 +277,7 @@ feature -- print
 	out : STRING
 		do
 			do_print(get_printer)
-			Result := get_printer.string
+			Result := get_printer.out
 		end
 invariant
 	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end

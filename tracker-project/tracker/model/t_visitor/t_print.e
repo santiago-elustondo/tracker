@@ -9,56 +9,56 @@ class
 
 inherit
 	T_VISITOR
-		redefine is_equal end
+		redefine is_equal, out end
 
 create
 	make
 
 feature{ANY}
-	string: STRING
+	out: STRING
 
 feature{NONE}
 	make
 		do
-			string := ""
+			out := ""
 		end
 
 feature
 	visit_phase(phase: T_PHASE)
 		do
-			string.append("%N    ")
-			string.append (phase.get_pid)
-			string.append ("->")
-			string.append (phase.get_name + ":")
-			string.append (phase.get_capacity.out + ",")
-			string.append (phase.get_containers.count.out + ",")
-			string.append (phase.get_radiation.out + ",")
+			out.append("%N    ")
+			out.append (phase.get_pid)
+			out.append ("->")
+			out.append (phase.get_name + ":")
+			out.append (phase.get_capacity.out + ",")
+			out.append (phase.get_containers.count.out + ",")
+			out.append (phase.get_radiation.out + ",")
 			phase.get_materials.do_print (current)
 		end
 
 	visit_container(con: T_CONTAINER)
 		do
-			string.append("%N    ")
-			string.append (con.get_cid)
-			string.append ("->")
-			string.append (con.get_pid)
-			string.append ("->")
-			string.append (con.get_props.material.get_name + ",")
-			string.append (con.get_props.radioactivity.out)
+			out.append("%N    ")
+			out.append (con.get_cid)
+			out.append ("->")
+			out.append (con.get_pid)
+			out.append ("->")
+			out.append (con.get_props.material.get_name + ",")
+			out.append (con.get_props.radioactivity.out)
 		end
 
 	visit_materials(mat: T_MATERIAL_SET)
 		do
-			string.append ("{")
+			out.append ("{")
 			across 1 |..| (mat.count - 1) as i loop
-				string.append(mat[i.item].get_name+ ",")
+				out.append(mat[i.item].get_name+ ",")
 			end
-			string.append (mat[mat.count].get_name+ "}")
+			out.append (mat[mat.count].get_name+ "}")
 		end
 
 	visit_tracker(tracker: T_TRACKER)
 		do
-			create string.make_empty
+			create out.make_empty
 			tracker_helper_print_state(tracker)
 			if (tracker.get_error ~ {ERROR_HANDLING}.err_ok) then
 				tracker_helper_main(tracker)
@@ -69,13 +69,13 @@ feature{NONE} --helper methods
 
 	tracker_helper_main(tracker: T_TRACKER)
 		do
-			string.append("%N  max_phase_radiation: ")
-			string.append (tracker.get_max_phase_rad.out)
-			string.append (", max_container_radiation: ")
-			string.append (tracker.get_max_container_rad.out)
-			string.append ("%N  phases: pid->name:capacity,count,radiation")
+			out.append("%N  max_phase_radiation: ")
+			out.append (tracker.get_max_phase_rad.out)
+			out.append (", max_container_radiation: ")
+			out.append (tracker.get_max_container_rad.out)
+			out.append ("%N  phases: pid->name:capacity,count,radiation")
 			tracker_helper_phases(tracker.get_phases)
-			string.append ("%N  containers: cid->pid->material,radioactivity")
+			out.append ("%N  containers: cid->pid->material,radioactivity")
 			tracker_helper_containers(tracker.get_phases)
 		end
 
@@ -109,18 +109,18 @@ feature{NONE} --helper methods
 
 	tracker_helper_print_state(tracker: T_TRACKER)
 		do
-			string.append ("  state ")
-			string.append (tracker.get_current_num_actions.out)
+			out.append ("  state ")
+			out.append (tracker.get_current_num_actions.out)
 			if tracker.print_old_state then
-				string.append(" (to ")
-				string.append(tracker.get_current_state_id.out)
-				string.append(")")
+				out.append(" (to ")
+				out.append(tracker.get_current_state_id.out)
+				out.append(")")
 			end
-			string.append (" "+tracker.get_error)
+			out.append (" "+tracker.get_error)
 		end
 
 	is_equal (other: like current): BOOLEAN
 		do
-			Result := string ~ other.string
+			Result := out ~ other.out
 		end
 end
