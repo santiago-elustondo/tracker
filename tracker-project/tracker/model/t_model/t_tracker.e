@@ -19,7 +19,6 @@ inherit
 			is_equal
 		end
 
-
 create { ANY }
 	make, reset
 
@@ -32,6 +31,7 @@ feature { NONE } -- state
 
 	current_num_actions: INTEGER;
 	current_state_id: INTEGER;
+	printer: T_PRINT
 
 feature{ NONE } -- Initialization
 
@@ -43,6 +43,7 @@ feature{ NONE } -- Initialization
 			error := {ERROR_HANDLING}.err_ok
 			current_num_actions := 0;
 			current_state_id := 0;
+			create printer.make
 		end
 
 feature { ETF_MODEL_FACADE }-- commands
@@ -167,6 +168,11 @@ feature -- public queries
 			end
 		end
 
+	get_printer: T_PRINT
+		do
+			Result := printer
+		end
+
 	get_current_num_actions: INTEGER
 		do
 			Result := current_num_actions
@@ -242,41 +248,6 @@ feature -- public queries
 			end
 		end
 
---	is_equal (other: like current): BOOLEAN
---		do
---			if current = other then
---				Result := true
---			elseif current_num_actions /= other.get_current_num_actions then
---				Result := false
---			elseif current_state_id /= other.get_current_state_id then
---				Result := false
---			elseif error /~ other.get_error then
---				Result := false
---			elseif max_phase_rad /= other.get_max_phase_rad then
---				Result := false
---			elseif max_container_rad /= other.get_max_container_rad then
---				Result := false
---			elseif phases /~ other.get_phases then
---				Result := false
---			else
---				Result := true
---			end
---		end
-
-		is_equal (other: like current): BOOLEAN
-			do
-				Result := current = other
-				or else get_current_num_actions = other.get_current_num_actions
-				and then get_current_state_id = other.get_current_state_id
-				and then get_error ~ other.get_error
-				and then get_max_phase_rad = other.get_max_phase_rad
-				and then get_max_container_rad = other.get_max_container_rad
-				and then get_phases ~ other.get_phases
-			end
-
-
-feature -- print
-
 	print_old_state : BOOLEAN
 		do
 			Result := (get_current_state_id /= get_current_num_actions)
@@ -284,67 +255,29 @@ feature -- print
 				and then (error /= {ERROR_HANDLING}.err_redo)
 		end
 
-	print_tracker: STRING
+	is_equal (other: like current): BOOLEAN
 		do
-			Create Result.make_from_string("%N  max_phase_radiation: ")
-			Result.append (get_max_phase_rad.out)
-			Result.append (", max_container_radiation: ")
-			Result.append (get_max_container_rad.out)
-			Result.append ("%N  phases: pid->name:capacity,count,radiation")
-			Result.append (print_phases)
-			Result.append ("%N  containers: cid->pid->material,radioactivity")
-			Result.append (print_containers)
+			Result := current = other
+			or else get_current_num_actions = other.get_current_num_actions
+			and then get_current_state_id = other.get_current_state_id
+			and then get_error ~ other.get_error
+			and then get_max_phase_rad = other.get_max_phase_rad
+			and then get_max_container_rad = other.get_max_container_rad
+			and then get_phases ~ other.get_phases
+			and then get_printer ~ other.get_printer
 		end
 
-	print_state : STRING
-		do
-			Create Result.make_from_string ("  state ")
-			Result.append (get_current_num_actions.out)
-			if print_old_state then
-				Result.append(" (to ")
-				Result.append(current_state_id.out)
-				Result.append(")")
-			end
-			Result.append (" ")
-		end
+feature -- print
 
-	print_phases : STRING
-		local
-			ph: SORTED_TWO_WAY_LIST[T_PHASE]
+	do_print(visitor: T_PRINT)
 		do
-			Create ph.make
-			Create Result.make_empty
-			across phases as p loop
-				ph.extend(p.item)
-			end
-			across ph as p loop
-				Result.append("%N"+p.item.print_phase)
-			end
-		end
-
-	print_containers : STRING
-		local
-			con : SORTED_TWO_WAY_LIST[T_CONTAINER]
-		do
-			Create con.make
-			Create Result.make_empty
-			across phases as p loop
-				across p.item.get_containers as c loop
-					con.extend (c.item)
-				end
-			end
-			across con as c loop
-				Result.append("%N"+c.item.print_container)
-			end
+			visitor.visit_tracker (current)
 		end
 
 	out : STRING
 		do
-			create Result.make_from_string ("")
-			Result.append (print_state + error)
-			if (error ~ {ERROR_HANDLING}.err_ok) then
-				Result.append (print_tracker)
-			end
+			do_print(get_printer)
+			Result := get_printer.string
 		end
 invariant
 	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end

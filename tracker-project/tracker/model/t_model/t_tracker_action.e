@@ -62,23 +62,13 @@ feature { T_TRACKER_ACTION } -- private queries
 
 	is_equal(other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := true
-			elseif prev_state_id /= other.prev_state_id then
-				Result := false
-			elseif post_state_id /= other.post_state_id then
-				Result := false
-			elseif exec_error /~ other.exec_error then
-				Result := false
-			elseif prev_error /~ other.prev_error then
-				Result := false
-			elseif container /~ other.container then
-				Result := false
-			elseif phase /~ other.phase then
-				Result := false
-			else
-				Result := true
-			end
+			Result := current = other
+			or else prev_state_id = other.prev_state_id
+			and then post_state_id = other.post_state_id
+			and then exec_error ~ other.exec_error
+			and then prev_error ~ other.prev_error
+			and then container ~ other.container
+			and then phase ~ other.phase
 		end
 
 

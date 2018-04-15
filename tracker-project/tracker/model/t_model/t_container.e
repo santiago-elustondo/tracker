@@ -117,15 +117,20 @@ feature -- queries
 
 feature -- print
 
-	print_container : STRING
+--	print_container : STRING
+--		do
+--			Create Result.make_from_string("    ")
+--			Result.append (get_cid)
+--			Result.append ("->")
+--			Result.append (get_pid)
+--			Result.append ("->")
+--			Result.append (get_props.material.get_name + ",")
+--			Result.append (get_props.radioactivity.out)
+--		end
+
+	do_print(visitor: T_VISITOR)
 		do
-			Create Result.make_from_string("    ")
-			Result.append (get_cid)
-			Result.append ("->")
-			Result.append (get_pid)
-			Result.append ("->")
-			Result.append (get_props.material.get_name + ",")
-			Result.append (get_props.radioactivity.out)
+			visitor.visit_container (current)
 		end
 
 

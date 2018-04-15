@@ -187,19 +187,23 @@ feature -- queries
 
 
 feature -- print
-	print_phase : STRING
-		do
-			Create Result.make_from_string("    ")
-			Result.append (get_pid)
-			Result.append ("->")
-			Result.append (get_name + ":")
-			Result.append (get_capacity.out + ",")
-			Result.append (get_containers.count.out + ",")
-			Result.append (get_radiation.out + ",{")
-			across 1 |..| (materials.count - 1) as i loop
-				Result.append(materials[i.item].get_name+ ",")
-			end
-			Result.append (materials [materials.count].get_name+ "}")
-		end
+--	print_phase : STRING
+--		do
+--			Create Result.make_from_string("    ")
+--			Result.append (get_pid)
+--			Result.append ("->")
+--			Result.append (get_name + ":")
+--			Result.append (get_capacity.out + ",")
+--			Result.append (get_containers.count.out + ",")
+--			Result.append (get_radiation.out + ",{")
+--			across 1 |..| (materials.count - 1) as i loop
+--				Result.append(materials[i.item].get_name+ ",")
+--			end
+--			Result.append (materials [materials.count].get_name+ "}")
+--		end
 
+	do_print(visitor: T_PRINT)
+		do
+			visitor.visit_phase (current)
+		end
 end

@@ -54,6 +54,11 @@ feature --queries
 			Result := materials ~ other.materials
 		end
 
+	do_print(visitor: T_VISITOR)
+		do
+			visitor.visit_materials (current)
+		end
+
 feature {NONE} --commands
 
 	add_materials(a_materials: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
