@@ -140,34 +140,49 @@ feature -- queries
 			result = (get_containers.count = get_capacity)
 		end
 
+--	is_less alias "<" (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := False
+--			elseif current.get_pid < other.get_pid then
+--				Result := True
+--			elseif current.get_pid ~ other.get_pid then
+--				Result := current.get_name < other.get_name
+--			end
+--		end
+
+--	is_equal (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif capacity /= other.get_capacity then
+--				Result := false
+--			elseif pid /~ other.get_pid then
+--				Result := false
+--			elseif name /~ other.get_name then
+--				Result := false
+--			elseif materials /~ other.get_materials then
+--				Result := false
+--			elseif containers /~ other.get_containers then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
+
 	is_less alias "<" (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := False
-			elseif current.get_pid < other.get_pid then
-				Result := True
-			elseif current.get_pid ~ other.get_pid then
-				Result := current.get_name < other.get_name
-			end
+			Result := get_pid < other.get_pid
 		end
 
 	is_equal (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := true
-			elseif capacity /= other.get_capacity then
-				Result := false
-			elseif pid /~ other.get_pid then
-				Result := false
-			elseif name /~ other.get_name then
-				Result := false
-			elseif materials /~ other.get_materials then
-				Result := false
-			elseif containers /~ other.get_containers then
-				Result := false
-			else
-				Result := true
-			end
+			Result := current = other
+			or else get_capacity = other.get_capacity
+			and then get_pid ~ other.get_pid
+			and then get_name ~ other.get_name
+			and then get_materials ~ other.get_materials
+			and then get_containers ~ other.get_containers
 		end
 
 

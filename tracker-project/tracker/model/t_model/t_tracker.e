@@ -153,7 +153,6 @@ feature{T_TRACKER}
 			Result.remove_phase(a_pid)
 		end
 
---	container_move aliad |
 
 feature -- public queries
 
@@ -243,26 +242,37 @@ feature -- public queries
 			end
 		end
 
-	is_equal (other: like current): BOOLEAN
-		do
-			if current = other then
-				Result := true
-			elseif current_num_actions /= other.get_current_num_actions then
-				Result := false
-			elseif current_state_id /= other.get_current_state_id then
-				Result := false
-			elseif error /~ other.get_error then
-				Result := false
-			elseif max_phase_rad /= other.get_max_phase_rad then
-				Result := false
-			elseif max_container_rad /= other.get_max_container_rad then
-				Result := false
-			elseif phases /~ other.get_phases then
-				Result := false
-			else
-				Result := true
+--	is_equal (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif current_num_actions /= other.get_current_num_actions then
+--				Result := false
+--			elseif current_state_id /= other.get_current_state_id then
+--				Result := false
+--			elseif error /~ other.get_error then
+--				Result := false
+--			elseif max_phase_rad /= other.get_max_phase_rad then
+--				Result := false
+--			elseif max_container_rad /= other.get_max_container_rad then
+--				Result := false
+--			elseif phases /~ other.get_phases then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
+
+		is_equal (other: like current): BOOLEAN
+			do
+				Result := current = other
+				or else get_current_num_actions = other.get_current_num_actions
+				and then get_current_state_id = other.get_current_state_id
+				and then get_error ~ other.get_error
+				and then get_max_phase_rad = other.get_max_phase_rad
+				and then get_max_container_rad = other.get_max_container_rad
+				and then get_phases ~ other.get_phases
 			end
-		end
 
 
 feature -- print

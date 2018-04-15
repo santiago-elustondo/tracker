@@ -72,32 +72,46 @@ feature -- queries
 			pid = old pid
 		end
 
+--	is_less alias "<" (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := False
+--			elseif current.get_cid < other.get_cid then
+--				Result := True
+--			elseif current.get_cid ~ other.get_cid then
+--				Result := current.get_pid < other.get_pid
+--			end
+--		end
+
+--	is_equal (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif cid /~ other.get_cid then
+--				Result := false
+--			elseif pid /~ other.get_pid then
+--				Result := false
+--			elseif props.material /~ other.get_props.material then
+--				Result := false
+--			elseif props.radioactivity /~ other.get_props.radioactivity then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
+
 	is_less alias "<" (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := False
-			elseif current.get_cid < other.get_cid then
-				Result := True
-			elseif current.get_cid ~ other.get_cid then
-				Result := current.get_pid < other.get_pid
-			end
+			Result := get_cid < other.get_cid
 		end
 
 	is_equal (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := true
-			elseif cid /~ other.get_cid then
-				Result := false
-			elseif pid /~ other.get_pid then
-				Result := false
-			elseif props.material /~ other.get_props.material then
-				Result := false
-			elseif props.radioactivity /~ other.get_props.radioactivity then
-				Result := false
-			else
-				Result := true
-			end
+			Result := current = other
+			or else get_cid ~ other.get_cid
+			and then get_pid ~ other.get_pid
+			and then get_props.material ~ other.get_props.material
+			and then get_props.radioactivity ~ other.get_props.radioactivity
 		end
 
 

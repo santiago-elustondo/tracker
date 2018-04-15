@@ -135,17 +135,24 @@ feature { HISTORICAL, HISTORY } -- commands
 
 feature{ HISTORY }
 
+--	is_equal(other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif cursor /= other.cursor then
+--				Result := false
+--			elseif implementation /~ other.implementation then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
+
 	is_equal(other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := true
-			elseif cursor /= other.cursor then
-				Result := false
-			elseif implementation /~ other.implementation then
-				Result := false
-			else
-				Result := true
-			end
+			Result := current = other
+			or else cursor = other.cursor
+			and then implementation ~ other.implementation
 		end
 
 
