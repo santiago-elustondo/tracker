@@ -269,14 +269,14 @@ feature -- public queries
 
 feature -- print
 
-	do_print(visitor: T_PRINT)
+	do_visit(visitor: T_VISITOR)
 		do
 			visitor.visit_tracker (current)
 		end
 
 	out : STRING
 		do
-			do_print(get_printer)
+			do_visit(get_printer)
 			Result := get_printer.out
 		end
 invariant

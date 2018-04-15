@@ -202,7 +202,7 @@ feature -- print
 --			Result.append (materials [materials.count].get_name+ "}")
 --		end
 
-	do_print(visitor: T_PRINT)
+	do_visit(visitor: T_VISITOR)
 		do
 			visitor.visit_phase (current)
 		end

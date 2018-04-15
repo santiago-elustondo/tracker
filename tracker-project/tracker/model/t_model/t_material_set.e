@@ -54,10 +54,6 @@ feature --queries
 			Result := materials ~ other.materials
 		end
 
-	do_print(visitor: T_VISITOR)
-		do
-			visitor.visit_materials (current)
-		end
 
 feature {NONE} --commands
 
@@ -69,7 +65,12 @@ feature {NONE} --commands
 			end
 		end
 
+feature -- print
 
+	do_visit(visitor: T_VISITOR)
+		do
+			visitor.visit_materials (current)
+		end
 
 invariant
 	all_elements_unique:

@@ -128,7 +128,7 @@ feature -- print
 --			Result.append (get_props.radioactivity.out)
 --		end
 
-	do_print(visitor: T_VISITOR)
+	do_visit(visitor: T_VISITOR)
 		do
 			visitor.visit_container (current)
 		end

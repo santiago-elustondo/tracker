@@ -33,7 +33,7 @@ feature
 			out.append (phase.get_capacity.out + ",")
 			out.append (phase.get_containers.count.out + ",")
 			out.append (phase.get_radiation.out + ",")
-			phase.get_materials.do_print (current)
+			phase.get_materials.do_visit (current)
 		end
 
 	visit_container(con: T_CONTAINER)
@@ -88,7 +88,7 @@ feature{NONE} --helper methods
 				ph.extend(p.item)
 			end
 			across ph as p loop
-				p.item.do_print (current)
+				p.item.do_visit (current)
 			end
 		end
 
@@ -103,7 +103,7 @@ feature{NONE} --helper methods
 				end
 			end
 			across con as c loop
-				c.item.do_print (current)
+				c.item.do_visit (current)
 			end
 		end
 
