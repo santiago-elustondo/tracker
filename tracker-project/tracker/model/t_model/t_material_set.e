@@ -54,6 +54,17 @@ feature --queries
 			Result := materials ~ other.materials
 		end
 
+	as_integers: ARRAY[INTEGER_64]
+		do
+			create result.make_empty
+			across materials as m loop
+				result.force (m.item.get_mid, m.cursor_index)
+			end
+--			across 1 |..| materials.count as m loop
+--				result.put (materials[m.item].get_mid, m.item)
+--			end
+		end
+
 
 feature {NONE} --commands
 

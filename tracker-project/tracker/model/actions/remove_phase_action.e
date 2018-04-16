@@ -23,12 +23,20 @@ feature{NONE} -- Initialization
 		do
 			set_target(a_target)
 			pid := a_pid
+			if target.has_phase (pid) then
+				phase_name := target.get_phase (pid).get_name
+				capacity := target.get_phase (pid).get_capacity
+				expected_materials := target.get_phase (pid).get_materials.as_integers
+			end
 			set_default_error
 		end
 
 feature{NONE} -- params
 
 	pid: STRING
+	phase_name: detachable STRING
+	capacity: INTEGER_64
+	expected_materials: detachable ARRAY[INTEGER_64]
 
 feature
 
@@ -44,7 +52,7 @@ feature
 				set_error(error.err_phase_id_not_exists)
 			else
 				set_error(error.err_ok)
-				phase := target.get_phase (pid)
+--				phase := target.get_phase (pid)
 				target.remove_phase (pid)
     		end
     	end
@@ -52,8 +60,16 @@ feature
 	undo
 		do
 			if action_success then
-				if attached phase as p then
-					target.add_phase (p)
+--				if attached phase as p then
+--					target.add_phase (p)
+--				end
+				if (attached phase_name as pn) and (attached expected_materials as em) then
+					target.add_phase(create {T_PHASE}.make(
+						pid,
+						pn,
+						capacity,
+						em
+					))
 				end
 			end
 			precursor

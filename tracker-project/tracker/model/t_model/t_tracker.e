@@ -28,10 +28,9 @@ feature { NONE } -- state
 	max_phase_rad: VALUE
 	max_container_rad: VALUE
 	phases: STRING_TABLE[T_PHASE]
-
 	current_num_actions: INTEGER;
 	current_state_id: INTEGER;
-	printer: T_PRINT
+--	printer: T_PRINT
 
 feature{ NONE } -- Initialization
 
@@ -43,7 +42,7 @@ feature{ NONE } -- Initialization
 			error := {ERROR_HANDLING}.err_ok
 			current_num_actions := 0;
 			current_state_id := 0;
-			create printer.make
+--			create printer.make
 		end
 
 feature { ETF_MODEL_FACADE }-- commands
@@ -168,11 +167,6 @@ feature -- public queries
 			end
 		end
 
-	get_printer: T_PRINT
-		do
-			Result := printer
-		end
-
 	get_current_num_actions: INTEGER
 		do
 			Result := current_num_actions
@@ -239,6 +233,11 @@ feature -- public queries
 			result = phases
 		end
 
+	has_phase(pid: STRING): BOOLEAN
+		do
+			Result := phases.has (pid)
+		end
+
 	find_container(cid: STRING) : detachable T_PHASE
 		do
 			across phases as p loop
@@ -264,7 +263,7 @@ feature -- public queries
 			and then get_max_phase_rad = other.get_max_phase_rad
 			and then get_max_container_rad = other.get_max_container_rad
 			and then get_phases ~ other.get_phases
-			and then get_printer ~ other.get_printer
+--			and then get_printer ~ other.get_printer
 		end
 
 feature -- print
@@ -275,10 +274,14 @@ feature -- print
 		end
 
 	out : STRING
+		local
+			printer: T_PRINT
 		do
-			do_visit(get_printer)
-			Result := get_printer.out
+			create printer.make
+			do_visit(printer)
+			Result := printer.out
 		end
+
 invariant
 	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end
 	phase_rad_not_exceeded: across get_phases as p all p.item.get_radiation <= get_max_phase_rad end

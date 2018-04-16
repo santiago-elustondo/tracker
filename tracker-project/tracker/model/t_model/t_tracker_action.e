@@ -43,8 +43,8 @@ feature { T_TRACKER_ACTION } -- private state
 	error: ERROR_HANDLING
 	prev_error: STRING
 	exec_error: STRING
-	container: detachable T_CONTAINER
-	phase: detachable T_PHASE
+--	container: detachable T_CONTAINER
+--	phase: detachable T_PHASE
 	prev_state_id: INTEGER
 	post_state_id: INTEGER
 
@@ -67,8 +67,8 @@ feature { T_TRACKER_ACTION } -- private queries
 			and then post_state_id = other.post_state_id
 			and then exec_error ~ other.exec_error
 			and then prev_error ~ other.prev_error
-			and then container ~ other.container
-			and then phase ~ other.phase
+--			and then container ~ other.container
+--			and then phase ~ other.phase
 		end
 
 
