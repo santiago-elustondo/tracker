@@ -10,6 +10,7 @@ class
 inherit
 	COMPARABLE
 		redefine is_equal end
+	
 
 create
 	make

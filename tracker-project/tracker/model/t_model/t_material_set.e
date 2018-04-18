@@ -54,7 +54,7 @@ feature --queries
 			Result := materials ~ other.materials
 		end
 
-	as_integers: ARRAY[INTEGER_64]
+	as_integer_array: ARRAY[INTEGER_64]
 		do
 			create result.make_empty
 			across materials as m loop
@@ -63,6 +63,16 @@ feature --queries
 --			across 1 |..| materials.count as m loop
 --				result.put (materials[m.item].get_mid, m.item)
 --			end
+		end
+
+	test: BOOLEAN
+		do
+			result :=
+			across materials as i all
+				across materials as j all
+					(i.cursor_index /= j.cursor_index) implies (i.item /= j.item)
+				end
+			end
 		end
 
 
@@ -84,11 +94,19 @@ feature -- print
 		end
 
 invariant
+--	all_elements_unique:
+--		across 1 |..| count as i all
+--			across 1 |..| count as j all
+--				(i.item /= j.item) implies (materials[i.item] /= materials[j.item])
+--			end
+--	 	end
+
 	all_elements_unique:
-		across 1 |..| count as i all
-			across 1 |..| count as j all
-				(i.item /= j.item) implies (materials[i.item] /= materials[j.item])
+		across materials as i all
+			across materials as j all
+--				(i.cursor_index /= j.cursor_index) implies (i.item /= j.item)
+				(i.item ~ j.item) implies (i.cursor_index = j.cursor_index)
 			end
-	 	end
+		end
 
 end

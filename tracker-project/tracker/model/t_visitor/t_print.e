@@ -9,7 +9,10 @@ class
 
 inherit
 	T_VISITOR
-		redefine is_equal, out end
+		redefine
+			is_equal,
+			out
+		end
 
 create
 	make

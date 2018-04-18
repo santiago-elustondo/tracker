@@ -26,7 +26,7 @@ feature{NONE} -- Initialization
 			if target.has_phase (pid) then
 				phase_name := target.get_phase (pid).get_name
 				capacity := target.get_phase (pid).get_capacity
-				expected_materials := target.get_phase (pid).get_materials.as_integers
+				expected_materials := target.get_phase (pid).get_materials.as_integer_array
 			end
 			set_default_error
 		end
