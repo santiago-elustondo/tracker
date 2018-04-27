@@ -19,7 +19,7 @@ note
 deferred class
 	HISTORICAL[ACTION_TYPE -> ACTION[ANY]]
 
-feature { NONE }
+feature { T_TRACKER }
 	history:HISTORY[ACTION_TYPE]
 
 feature { NONE }
@@ -63,7 +63,7 @@ feature { T_TRACKER_ACTION, ETF_COMMAND }
 			end
 		end
 
-	get_history: HISTORY[ACTION_TYPE]
+	get_history: like history
 		do
 			Result := history
 		end

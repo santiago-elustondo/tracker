@@ -9,6 +9,8 @@ class
 
 inherit
 	COMPARABLE
+		redefine is_equal end
+	
 
 create
 	make
@@ -71,29 +73,65 @@ feature -- queries
 			pid = old pid
 		end
 
+--	is_less alias "<" (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := False
+--			elseif current.get_cid < other.get_cid then
+--				Result := True
+--			elseif current.get_cid ~ other.get_cid then
+--				Result := current.get_pid < other.get_pid
+--			end
+--		end
+
+--	is_equal (other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif cid /~ other.get_cid then
+--				Result := false
+--			elseif pid /~ other.get_pid then
+--				Result := false
+--			elseif props.material /~ other.get_props.material then
+--				Result := false
+--			elseif props.radioactivity /~ other.get_props.radioactivity then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
+
 	is_less alias "<" (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := False
-			elseif current.get_cid < other.get_cid then
-				Result := True
-			elseif current.get_cid ~ other.get_cid then
-				Result := current.get_pid < other.get_pid
-			end
+			Result := get_cid < other.get_cid
+		end
+
+	is_equal (other: like current): BOOLEAN
+		do
+			Result := current = other
+			or else get_cid ~ other.get_cid
+			and then get_pid ~ other.get_pid
+			and then get_props.material ~ other.get_props.material
+			and then get_props.radioactivity ~ other.get_props.radioactivity
 		end
 
 
 feature -- print
 
-	print_container : STRING
+--	print_container : STRING
+--		do
+--			Create Result.make_from_string("    ")
+--			Result.append (get_cid)
+--			Result.append ("->")
+--			Result.append (get_pid)
+--			Result.append ("->")
+--			Result.append (get_props.material.get_name + ",")
+--			Result.append (get_props.radioactivity.out)
+--		end
+
+	do_visit(visitor: T_VISITOR)
 		do
-			Create Result.make_from_string("    ")
-			Result.append (get_cid)
-			Result.append ("->")
-			Result.append (get_pid)
-			Result.append ("->")
-			Result.append (get_props.material.get_name + ",")
-			Result.append (get_props.radioactivity.out)
+			visitor.visit_container (current)
 		end
 
 

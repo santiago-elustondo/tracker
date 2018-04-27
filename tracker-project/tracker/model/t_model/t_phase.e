@@ -9,6 +9,7 @@ class
 
 inherit
 	COMPARABLE
+		redefine is_equal end
 
 create
 	make
@@ -36,7 +37,7 @@ feature {NONE} -- cmds
 			containers.compare_objects
 		end
 
-feature {T_TRACKER_ACTION} -- commands
+feature {T_TRACKER_ACTION, T_PHASE} -- commands
 
 	add_container(a_container: T_CONTAINER)
 		require
@@ -51,6 +52,7 @@ feature {T_TRACKER_ACTION} -- commands
 			container_exists: get_containers.has(a_container.get_cid)
 			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
 			container_count_increased: get_containers.count = old get_containers.count + 1
+			container_added: current ~ old current.deep_twin |-> (a_container)
 		end
 
 	remove_container(a_cid: STRING)
@@ -62,6 +64,20 @@ feature {T_TRACKER_ACTION} -- commands
 		ensure
 			container_removed: not get_containers.has (a_cid)
 			container_count_decreased: get_containers.count = old get_containers.count - 1
+			container_removed: current ~ old current.deep_twin |-/> (a_cid)
+		end
+
+feature {T_PHASE}
+	container_added alias "|->"(a_container: T_CONTAINER): like current
+		do
+			Result := current.deep_twin
+				Result.add_container(a_container)
+			end
+
+	container_removed alias "|-/>"(a_cid: STRING): like current
+		do
+			Result := current.deep_twin
+			Result.remove_container(a_cid)
 		end
 
 
@@ -125,13 +141,22 @@ feature -- queries
 
 	is_less alias "<" (other: like current): BOOLEAN
 		do
-			if current = other then
-				Result := False
-			elseif current.get_pid < other.get_pid then
-				Result := True
-			elseif current.get_pid ~ other.get_pid then
-				Result := current.get_name < other.get_name
-			end
+			Result := get_pid < other.get_pid
+		end
+
+	is_equal (other: like current): BOOLEAN
+		do
+			Result := current = other
+			or else get_capacity = other.get_capacity
+			and then get_pid ~ other.get_pid
+			and then get_name ~ other.get_name
+			and then get_materials ~ other.get_materials
+			and then get_containers ~ other.get_containers
+		end
+
+	do_visit(visitor: T_VISITOR)
+		do
+			visitor.visit_phase (current)
 		end
 
 feature -- print

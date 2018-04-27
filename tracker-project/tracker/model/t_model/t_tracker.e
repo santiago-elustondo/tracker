@@ -1,6 +1,6 @@
 ﻿note
-	description: "A default business model."
-	author: "Jackie Wang"
+	description: "The Tracker central state model"
+	author: "Josh Phillip & Santiago Elustondo"
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -15,7 +15,8 @@ inherit
 	HISTORICAL[T_TRACKER_ACTION]
 		redefine
 			make,
-			out
+			out,
+			is_equal
 		end
 
 create { ANY }
@@ -42,7 +43,7 @@ feature { ETF_MODEL_FACADE }-- commands
 			make
 		end
 
-feature { T_TRACKER_ACTION } -- commands
+feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 
 	new_tracker(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
@@ -54,8 +55,7 @@ feature { T_TRACKER_ACTION } -- commands
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		ensure
-			phases_count_unchanged: get_phases.count = old get_phases.count
-
+			phases_unchanged: phases ~ old get_phases.deep_twin
 		end
 
 	add_phase(a_phase: T_PHASE)
@@ -71,6 +71,7 @@ feature { T_TRACKER_ACTION } -- commands
 		ensure
 			phase_exists: get_phases.has(a_phase.get_pid)
 			phases_count_increased: get_phases.count = old get_phases.count + 1
+			phase_added: current ~ old current.deep_twin |-> (a_phase)
 		end
 
 	remove_phase(a_pid: STRING)
@@ -82,6 +83,7 @@ feature { T_TRACKER_ACTION } -- commands
 		ensure
 			phase_no_longer_exists: not get_phases.has(a_pid)
 			phases_count_decreased: get_phases.count = old get_phases.count - 1
+			phase_removed: current ~ old current.deep_twin |-/> (a_pid)
 		end
 
 	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
@@ -97,6 +99,8 @@ feature { T_TRACKER_ACTION } -- commands
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
 			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
 		ensure
+			phase_moved: (get_phase(a_pid2) ~ old get_phase(a_pid2).deep_twin |-> (a_container))
+				and (get_phase(a_pid1) ~ old get_phase(a_pid1).deep_twin |-/> (a_container.get_cid))
 			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
 			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
 			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1
@@ -125,6 +129,19 @@ feature { T_TRACKER_ACTION } -- commands
 			current_num_actions = old current_num_actions + 1
 		end
 
+feature{T_TRACKER}
+	phases_added alias "|->"(a_phase: T_PHASE): like current
+		do
+			Result := current.deep_twin
+			Result.add_phase(a_phase)
+		end
+
+	phase_removed alias "|-/>"(a_pid: STRING): like current
+		do
+			Result := current.deep_twin
+			Result.remove_phase(a_pid)
+		end
+
 feature { NONE } -- state
 
 	max_phase_rad: VALUE
@@ -143,7 +160,7 @@ feature -- public queries
 				p.item.get_containers.count /= 0
 			end
 		ensure
-			-- result = ∃p( p has a container )
+			-- result = ∀p( p ∈ phases -> p has a container )
 			result = across phases as p some
 				p.item.get_containers.count /= 0
 			end
@@ -215,6 +232,11 @@ feature -- public queries
 			result = phases
 		end
 
+	has_phase(pid: STRING): BOOLEAN
+		do
+			Result := phases.has (pid)
+		end
+
 	find_container(cid: STRING) : detachable T_PHASE
 		do
 			across phases as p loop
@@ -223,10 +245,7 @@ feature -- public queries
 				end
 			end
 		end
-
-
-feature -- print
-
+		
 	print_old_state : BOOLEAN
 		do
 			Result := (get_current_state_id /= get_current_num_actions)
@@ -234,67 +253,33 @@ feature -- print
 				and then (error /= {ERROR_HANDLING}.err_redo)
 		end
 
-	print_tracker: STRING
+	is_equal (other: like current): BOOLEAN
 		do
-			Create Result.make_from_string("%N  max_phase_radiation: ")
-			Result.append (get_max_phase_rad.out)
-			Result.append (", max_container_radiation: ")
-			Result.append (get_max_container_rad.out)
-			Result.append ("%N  phases: pid->name:capacity,count,radiation")
-			Result.append (print_phases)
-			Result.append ("%N  containers: cid->pid->material,radioactivity")
-			Result.append (print_containers)
+			Result := current = other
+			or else get_current_num_actions = other.get_current_num_actions
+			and then get_current_state_id = other.get_current_state_id
+			and then get_error ~ other.get_error
+			and then get_max_phase_rad = other.get_max_phase_rad
+			and then get_max_container_rad = other.get_max_container_rad
+			and then get_phases ~ other.get_phases
+--			and then get_printer ~ other.get_printer
 		end
 
-	print_state : STRING
-		do
-			Create Result.make_from_string ("  state ")
-			Result.append (get_current_num_actions.out)
-			if print_old_state then
-				Result.append(" (to ")
-				Result.append(current_state_id.out)
-				Result.append(")")
-			end
-			Result.append (" ")
-		end
 
-	print_phases : STRING
-		local
-			ph: SORTED_TWO_WAY_LIST[T_PHASE]
-		do
-			Create ph.make
-			Create Result.make_empty
-			across phases as p loop
-				ph.extend(p.item)
-			end
-			across ph as p loop
-				Result.append("%N"+p.item.print_phase)
-			end
-		end
+feature -- print
 
-	print_containers : STRING
-		local
-			con : SORTED_TWO_WAY_LIST[T_CONTAINER]
+	do_visit(visitor: T_VISITOR)
 		do
-			Create con.make
-			Create Result.make_empty
-			across phases as p loop
-				across p.item.get_containers as c loop
-					con.extend (c.item)
-				end
-			end
-			across con as c loop
-				Result.append("%N"+c.item.print_container)
-			end
+			visitor.visit_tracker (current)
 		end
 
 	out : STRING
+		local
+			printer: T_PRINT
 		do
-			create Result.make_from_string ("")
-			Result.append (print_state + error)
-			if (error ~ {ERROR_HANDLING}.err_ok) then
-				Result.append (print_tracker)
-			end
+			create printer.make
+			do_visit(printer)
+			Result := printer.out
 		end
 
 invariant
@@ -308,6 +293,12 @@ invariant
 		not (current_num_actions < current_state_id);
 	current_actions_and_state_id_are_not_negative:
 		not (current_num_actions < 0);
+
+	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end
+	phase_rad_not_exceeded: across get_phases as p all p.item.get_radiation <= get_max_phase_rad end
+	con_rad_not_exceeded: across get_phases as p all
+		across p.item.get_containers as c all not get_container_rad_exceeded(c.item.get_props.radioactivity) end
+	end
 
 
 end

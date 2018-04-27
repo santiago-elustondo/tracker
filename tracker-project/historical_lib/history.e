@@ -10,10 +10,14 @@ note
 class
 	HISTORY[G]
 
+inherit
+	ANY
+		redefine is_equal end
+
 create
 	make
 
-feature { NONE } --state
+feature { HISTORY } --state
 	implementation: ARRAY[G];
 	cursor: INTEGER
 
@@ -47,13 +51,27 @@ feature -- queries
 	added alias "|->"(item: G): like current
 		do
 			Result := current.deep_twin
+			Result.add (item)
+--		ensure
+--			cursor_incremented: result.cursor = old result.cursor + 1
+--			current_item_is_new_one: result.get_element = item
+--			no_future: not not has_future
+		end
+
+	no_future: like current
+		do
+			Result := current.deep_twin
 			Result.clear_future
-			Result.next_element
-			Result.get_implementation.force (item, result.get_cursor)
-		ensure
-			cursor_incremented: result.get_cursor = old result.get_cursor + 1
-			current_item_is_new_one: result.get_element = item
-			no_future: not result.has_future
+--		ensure
+--			cursor_end_position: result.cursor = result.implementation.count
+		end
+
+	no_past: like current
+		do
+			Result := current.deep_twin
+			Result.clear_past
+--		ensure
+--			cursor_start_position: cursor = 1
 		end
 
 
@@ -68,9 +86,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			new_history_is_equal_except_for_new_item: arrays_have_same_items(
-				array_slice(implementation, 1, implementation.count - 1), old implementation
-			)
+			item_added: current ~ (old current.deep_twin |-> (item))
 		end
 
 	prev_element
@@ -93,8 +109,8 @@ feature { HISTORICAL, HISTORY } -- commands
 		do
 			implementation := array_slice(implementation, implementation.lower, cursor)
 		ensure
-			no_future: not has_future
 			cursor_end_position: cursor = implementation.count
+			no_future: current ~ old current.deep_twin.no_future
 		end
 
 	clear_past
@@ -102,7 +118,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			implementation := array_slice(implementation, cursor, implementation.upper)
 			cursor := 1
 		ensure
-			no_past: not has_past
+			no_past: current ~ old current.deep_twin.no_past
 			cursor_start_position: cursor = 1
 		end
 
@@ -118,14 +134,24 @@ feature { HISTORICAL, HISTORY } -- commands
 
 feature{ HISTORY }
 
-	get_implementation: ARRAY[G]
-		do
-			Result := implementation
-		end
+--	is_equal(other: like current): BOOLEAN
+--		do
+--			if current = other then
+--				Result := true
+--			elseif cursor /= other.cursor then
+--				Result := false
+--			elseif implementation /~ other.implementation then
+--				Result := false
+--			else
+--				Result := true
+--			end
+--		end
 
-	get_cursor: INTEGER
+	is_equal(other: like current): BOOLEAN
 		do
-			Result := cursor
+			Result := current = other
+			or else cursor = other.cursor
+			and then implementation ~ other.implementation
 		end
 
 
@@ -153,23 +179,10 @@ feature { NONE } -- utils
 
 	-- utility class for comparing arrays
 	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
-		local
-			i: INTEGER
 		do
-			result := true
-			if not ( a_array.count = a_array_2.count ) then
-				result := false
-			else
-				from
-					i := 1
-				until
-					i > a_array.count
-				loop
-					if not ( a_array[i] = a_array_2[i] ) then
-						result := false
-					end
-					i := i + 1
-				end
+			Result := (a_array.count = a_array_2.count)
+			if result then
+				result := across 1 |..| a_array.count as a all a_array[a.item] = a_array_2[a.item] end
 			end
 		end
 

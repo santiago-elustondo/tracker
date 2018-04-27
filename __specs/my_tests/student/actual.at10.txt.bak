@@ -1,1 +1,109 @@
-Error: current mode is ETF GUI (no command line arguments).
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 1 e19: there is no more to undo
+->undo
+  state 2 e19: there is no more to undo
+->redo
+  state 3 e20: there is no more to redo
+->redo
+  state 4 e20: there is no more to redo
+->new_phase("gg","nore",1000000000,<<glass, plastic, plastic, plastic, glass, metal, plastic>>)
+  state 5 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 6 (to 0) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 7 e19: there is no more to undo
+->redo
+  state 8 (to 5) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 9 e20: there is no more to redo
+->new_phase("","",0,<<>>)
+  state 10 e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 11 (to 5) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 12 (to 0) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->redo
+  state 13 (to 5) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 14 (to 10) e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_phase("1.924","1215.6",1,<<glass>>)
+  state 15 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    1.924->1215.6:1,0,0.00,{glass}
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->new_phase("2","",0,<<>>)
+  state 16 e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_phase(" ","",0,<<>>)
+  state 17 e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_phase("apple","",0,<<>>)
+  state 18 e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_phase("gg","2",0,<<>>)
+  state 19 e6: phase identifier already exists
+->undo
+  state 20 (to 18) e5: identifiers/names must start with A-Z, a-z or 0..9
+->undo
+  state 21 (to 17) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 22 (to 18) e5: identifiers/names must start with A-Z, a-z or 0..9
+->redo
+  state 23 (to 19) e6: phase identifier already exists
+->undo
+  state 24 (to 18) e5: identifiers/names must start with A-Z, a-z or 0..9
+->new_phase("apple","3",0,<<>>)
+  state 25 e7: phase capacity must be a positive integer
+->new_phase("apple","2",1,<<>>)
+  state 26 e8: there must be at least one expected material for this phase
+->new_phase("apple","7",1,<<metal, metal, metal, glass, glass, glass, plastic>>)
+  state 27 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    1.924->1215.6:1,0,0.00,{glass}
+    apple->7:1,0,0.00,{metal,glass,plastic}
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->new_phase("apple"," ",0,<<>>)
+  state 28 e6: phase identifier already exists
+->new_phase("apple","banana",0,<<>>)
+  state 29 e6: phase identifier already exists
+->undo
+  state 30 (to 28) e6: phase identifier already exists
+->undo
+  state 31 (to 27) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    1.924->1215.6:1,0,0.00,{glass}
+    apple->7:1,0,0.00,{metal,glass,plastic}
+    gg->nore:1000000000,0,0.00,{glass,plastic,metal}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 32 (to 28) e6: phase identifier already exists
+->redo
+  state 33 (to 29) e6: phase identifier already exists

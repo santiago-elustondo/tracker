@@ -4,7 +4,7 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-frozen expanded class
+expanded class
 	T_MATERIAL_ACCESS
 
 feature
