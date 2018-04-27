@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "A default business model."
 	author: "Jackie Wang"
 	date: "$Date$"
@@ -143,6 +143,7 @@ feature -- public queries
 				p.item.get_containers.count /= 0
 			end
 		ensure
+			-- result = ∃p( p has a container )
 			result = across phases as p some
 				p.item.get_containers.count /= 0
 			end
@@ -295,5 +296,18 @@ feature -- print
 				Result.append (print_tracker)
 			end
 		end
+
+invariant
+
+	-- max_phase_rad >= max_container_rad >= 0
+	max_phase_rad_not_smaller_than_max_container_rad: not (max_phase_rad < max_container_rad);
+	max_rads_are_positive: not (max_container_rad < 0.0);
+
+	-- current_num_actions >= current_state_id >= 0
+	current_num_actions_not_smaller_than_current_state_id:
+		not (current_num_actions < current_state_id);
+	current_actions_and_state_id_are_not_negative:
+		not (current_num_actions < 0);
+
 
 end

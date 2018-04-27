@@ -1,3 +1,1 @@
-new_tracker(50, 10)
-new_phase("pid1", "unpacking", 2, <<glass, metal, plastic, liquid>>)
-new_container("cid4", [metal,   3.0], "pid1")
+new_tracker(13, 5)

@@ -69,8 +69,7 @@ feature { HISTORICAL, HISTORY } -- commands
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
 			new_history_is_equal_except_for_new_item: arrays_have_same_items(
-				array_slice(implementation, 1, implementation.count - 1),
-				old implementation
+				array_slice(implementation, 1, implementation.count - 1), old implementation
 			)
 		end
 
@@ -153,7 +152,6 @@ feature { NONE } -- utils
 		end
 
 	-- utility class for comparing arrays
-
 	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
 		local
 			i: INTEGER

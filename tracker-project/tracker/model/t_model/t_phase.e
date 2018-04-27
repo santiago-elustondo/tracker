@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Summary description for {T_PHASE}."
 	author: ""
 	date: "$Date$"
@@ -13,14 +13,14 @@ inherit
 create
 	make
 
-feature {NONE} -- params
+feature {NONE} -- state
 	pid: STRING
 	name: STRING
 	capacity: INTEGER_64
 	materials: T_MATERIAL_SET
 	containers: STRING_TABLE[T_CONTAINER]
 
-feature{NONE} -- cmds
+feature {NONE} -- cmds
 	make(
 		a_pid: STRING
 		a_name: STRING
@@ -36,7 +36,7 @@ feature{NONE} -- cmds
 			containers.compare_objects
 		end
 
-feature{T_TRACKER_ACTION} -- commands
+feature {T_TRACKER_ACTION} -- commands
 
 	add_container(a_container: T_CONTAINER)
 		require
@@ -149,5 +149,21 @@ feature -- print
 			end
 			Result.append (materials [materials.count].get_name+ "}")
 		end
+
+invariant
+
+	-- 	∀c( c ∈ containers -> c.radiation >= 0 )
+	all_containers_have_non_negative_radiation:
+		 across containers as c all c.item.get_props.radioactivity >= 0.0 end;
+
+	-- 	∀c( c ∈ containers -> c.material ∈ materials )
+	all_containers_are_of_valid_material:
+		 across containers as c all
+		 	across materials as m some c.item.get_props.material = m.item end
+		 end;
+
+	-- capacity >= #(containers)
+	capacity_not_smaller_than_sum_of_container_radioactivities:
+		not (capacity < containers.count);
 
 end

@@ -6,6 +6,8 @@ note
 
 class
 	T_MATERIAL_SET
+	inherit
+		ITERABLE[T_MATERIAL]
 
 create
 	make
@@ -26,6 +28,11 @@ feature{NONE} -- Initialization
 		end
 
 feature --queries
+
+	new_cursor: ITERATION_CURSOR[T_MATERIAL]
+		do
+			result := materials.new_cursor
+		end
 
 	count : INTEGER
 		do
