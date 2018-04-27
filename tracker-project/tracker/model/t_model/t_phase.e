@@ -188,7 +188,7 @@ invariant
 		 end;
 
 	-- capacity >= #(containers)
-	capacity_not_smaller_than_sum_of_container_radioactivities:
+	capacity_not_smaller_than_sum_of_containers:
 		not (capacity < containers.count);
 
 end
