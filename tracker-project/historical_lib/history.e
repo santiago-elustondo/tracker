@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Summary description for {HISTORY}."
 	author: ""
 	date: "$Date$"
@@ -187,7 +187,16 @@ feature { NONE } -- utils
 		end
 
 invariant
+
+	-- cursor >= 0
 	cursor_is_non_negative: cursor >= 0
+
+	-- cursor <= |{ i : i ∈ history }|
 	cursor_is_not_larger_than_history_count: cursor <= implementation.count
-	no_future_if_max_cursor: has_future implies (cursor < implementation.count)
+
+	-- ∃x( x ∈ history && ∀i( i is an integer && i <= cursor && history[i] is not x ) ) <=> ( cursor < |{ x : x ∈ history }| )
+	no_future_if_and_only_if_max_cursor:
+		(has_future implies (cursor < implementation.count))
+		and ((cursor < implementation.count) implies has_future)
+
 end

@@ -177,11 +177,11 @@ feature -- print
 
 invariant
 
-	-- 	∀c( c ∈ containers -> c.radiation >= 0 )
+	-- ∀c( c ∈ containers -> c.radiation >= 0 )
 	all_containers_have_non_negative_radiation:
 		 across containers as c all c.item.get_props.radioactivity >= 0.0 end;
 
-	-- 	∀c( c ∈ containers -> c.material ∈ materials )
+	-- ∀c( c ∈ containers -> c.material ∈ materials )
 	all_containers_are_of_valid_material:
 		 across containers as c all
 		 	across materials as m some c.item.get_props.material = m.item end

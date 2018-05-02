@@ -10,7 +10,7 @@ class
 inherit
 	COMPARABLE
 		redefine is_equal end
-	
+
 
 create
 	make
@@ -133,6 +133,12 @@ feature -- print
 		do
 			visitor.visit_container (current)
 		end
+
+invariant
+
+	-- radioactivity >= 0
+	radioactivity_is_not_negative:
+		not (props.radioactivity < .0)
 
 
 end
