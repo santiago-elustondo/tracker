@@ -43,14 +43,14 @@ feature { ETF_MODEL_FACADE }-- commands
 			make
 		end
 
-feature { T_TRACKER_ACTION, T_TRACKER } -- commands
+feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 
 	new_tracker(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
 		require
 			tracker_not_in_use : not tracker_in_use
-			max_phase_rad_is_positive: not (get_max_phase_rad < 0.0)
-    		max_container_rad_is_positive: not (get_max_container_rad < 0.0)
-			max_phase_rad_is_not_smaller_than_max_container_rad: not (get_max_container_rad > get_max_phase_rad)
+			max_phase_rad_is_positive: not (a_max_phase_rad < 0.0)
+    		max_container_rad_is_positive: not (a_max_container_rad < 0.0)
+			max_phase_rad_is_not_smaller_than_max_container_rad: not (a_max_container_rad > a_max_phase_rad)
 		do
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
@@ -92,6 +92,7 @@ feature { T_TRACKER_ACTION, T_TRACKER } -- commands
 			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
 			radioactivity_non_negative: not (a_container.get_props.radioactivity < 0.0)
 			max_capacity_not_exceeded: not get_phase(a_pid2).max_capacity
+			phase_rad_not_exceeded: not get_phase_rad_exceeded (a_pid2, a_container.get_props.radioactivity)
 			material_expected: get_phase(a_pid2).get_materials.material_expected (a_container.get_props.material.get_mid)
 			has_container: get_phase(a_pid1).get_containers.has_item (a_container)
 		do
@@ -245,7 +246,7 @@ feature -- public queries
 				end
 			end
 		end
-		
+
 	print_old_state : BOOLEAN
 		do
 			Result := (get_current_state_id /= get_current_num_actions)
@@ -262,7 +263,6 @@ feature -- public queries
 			and then get_max_phase_rad = other.get_max_phase_rad
 			and then get_max_container_rad = other.get_max_container_rad
 			and then get_phases ~ other.get_phases
---			and then get_printer ~ other.get_printer
 		end
 
 

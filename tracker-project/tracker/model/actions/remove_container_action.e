@@ -53,7 +53,6 @@ feature -- commands
 				set_error(error.err_con_id_not_exists)
     		else
     			set_error(error.err_ok)
---    			container := p.get_container (cid)
 				target.get_phase (p).remove_container (cid)
 			end
     	end
@@ -61,9 +60,6 @@ feature -- commands
 	undo
 		do
 			if action_success then
---				if (attached phase as p) and then (attached container as con) then
---					p.add_container (con)
---				end
 				if (attached pid as p) then
 					target.get_phase (p).add_container (create {T_CONTAINER}.make(
 						cid,

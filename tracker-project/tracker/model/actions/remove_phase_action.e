@@ -52,7 +52,6 @@ feature
 				set_error(error.err_phase_id_not_exists)
 			else
 				set_error(error.err_ok)
---				phase := target.get_phase (pid)
 				target.remove_phase (pid)
     		end
     	end
@@ -60,9 +59,6 @@ feature
 	undo
 		do
 			if action_success then
---				if attached phase as p then
---					target.add_phase (p)
---				end
 				if (attached phase_name as pn) and (attached expected_materials as em) then
 					target.add_phase(create {T_PHASE}.make(
 						pid,

@@ -56,50 +56,22 @@ feature -- queries
 		do
 			Result := props
 		ensure
-			props = old props
+			result = props
 		end
 
 	get_cid : STRING
 		do
 			Result := cid
 		ensure
-			cid = old cid
+			result = cid
 		end
 
 	get_pid : STRING
 		do
 			Result := pid
 		ensure
-			pid = old pid
+			result = pid
 		end
-
---	is_less alias "<" (other: like current): BOOLEAN
---		do
---			if current = other then
---				Result := False
---			elseif current.get_cid < other.get_cid then
---				Result := True
---			elseif current.get_cid ~ other.get_cid then
---				Result := current.get_pid < other.get_pid
---			end
---		end
-
---	is_equal (other: like current): BOOLEAN
---		do
---			if current = other then
---				Result := true
---			elseif cid /~ other.get_cid then
---				Result := false
---			elseif pid /~ other.get_pid then
---				Result := false
---			elseif props.material /~ other.get_props.material then
---				Result := false
---			elseif props.radioactivity /~ other.get_props.radioactivity then
---				Result := false
---			else
---				Result := true
---			end
---		end
 
 	is_less alias "<" (other: like current): BOOLEAN
 		do
@@ -117,17 +89,6 @@ feature -- queries
 
 
 feature -- print
-
---	print_container : STRING
---		do
---			Create Result.make_from_string("    ")
---			Result.append (get_cid)
---			Result.append ("->")
---			Result.append (get_pid)
---			Result.append ("->")
---			Result.append (get_props.material.get_name + ",")
---			Result.append (get_props.radioactivity.out)
---		end
 
 	do_visit(visitor: T_VISITOR)
 		do

@@ -37,7 +37,7 @@ feature {NONE} -- cmds
 			containers.compare_objects
 		end
 
-feature {T_TRACKER_ACTION, T_PHASE} -- commands
+feature {T_TRACKER_ACTION, T_PHASE, STUDENT_TESTS} -- commands
 
 	add_container(a_container: T_CONTAINER)
 		require
@@ -135,7 +135,6 @@ feature -- queries
 		do
 			Result := (get_containers.count = get_capacity)
 		ensure
-			get_containers.count = old get_containers.count
 			result = (get_containers.count = get_capacity)
 		end
 

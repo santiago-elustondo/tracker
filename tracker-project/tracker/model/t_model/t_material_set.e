@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Summary description for {T_MATERIAL_SET}."
 	author: ""
 	date: "$Date$"
@@ -8,8 +8,6 @@ class
 	T_MATERIAL_SET
 	inherit
 		ITERABLE[T_MATERIAL]
-			redefine is_equal end
-		ANY
 			redefine is_equal end
 
 create
@@ -66,20 +64,8 @@ feature { ANY } --queries
 			across materials as m loop
 				result.force (m.item.get_mid, m.cursor_index)
 			end
---			across 1 |..| materials.count as m loop
---				result.put (materials[m.item].get_mid, m.item)
---			end
 		end
 
-	test: BOOLEAN
-		do
-			result :=
-			across materials as i all
-				across materials as j all
-					(i.cursor_index /= j.cursor_index) implies (i.item /= j.item)
-				end
-			end
-		end
 
 feature {NONE} --commands
 
@@ -99,17 +85,11 @@ feature -- print
 		end
 
 invariant
---	all_elements_unique:
---		across 1 |..| count as i all
---			across 1 |..| count as j all
---				(i.item /= j.item) implies (materials[i.item] /= materials[j.item])
---			end
---	 	end
 
+	-- ∀i,j( i.index != j.index -> i != j )
 	all_elements_unique:
 		across materials as i all
 			across materials as j all
---				(i.cursor_index /= j.cursor_index) implies (i.item /= j.item)
 				(i.item ~ j.item) implies (i.cursor_index = j.cursor_index)
 			end
 		end
