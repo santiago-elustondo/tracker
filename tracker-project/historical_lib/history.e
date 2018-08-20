@@ -52,26 +52,18 @@ feature -- queries
 		do
 			Result := current.deep_twin
 			Result.add (item)
---		ensure
---			cursor_incremented: result.cursor = old result.cursor + 1
---			current_item_is_new_one: result.get_element = item
---			no_future: not not has_future
 		end
 
 	no_future: like current
 		do
 			Result := current.deep_twin
 			Result.clear_future
---		ensure
---			cursor_end_position: result.cursor = result.implementation.count
 		end
 
 	no_past: like current
 		do
 			Result := current.deep_twin
 			Result.clear_past
---		ensure
---			cursor_start_position: cursor = 1
 		end
 
 
@@ -134,18 +126,6 @@ feature { HISTORICAL, HISTORY } -- commands
 
 feature{ HISTORY }
 
---	is_equal(other: like current): BOOLEAN
---		do
---			if current = other then
---				Result := true
---			elseif cursor /= other.cursor then
---				Result := false
---			elseif implementation /~ other.implementation then
---				Result := false
---			else
---				Result := true
---			end
---		end
 
 	is_equal(other: like current): BOOLEAN
 		do
@@ -174,15 +154,6 @@ feature { NONE } -- utils
 			loop
 				Result.force(a_array[a_start_index + i + 1], i + 2)
 				i := i + 1
-			end
-		end
-
-	-- utility class for comparing arrays
-	arrays_have_same_items(a_array: ARRAY[G]; a_array_2: ARRAY[G]): BOOLEAN
-		do
-			Result := (a_array.count = a_array_2.count)
-			if result then
-				result := across 1 |..| a_array.count as a all a_array[a.item] = a_array_2[a.item] end
 			end
 		end
 
