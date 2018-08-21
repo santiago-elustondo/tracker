@@ -43,9 +43,23 @@ feature { ETF_MODEL_FACADE }-- commands
 			make
 		end
 
-feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
+feature -- model
+
+	model: FUN[STRING, T_PHASE]
+			-- abstraction function
+		do
+			create Result.make_empty
+			across phases as p loop
+				Result.extend([p.item.get_pid, p.item])
+			end
+		ensure
+			model.is_function
+		end
+
+feature -- commands
 
 	new_tracker(a_max_phase_rad: VALUE; a_max_container_rad: VALUE)
+			-- creates a new tracker with `a_max_phase_rad' and `a_max_container_rad'
 		require
 			tracker_not_in_use : not tracker_in_use
 			max_phase_rad_is_positive: not (a_max_phase_rad < 0.0)
@@ -55,10 +69,12 @@ feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 			max_phase_rad := a_max_phase_rad
 			max_container_rad := a_max_container_rad
 		ensure
-			phases_unchanged: phases ~ old get_phases.deep_twin
+			model_unchanged: model ~ old model.deep_twin
+--			phases_unchanged: phases ~ old get_phases.deep_twin
 		end
 
 	add_phase(a_phase: T_PHASE)
+			-- adds `a_phase' to tracker
 		require
 			tracker_not_in_use : not tracker_in_use
 			pid_is_valid: not a_phase.get_pid.is_empty and then a_phase.get_pid[1].is_alpha_numeric
@@ -69,24 +85,28 @@ feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
-			phase_exists: get_phases.has(a_phase.get_pid)
-			phases_count_increased: get_phases.count = old get_phases.count + 1
-			phase_added: current ~ old current.deep_twin |-> (a_phase)
+--			phase_exists: get_phases.has(a_phase.get_pid)
+--			phases_count_increased: get_phases.count = old get_phases.count + 1
+--			phase_added: current ~ old current.deep_twin |-> (a_phase)
+			phase_added: model ~ old model.deep_twin + [a_phase.get_pid, a_phase]
 		end
 
 	remove_phase(a_pid: STRING)
+			-- removes phase associated with `a_pid' from tracker
 		require
 			phase_exists: get_phases.has(a_pid)
 			tracker_not_in_use : not tracker_in_use
 		do
 			phases.remove(a_pid)
 		ensure
-			phase_no_longer_exists: not get_phases.has(a_pid)
-			phases_count_decreased: get_phases.count = old get_phases.count - 1
-			phase_removed: current ~ old current.deep_twin |-/> (a_pid)
+--			phase_no_longer_exists: not get_phases.has(a_pid)
+--			phases_count_decreased: get_phases.count = old get_phases.count - 1
+--			phase_removed: current ~ old current.deep_twin |-/> (a_pid)
+			phased_removed: model ~ old model.deep_twin - old [a_pid, get_phase(a_pid)]
 		end
 
 	move_container(a_container: T_CONTAINER; a_pid1, a_pid2: STRING)
+			-- moves `a_container' from `a_pid1' to `a_pid2'
 		require
 			container_doesnt_exist: get_phase(a_pid1).get_containers.has (a_container.get_cid)
 			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
@@ -100,16 +120,19 @@ feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
 			get_phase(a_pid2).get_containers.put (a_container, a_container.get_cid)
 		ensure
-			phase_moved: (get_phase(a_pid2) ~ old get_phase(a_pid2).deep_twin |-> (a_container))
-				and (get_phase(a_pid1) ~ old get_phase(a_pid1).deep_twin |-/> (a_container.get_cid))
-			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
-			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
-			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1
-			container_count_increased_old: get_phase(a_pid1).get_containers.count = old get_phase(a_pid1).get_containers.count - 1
-			container_has_correct_pid: get_phase(a_pid2).get_container(a_container.get_cid).get_pid ~ a_pid2
+			container_removed_from_old: get_phase(a_pid1).model ~ old get_phase(a_pid1).model - [a_container.get_cid, a_container]
+			container_added_to_new: get_phase(a_pid2).model ~ old get_phase(a_pid2).model + [a_container.get_cid, get_phase(a_pid2).get_container (a_container.get_cid)]
+--			phase_moved: (get_phase(a_pid2) ~ old get_phase(a_pid2).deep_twin |-> (a_container))
+--				and (get_phase(a_pid1) ~ old get_phase(a_pid1).deep_twin |-/> (a_container.get_cid))
+--			container_moved_to_new: get_phase(a_pid2).get_containers.has(a_container.get_cid)
+--			container_removed_from_old: not get_phase(a_pid1).get_containers.has(a_container.get_cid)
+--			container_count_increased_new: get_phase(a_pid2).get_containers.count = old get_phase(a_pid2).get_containers.count + 1
+--			container_count_increased_old: get_phase(a_pid1).get_containers.count = old get_phase(a_pid1).get_containers.count - 1
+--			container_has_correct_pid: get_phase(a_pid2).get_container(a_container.get_cid).get_pid ~ a_pid2
 		end
 
 	set_error(a_error: STRING)
+			-- sets error message
 		do
 			error := a_error
 		ensure
@@ -117,6 +140,7 @@ feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 		end
 
 	set_current_state_id(a_id: INTEGER)
+			-- sets the id of the current state
 		do
 			current_state_id := a_id
 		ensure
@@ -124,23 +148,11 @@ feature { T_TRACKER_ACTION, T_TRACKER, STUDENT_TESTS } -- commands
 		end
 
 	increment_num_actions
+			-- incremements the action counter
 		do
 			current_num_actions := current_num_actions + 1
 		ensure
 			current_num_actions = old current_num_actions + 1
-		end
-
-feature{T_TRACKER}
-	phases_added alias "|->"(a_phase: T_PHASE): like current
-		do
-			Result := current.deep_twin
-			Result.add_phase(a_phase)
-		end
-
-	phase_removed alias "|-/>"(a_pid: STRING): like current
-		do
-			Result := current.deep_twin
-			Result.remove_phase(a_pid)
 		end
 
 feature { NONE } -- state
@@ -156,6 +168,7 @@ feature { NONE } -- state
 feature -- public queries
 
 	tracker_in_use: BOOLEAN
+			-- returns whether tracker is in use
 		do
 			Result := across phases as p some
 				p.item.get_containers.count /= 0
@@ -168,6 +181,7 @@ feature -- public queries
 		end
 
 	get_current_num_actions: INTEGER
+			-- returns action counter
 		do
 			Result := current_num_actions
 		ensure
@@ -175,6 +189,7 @@ feature -- public queries
 		end
 
 	get_current_state_id: INTEGER
+			-- returns the current state id
 		do
 			Result := current_state_id
 		ensure
@@ -182,6 +197,7 @@ feature -- public queries
 		end
 
 	get_error: STRING
+			-- returns the current error message
 		do
 			Result := error
 		ensure
@@ -189,6 +205,7 @@ feature -- public queries
 		end
 
 	get_max_phase_rad: VALUE
+			-- returns the max radiation for phase
 		do
 			Result := max_phase_rad
 		ensure
@@ -196,6 +213,7 @@ feature -- public queries
 		end
 
 	get_max_container_rad: VALUE
+			-- returns the max radiation per container
 		do
 			Result := max_container_rad
 		ensure
@@ -203,6 +221,7 @@ feature -- public queries
 		end
 
 	get_phase_rad_exceeded(pid: STRING; rad: VALUE) : BOOLEAN
+			-- returns whether max phase radiation is exceeded
 		do
 			Result := (get_phase(pid).get_radiation + rad) > get_max_phase_rad
 		ensure
@@ -211,6 +230,7 @@ feature -- public queries
 		end
 
 	get_container_rad_exceeded(rad: VALUE) : BOOLEAN
+			-- returns whether max container radiation is exceeded
 		do
 			Result := rad > get_max_container_rad
 		ensure
@@ -218,15 +238,19 @@ feature -- public queries
 		end
 
 	get_phase(pid: STRING): T_PHASE
+			-- returns the phase associated with `pid'
 		require
 			pid_exists: get_phases.has(pid)
 		do
 			check attached phases.item(pid) as p then
 				Result := p
 			end
+		ensure
+			attached Result implies Result = model[pid]
 		end
 
 	get_phases : STRING_TABLE[T_PHASE]
+			-- returns a list of phases
 		do
 			Result := phases
 		ensure
@@ -234,20 +258,27 @@ feature -- public queries
 		end
 
 	has_phase(pid: STRING): BOOLEAN
+			-- returns whether phase associated with `pid' exists
 		do
 			Result := phases.has (pid)
+		ensure
+			Result = model.domain.has (pid)
 		end
 
 	find_container(cid: STRING) : detachable T_PHASE
+			-- returns the phase associated with `cid' if it exists
 		do
 			across phases as p loop
 				if p.item.get_containers.has (cid) then
 					Result := p.item
 				end
 			end
+		ensure
+			attached Result implies Result.model.domain.has (cid)
 		end
 
 	print_old_state : BOOLEAN
+			-- prints the old state
 		do
 			Result := (get_current_state_id /= get_current_num_actions)
 				and then (error /= {ERROR_HANDLING}.err_undo)

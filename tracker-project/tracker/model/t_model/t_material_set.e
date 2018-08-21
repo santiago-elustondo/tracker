@@ -15,7 +15,17 @@ create
 
 feature{ T_MATERIAL_SET }
 
-	materials: LIST[T_MATERIAL]
+	materials: LINKED_SET[T_MATERIAL]
+
+feature -- model
+
+	model: SET[T_MATERIAL]
+		do
+			create Result.make_empty
+			across materials as m loop
+				Result.extend(m.item)
+			end
+		end
 
 feature{NONE} -- Initialization
 
@@ -23,27 +33,25 @@ feature{NONE} -- Initialization
 		do
 			materials := add_materials(a_materials)
 		ensure
-			current ~ (old current.deep_twin) |-> (a_materials)
+			model ~ create {SET[T_MATERIAL]}.make_from_array (as_array)
 		end
 
 feature { ANY } --queries
 
-	new_cursor: ITERATION_CURSOR[T_MATERIAL]
-		do
-			result := materials.new_cursor
-		end
-
 	count : INTEGER
+			--returns number of materials in set
 		do
 			Result := materials.count
 		end
 
 	material_expected(mat: INTEGER_64) : BOOLEAN
+			-- returns whether material is acceptable to the set
 		do
 			Result := materials.has ((create {T_MATERIAL_FACTORY}.default_create).parse_material(mat))
 		end
 
 	at alias "[]" (i: INTEGER_64): T_MATERIAL
+			-- returns the material at `i'
 		do
 			Result := materials [i.to_integer_32]
 		end
@@ -53,12 +61,17 @@ feature { ANY } --queries
 			Result := materials ~ other.materials
 		end
 
-	elements_added alias "|->"(a_materials: ARRAY[INTEGER_64]) : like current
+	as_array: ARRAY[T_MATERIAL]
+			-- returns set as an array
 		do
-			create Result.make (a_materials)
+			create Result.make_empty
+			across materials as m loop
+				result.force(m.item, m.cursor_index)
+			end
 		end
 
 	as_integer_array: ARRAY[INTEGER_64]
+			-- returns set as an array of ints
 		do
 			create result.make_empty
 			across materials as m loop
@@ -66,10 +79,18 @@ feature { ANY } --queries
 			end
 		end
 
+feature{NONE} -- iteration
 
-feature {NONE} --commands
+	new_cursor: ITERATION_CURSOR[T_MATERIAL]
+		do
+			result := materials.new_cursor
+		end
+
+
+feature --commands
 
 	add_materials(a_materials: ARRAY[INTEGER_64]): LINKED_SET[T_MATERIAL]
+			-- takes an array of `a_material' and produces a set
 		do
 			create Result.make
 			across a_materials as m loop

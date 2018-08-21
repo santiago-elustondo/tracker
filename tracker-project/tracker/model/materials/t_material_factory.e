@@ -7,13 +7,10 @@ note
 expanded class
 	T_MATERIAL_FACTORY
 
-create
-	default_create
-
-
 feature
 
 	parse_material (a_material: INTEGER_64): T_MATERIAL
+			-- converts `a_material' to a material
 		local
 			ma: T_MATERIAL_ACCESS
 		do
@@ -29,6 +26,6 @@ feature
 			end
 		end
 
-		
+
 
 end

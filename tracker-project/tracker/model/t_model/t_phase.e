@@ -37,9 +37,10 @@ feature {NONE} -- cmds
 			containers.compare_objects
 		end
 
-feature {T_TRACKER_ACTION, T_PHASE, STUDENT_TESTS} -- commands
+feature -- commands
 
 	add_container(a_container: T_CONTAINER)
+			-- adds `a_container' to tracker
 		require
 			container_doesnt_exist: not get_containers.has (a_container.get_cid)
 			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
@@ -49,40 +50,43 @@ feature {T_TRACKER_ACTION, T_PHASE, STUDENT_TESTS} -- commands
 		do
 			containers.put(a_container, a_container.get_cid)
 		ensure
-			container_exists: get_containers.has(a_container.get_cid)
-			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
-			container_count_increased: get_containers.count = old get_containers.count + 1
-			container_added: current ~ old current.deep_twin |-> (a_container)
+			container_added: model ~ old model.deep_twin + [a_container.get_cid, a_container]
+--			container_exists: get_containers.has(a_container.get_cid)
+--			container_has_correct_pid: get_container(a_container.get_cid).get_pid ~ get_pid
+--			container_count_increased: get_containers.count = old get_containers.count + 1
+--			container_added: current ~ old current.deep_twin |-> (a_container)
 		end
 
 	remove_container(a_cid: STRING)
+			-- removes container associated with `a_cid' from tracker
 		require
 			cid_is_valid: not a_cid.is_empty and then a_cid[1].is_alpha_numeric
 			has_container: get_containers.has (a_cid)
 		do
 			containers.remove(a_cid)
 		ensure
-			container_removed: not get_containers.has (a_cid)
-			container_count_decreased: get_containers.count = old get_containers.count - 1
-			container_removed: current ~ old current.deep_twin |-/> (a_cid)
+			container_removed: model ~ old model.deep_twin - old [a_cid, get_container (a_cid)]
+--			container_removed: not get_containers.has (a_cid)
+--			container_count_decreased: get_containers.count = old get_containers.count - 1
+--			container_removed: current ~ old current.deep_twin |-/> (a_cid)
 		end
 
-feature {T_PHASE}
-	container_added alias "|->"(a_container: T_CONTAINER): like current
+feature -- model
+
+	model: FUN[STRING, T_CONTAINER]
+			-- abstraction function
 		do
-			Result := current.deep_twin
-				Result.add_container(a_container)
+			create Result.make_empty
+			across containers as c loop
+				Result.extend([c.item.get_cid, c.item])
 			end
-
-	container_removed alias "|-/>"(a_cid: STRING): like current
-		do
-			Result := current.deep_twin
-			Result.remove_container(a_cid)
+		ensure
+			model.is_function
 		end
-
 
 feature -- queries
 	get_pid: STRING
+			-- returns the pid of the phase
 		do
 			Result := pid
 		ensure
@@ -90,6 +94,7 @@ feature -- queries
 		end
 
 	get_name: STRING
+			-- returns the name of the phase
 		do
 			Result := name
 		ensure
@@ -97,6 +102,7 @@ feature -- queries
 		end
 
 	get_capacity: INTEGER_64
+			-- returns the capacity of the phase
 		do
 			Result := capacity
 		ensure
@@ -104,6 +110,7 @@ feature -- queries
 		end
 
 	get_radiation: VALUE
+			-- returns the current radiation of the phase
 		do
 			across containers as c loop
 				Result := Result + c.item.get_props.radioactivity
@@ -111,6 +118,7 @@ feature -- queries
 		end
 
 	get_materials: T_MATERIAL_SET
+			-- returns the set of materials that can be used in the phase
 		do
 			Result := materials
 		ensure
@@ -118,13 +126,17 @@ feature -- queries
 		end
 
 	get_container(cid: STRING): T_CONTAINER
+			-- returns a container associated with `cid'
 		do
 			check attached containers.item (cid) as c then
 				Result := c
 			end
+		ensure
+			attached Result implies Result = model[cid]
 		end
 
 	get_containers: STRING_TABLE[T_CONTAINER]
+			-- returns a list of containers
 		do
 			Result := containers
 		ensure
@@ -132,6 +144,7 @@ feature -- queries
 		end
 
 	max_capacity: BOOLEAN
+			-- returns the max capacity of the phase
 		do
 			Result := (get_containers.count = get_capacity)
 		ensure
@@ -154,6 +167,7 @@ feature -- queries
 		end
 
 	do_visit(visitor: T_VISITOR)
+			-- allows a visitor to visit Current
 		do
 			visitor.visit_phase (current)
 		end

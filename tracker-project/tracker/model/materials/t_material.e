@@ -7,12 +7,14 @@ note
 deferred class
 	T_MATERIAL
 
-feature
+feature -- queries
 
 	get_name: STRING
+			-- name of material
 		deferred end
 
 	get_mid: INTEGER_64
+			-- id of material
 		deferred end
 
 

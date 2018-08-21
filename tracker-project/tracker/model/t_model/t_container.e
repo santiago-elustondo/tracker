@@ -53,6 +53,7 @@ feature{T_TRACKER} -- commands
 feature -- queries
 
 	get_props : TUPLE [material: T_MATERIAL; radioactivity: VALUE]
+			-- returns the props of container
 		do
 			Result := props
 		ensure
@@ -60,6 +61,7 @@ feature -- queries
 		end
 
 	get_cid : STRING
+			-- returns the cid of container
 		do
 			Result := cid
 		ensure
@@ -67,6 +69,7 @@ feature -- queries
 		end
 
 	get_pid : STRING
+			-- returns the pid that container is in
 		do
 			Result := pid
 		ensure

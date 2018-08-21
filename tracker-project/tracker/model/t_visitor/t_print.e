@@ -28,6 +28,7 @@ feature{NONE}
 
 feature
 	visit_phase(phase: T_PHASE)
+			-- handles output for `phase'
 		do
 			out.append("%N    ")
 			out.append (phase.get_pid)
@@ -40,6 +41,7 @@ feature
 		end
 
 	visit_container(con: T_CONTAINER)
+			-- handles output for `con'
 		do
 			out.append("%N    ")
 			out.append (con.get_cid)
@@ -51,6 +53,7 @@ feature
 		end
 
 	visit_materials(mat: T_MATERIAL_SET)
+			-- handles output for `mat'
 		do
 			out.append ("{")
 			across 1 |..| (mat.count - 1) as i loop
@@ -60,6 +63,7 @@ feature
 		end
 
 	visit_tracker(tracker: T_TRACKER)
+			-- handled output for `tracker'
 		do
 			create out.make_empty
 			tracker_helper_print_state(tracker)
