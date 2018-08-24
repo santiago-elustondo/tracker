@@ -42,11 +42,12 @@ feature -- commands
 	add_container(a_container: T_CONTAINER)
 			-- adds `a_container' to tracker
 		require
-			container_doesnt_exist: not get_containers.has (a_container.get_cid)
+--			container_doesnt_exist: not get_containers.has (a_container.get_cid)
 			cid_is_valid: not a_container.get_cid.is_empty and then a_container.get_cid[1].is_alpha_numeric
 			radioactivity_non_negative: not (a_container.get_props.radioactivity < 0.0)
 			max_capacity_not_exceeded: not max_capacity
 			material_expected: get_materials.material_expected (a_container.get_props.material.get_mid)
+			container_doesnt_exist: not model.has ([a_container.get_cid, a_container])
 		do
 			containers.put(a_container, a_container.get_cid)
 		ensure
@@ -61,7 +62,8 @@ feature -- commands
 			-- removes container associated with `a_cid' from tracker
 		require
 			cid_is_valid: not a_cid.is_empty and then a_cid[1].is_alpha_numeric
-			has_container: get_containers.has (a_cid)
+--			has_container: get_containers.has (a_cid)
+			has_container: model.has ([a_cid, model[a_cid]])
 		do
 			containers.remove(a_cid)
 		ensure

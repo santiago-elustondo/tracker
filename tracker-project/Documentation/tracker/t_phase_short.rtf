@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\deflang1033{\fonttbl{\f0\fscript\fcharset0 Courier;}}{\colortbl ;\red0\green0\blue0;\red255\green255\blue255;\red128\green0\blue0;\red0\green0\blue255;\red0\green128\blue0;\red0\green0\blue128;}
+{\cf3\f0\fs16 {\tab}{\tab}{\tab}-- Automatic generation produced by ISE Eiffel --
+{\line}
+{{\b\cf6 note}{\line}
+{\tab}{\cf1 description}{\cf1 :} "Summary description for {\cf1 \{}{\cf4 T_PHASE}{\cf1 \}}."{\line}
+{\tab}{\cf1 author}{\cf1 :} ""{\line}
+{\tab}{\cf1 date}{\cf1 :} "$Date$"{\line}
+{\tab}{\cf1 revision}{\cf1 :} "$Revision$"{\line}
+{\line}
+{\b\cf6 class} {\b\cf6 interface}{\line}
+{\tab}{\cf4 T_PHASE}{\line}
+{\line}
+{\b\cf6 create} {\line}
+{\tab}{\cf5 make}{\line}
+{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  commands}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 add_container} {\cf1 (}{\cf5 a_container}{\cf1 :} {\cf4 T_CONTAINER}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  adds }{\cf5 a_container}{\cf3  to tracker}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\cf1 container_doesnt_exist}{\cf1 :} {\b\cf6 not} {\cf5 get_containers}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 cid_is_valid}{\cf1 :} {\b\cf6 not} {\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\b\cf1 .}{\cf5 is_empty} {\b\cf6 and then} {\cf5 a_container}{\b\cf1 .}{\cf5 get_cid} {\cf1 [}1{\cf1 ]}{\b\cf1 .}{\cf5 is_alpha_numeric}{\line}
+{\tab}{\tab}{\tab}{\cf1 radioactivity_non_negative}{\cf1 :} {\b\cf6 not} {\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 radioactivity}{\b\cf1 .}{\cf5 as_double} {\cf1 <} 0.0{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 max_capacity_not_exceeded}{\cf1 :} {\b\cf6 not} {\cf5 max_capacity}{\line}
+{\tab}{\tab}{\tab}{\cf1 material_expected}{\cf1 :} {\cf5 get_materials}{\b\cf1 .}{\cf5 material_expected}{\cf1  }{\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 material}{\b\cf1 .}{\cf5 get_mid}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 container_added}{\cf1 :} {\cf5 model} {\cf1 ~} {\b\cf6 old} {\cf5 model}{\b\cf1 .}{\cf5 deep_twin} {\cf1 +} {\b\cf6 create} {\cf1 \{}{\cf4 PAIR} {\cf1 [}{\cf4 STRING_8}{\cf1 ,} {\cf4 T_CONTAINER}{\cf1 ]}{\cf1 \}}{\b\cf1 .}{\cf5 make_from_tuple}{\cf1  }{\cf1 (}{\cf1 [}{\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\cf1 ,} {\cf5 a_container}{\cf1 ]}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 remove_container} {\cf1 (}{\cf5 a_cid}{\cf1 :} {\cf4 STRING_8}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  removes container associated with }{\cf5 a_cid}{\cf3  from tracker}{\line}
+{\tab}{\tab}{\b\cf6 require}{\line}
+{\tab}{\tab}{\tab}{\cf1 cid_is_valid}{\cf1 :} {\b\cf6 not} {\cf5 a_cid}{\b\cf1 .}{\cf5 is_empty} {\b\cf6 and then} {\cf5 a_cid} {\cf1 [}1{\cf1 ]}{\b\cf1 .}{\cf5 is_alpha_numeric}{\line}
+{\tab}{\tab}{\tab}{\cf1 has_container}{\cf1 :} {\cf5 get_containers}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_cid}{\cf1 )}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\cf1 container_removed}{\cf1 :} {\cf5 model} {\cf1 ~} {\b\cf6 old} {\cf5 model}{\b\cf1 .}{\cf5 deep_twin} {\cf1 -} {\b\cf6 create} {\cf1 \{}{\cf4 PAIR} {\cf1 [}{\cf4 STRING_8}{\cf1 ,} {\cf4 T_CONTAINER}{\cf1 ]}{\cf1 \}}{\b\cf1 .}{\cf5 make_from_tuple}{\cf1  }{\cf1 (}{\b\cf6 old} {\cf1 [}{\cf5 a_cid}{\cf1 ,} {\cf5 get_container}{\cf1  }{\cf1 (}{\cf5 a_cid}{\cf1 )}{\cf1 ]}{\cf1 )}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  model}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 model}{\cf1 :} {\cf4 FUN} {\cf1 [}{\cf4 STRING_8}{\cf1 ,} {\cf4 T_CONTAINER}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  abstraction function}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 model}{\b\cf1 .}{\cf5 is_function}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  queries}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 get_pid}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the pid of the phase}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf5 pid}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_name}{\cf1 :} {\cf4 STRING_8}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the name of the phase}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf5 name}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_capacity}{\cf1 :} {\cf4 INTEGER_64}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the capacity of the phase}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf5 capacity}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_radiation}{\cf1 :} {\cf4 VALUE}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the current radiation of the phase}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_materials}{\cf1 :} {\cf4 T_MATERIAL_SET}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the set of materials that can be used in the phase}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf5 materials}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_container} {\cf1 (}{\cf5 cid}{\cf1 :} {\cf4 STRING_8}{\cf1 )}{\cf1 :} {\cf4 T_CONTAINER}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns a container associated with }{\cf5 cid}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 attached} {\b\cf6 Result} {\b\cf6 implies} {\b\cf6 Result} {\cf1 =} {\cf5 model} {\cf1 [}{\cf5 cid}{\cf1 ]}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 get_containers}{\cf1 :} {\cf4 STRING_TABLE} {\cf1 [}{\cf4 T_CONTAINER}{\cf1 ]}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns a list of containers}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf5 containers}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 max_capacity}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  returns the max capacity of the phase}{\line}
+{\tab}{\tab}{\b\cf6 ensure}{\line}
+{\tab}{\tab}{\tab}{\tab}{\b\cf6 Result} {\cf1 =} {\cf1 (}{\cf5 get_containers}{\b\cf1 .}{\cf5 count}{\b\cf1 .}{\cf5 to_integer_64} {\cf1 =} {\cf5 get_capacity}{\cf1 )}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 is_less} {\b\cf6 alias} {\cf1 "}{\cf1 <}{\cf1 "} {\cf1 (}{\cf5 other}{\cf1 :} {\b\cf6 like} {\b\cf6 Current}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Is current object less than }{\cf5 other}{\cf3 ?}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 is_equal} {\cf1 (}{\cf5 other}{\cf1 :} {\b\cf6 like} {\b\cf6 Current}{\cf1 )}{\cf1 :} {\cf4 BOOLEAN}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  Is }{\cf5 other}{\cf3  attached to an object of the same type}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  as current object and identical to it?}{\line}
+}{\line}
+{\tab}{\cf5 {\cf5 do_visit} {\cf1 (}{\cf5 visitor}{\cf1 :} {\cf4 T_VISITOR}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf3 --}{\cf3  allows a visitor to visit Current}{\line}
+}{\tab}{\line}
+{\b\cf6 feature} {\cf3 --}{\cf3  print}{\line}
+{\line}
+{\tab}{\cf5 {\cf5 print_phase}{\cf1 :} {\cf4 STRING_8}{\line}
+}{\tab}{\line}
+{\b\cf6 invariant}{\line}
+{\tab}{\cf1 all_containers_have_non_negative_radiation}{\cf1 :} {\b\cf6 across}{\line}
+{\tab}{\tab}{\tab}{\cf5 containers} {\b\cf6 as} c{\line}
+{\tab}{\tab}{\b\cf6 all}{\line}
+{\tab}{\tab}{\tab}{\cf5 c}{\b\cf1 .}{\cf5 item}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 radioactivity}{\b\cf1 .}{\cf5 as_double} {\cf1 >=} 0.0{\line}
+{\tab}{\tab}{\b\cf6 end}{\line}
+{\tab}{\cf1 all_containers_are_of_valid_material}{\cf1 :} {\b\cf6 across}{\line}
+{\tab}{\tab}{\tab}{\cf5 containers} {\b\cf6 as} c{\line}
+{\tab}{\tab}{\b\cf6 all}{\line}
+{\tab}{\tab}{\tab}{\b\cf6 across}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 materials} {\b\cf6 as} m{\line}
+{\tab}{\tab}{\tab}{\b\cf6 some}{\line}
+{\tab}{\tab}{\tab}{\tab}{\cf5 c}{\b\cf1 .}{\cf5 item}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 material} {\cf1 =} {\cf5 m}{\b\cf1 .}{\cf5 item}{\line}
+{\tab}{\tab}{\tab}{\b\cf6 end}{\line}
+{\tab}{\tab}{\b\cf6 end}{\line}
+{\tab}{\cf1 capacity_not_smaller_than_sum_of_containers}{\cf1 :} {\b\cf6 not} {\cf1 (}{\cf5 capacity} {\cf1 <} {\cf5 containers}{\b\cf1 .}{\cf5 count}{\b\cf1 .}{\cf5 to_integer_64}{\cf1 )}{\line}
+{\line}
+{\b\cf6 end} {\cf3 --} {\cf3 class }{\cf4 T_PHASE}}
+{\line}
+{\cf3 {\tab}{\tab}{\tab}-- Generated by ISE Eiffel --}
+{\line}
+{\cf3{\tab}{\tab}{\tab}-- For more details: http://www.eiffel.com --}
+}}
+{\line}

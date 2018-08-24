@@ -79,9 +79,10 @@ feature -- commands
 			tracker_not_in_use : not tracker_in_use
 			pid_is_valid: not a_phase.get_pid.is_empty and then a_phase.get_pid[1].is_alpha_numeric
 			name_is_valid: not a_phase.get_name.is_empty and then a_phase.get_name[1].is_alpha_numeric
-			phase_not_exists: not get_phases.has (a_phase.get_pid)
+--			phase_not_exists: not get_phases.has (a_phase.get_pid)
 			capacity_not_negative: not (a_phase.get_capacity <= 0)
 			materials_expected: not (a_phase.get_materials.count = 0)
+			phase_not_exists: not model.has ([a_phase.get_pid, a_phase])
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
@@ -94,8 +95,9 @@ feature -- commands
 	remove_phase(a_pid: STRING)
 			-- removes phase associated with `a_pid' from tracker
 		require
-			phase_exists: get_phases.has(a_pid)
+--			phase_exists: get_phases.has(a_pid)
 			tracker_not_in_use : not tracker_in_use
+			phase_exists: model.has ([a_pid, model[a_pid]])
 		do
 			phases.remove(a_pid)
 		ensure
@@ -114,7 +116,9 @@ feature -- commands
 			max_capacity_not_exceeded: not get_phase(a_pid2).max_capacity
 			phase_rad_not_exceeded: not get_phase_rad_exceeded (a_pid2, a_container.get_props.radioactivity)
 			material_expected: get_phase(a_pid2).get_materials.material_expected (a_container.get_props.material.get_mid)
-			has_container: get_phase(a_pid1).get_containers.has_item (a_container)
+--			has_container: get_phase(a_pid1).get_containers.has_item (a_container)
+			old_has_container: get_phase(a_pid1).model.has ([a_container.get_cid, a_container])
+			new_not_has_container: not get_phase(a_pid2).model.has ([a_container.get_cid, a_container])
 		do
 			a_container.set_pid (a_pid2)
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)
@@ -240,13 +244,13 @@ feature -- public queries
 	get_phase(pid: STRING): T_PHASE
 			-- returns the phase associated with `pid'
 		require
-			pid_exists: get_phases.has(pid)
+			pid_exists: model.domain.has (pid)
 		do
 			check attached phases.item(pid) as p then
 				Result := p
 			end
 		ensure
-			attached Result implies Result = model[pid]
+			Result = model[pid]
 		end
 
 	get_phases : STRING_TABLE[T_PHASE]

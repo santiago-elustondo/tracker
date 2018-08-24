@@ -8,7 +8,7 @@
 --   an ordered history of like-items, with the ability to backtrack.
 -- it will accept and hold items of a generic type in chronological order.
 class
-	HISTORY[G]
+	HISTORY[G -> ANY]
 
 inherit
 	ANY
@@ -31,6 +31,16 @@ feature { NONE } -- constructors
 			cursor := 0
 		end
 
+feature -- model
+
+	model: SEQ[G]
+		do
+			create Result.make_empty
+			across implementation as imp loop
+				Result.append(imp.item)
+			end
+		end
+
 feature -- queries
 
 	has_past: BOOLEAN
@@ -48,28 +58,29 @@ feature -- queries
 			Result := implementation[cursor]
 		end
 
-	added alias "|->"(item: G): like current
-		do
-			Result := current.deep_twin
-			Result.add (item)
-		end
+--	added alias "|->"(item: G): like current
+--		do
+--			Result := current.deep_twin
+--			Result.add (item)
+--		end
 
-	no_future: like current
-		do
-			Result := current.deep_twin
-			Result.clear_future
-		end
+--	no_future: like current
+--		do
+--			Result := current.deep_twin
+--			Result.clear_future
+--		end
 
-	no_past: like current
-		do
-			Result := current.deep_twin
-			Result.clear_past
-		end
+--	no_past: like current
+--		do
+--			Result := current.deep_twin
+--			Result.clear_past
+--		end
 
 
-feature { HISTORICAL, HISTORY } -- commands
+feature -- commands
 
 	add(item: G)
+			-- adds `item' to history
 		do
 			clear_future
 			next_element
@@ -78,10 +89,12 @@ feature { HISTORICAL, HISTORY } -- commands
 			cursor_incremented: cursor = old cursor + 1
 			current_item_is_new_one: get_element = item
 			no_future: not has_future
-			item_added: current ~ (old current.deep_twin |-> (item))
+--			item_added: current ~ (old current.deep_twin |-> (item))
+			model ~ old model.deep_twin.subsequenced(1, cursor) |-> item
 		end
 
 	prev_element
+			-- goes back in history
 		require
 			not_first: has_past
 		do
@@ -91,6 +104,7 @@ feature { HISTORICAL, HISTORY } -- commands
 		end
 
 	next_element
+			-- goes forward in history
 	 	do
 	 		cursor := cursor + 1
 	 	ensure
@@ -98,28 +112,21 @@ feature { HISTORICAL, HISTORY } -- commands
 	 	end
 
 	clear_future
+			-- removes all future elements of history
 		do
 			implementation := array_slice(implementation, implementation.lower, cursor)
 		ensure
 			cursor_end_position: cursor = implementation.count
-			no_future: current ~ old current.deep_twin.no_future
-		end
-
-	clear_past
-		do
-			implementation := array_slice(implementation, cursor, implementation.upper)
-			cursor := 1
-		ensure
-			no_past: current ~ old current.deep_twin.no_past
-			cursor_start_position: cursor = 1
+--			no_future: current ~ old current.deep_twin.no_future
+			no_future: model ~ old model.deep_twin.subsequenced (1, cursor)
 		end
 
 	clear_all
+			-- removes all of history
 		do
 			make
 		ensure
-			no_past: not has_past
-			no_future: not has_future
+			is_empty: model.is_empty
 			cursor_end_position: cursor = implementation.count
 			cursor_start_position: cursor = 0
 		end
