@@ -1,0 +1,295 @@
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid2")
+  state 1 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 2 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 3 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 4 e9: phase identifier not in the system
+->remove_phase("pid2")
+  state 5 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 6 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 7 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 8 e9: phase identifier not in the system
+->new_tracker(50,10)
+  state 9 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 10 e19: there is no more to undo
+->undo
+  state 11 e19: there is no more to undo
+->undo
+  state 12 e19: there is no more to undo
+->remove_phase("pid2")
+  state 13 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 14 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 15 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 16 e9: phase identifier not in the system
+->remove_phase("pid2")
+  state 17 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 18 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 19 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 20 e9: phase identifier not in the system
+->redo
+  state 21 e20: there is no more to redo
+->redo
+  state 22 e20: there is no more to redo
+->redo
+  state 23 e20: there is no more to redo
+->undo
+  state 24 (to 19) e9: phase identifier not in the system
+->undo
+  state 25 (to 18) e9: phase identifier not in the system
+->undo
+  state 26 (to 17) e9: phase identifier not in the system
+->new_tracker(30,20)
+  state 27 ok
+  max_phase_radiation: 30.00, max_container_radiation: 20.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 28 e19: there is no more to undo
+->undo
+  state 29 e19: there is no more to undo
+->undo
+  state 30 e19: there is no more to undo
+->redo
+  state 31 e20: there is no more to redo
+->redo
+  state 32 e20: there is no more to redo
+->redo
+  state 33 e20: there is no more to redo
+->undo
+  state 34 e19: there is no more to undo
+->undo
+  state 35 e19: there is no more to undo
+->undo
+  state 36 e19: there is no more to undo
+->new_tracker(10,10)
+  state 37 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 38 e19: there is no more to undo
+->undo
+  state 39 e19: there is no more to undo
+->undo
+  state 40 e19: there is no more to undo
+->redo
+  state 41 e20: there is no more to redo
+->redo
+  state 42 e20: there is no more to redo
+->redo
+  state 43 e20: there is no more to redo
+->undo
+  state 44 e19: there is no more to undo
+->undo
+  state 45 e19: there is no more to undo
+->undo
+  state 46 e19: there is no more to undo
+->new_phase("pid2","compacting",2,<<glass, metal, plastic>>)
+  state 47 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 48 (to 37) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 49 e19: there is no more to undo
+->undo
+  state 50 e19: there is no more to undo
+->redo
+  state 51 (to 47) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 52 e20: there is no more to redo
+->redo
+  state 53 e20: there is no more to redo
+->undo
+  state 54 (to 37) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 55 e19: there is no more to undo
+->undo
+  state 56 e19: there is no more to undo
+->new_phase("pid1","unpacking",2,<<glass, metal, plastic, liquid>>)
+  state 57 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid2")
+  state 58 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 59 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid3")
+  state 60 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 61 e9: phase identifier not in the system
+->remove_phase("pid2")
+  state 62 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 63 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 64 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 65 e9: phase identifier not in the system
+->new_phase("pid3","compacting",2,<<glass, metal, plastic>>)
+  state 66 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid3->compacting:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_phase("pid4","unpacking",2,<<glass, metal, plastic, liquid>>)
+  state 67 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid3->compacting:2,0,0.00,{glass,metal,plastic}
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[metal, 2],"pid2")
+  state 68 e9: phase identifier not in the system
+->new_container("cid2",[metal, 2],"pid2")
+  state 69 e9: phase identifier not in the system
+->new_container("cid3",[metal, 3],"pid1")
+  state 70 e9: phase identifier not in the system
+->new_container("cid4",[metal, 4],"pid1")
+  state 71 e9: phase identifier not in the system
+->remove_phase("pid2")
+  state 72 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 73 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 74 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid4")
+  state 75 ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid2")
+  state 76 e9: phase identifier not in the system
+->remove_phase("pid3")
+  state 77 e9: phase identifier not in the system
+->remove_phase("pid4")
+  state 78 e9: phase identifier not in the system
+->remove_phase("pid1")
+  state 79 e9: phase identifier not in the system
+->undo
+  state 80 (to 78) e9: phase identifier not in the system
+->undo
+  state 81 (to 77) e9: phase identifier not in the system
+->undo
+  state 82 (to 76) e9: phase identifier not in the system
+->redo
+  state 83 (to 77) e9: phase identifier not in the system
+->redo
+  state 84 (to 78) e9: phase identifier not in the system
+->redo
+  state 85 (to 79) e9: phase identifier not in the system
+->undo
+  state 86 (to 78) e9: phase identifier not in the system
+->undo
+  state 87 (to 77) e9: phase identifier not in the system
+->undo
+  state 88 (to 76) e9: phase identifier not in the system
+->remove_container("cid1")
+  state 89 e15: this container identifier not in tracker
+->undo
+  state 90 (to 76) e9: phase identifier not in the system
+->undo
+  state 91 (to 75) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 92 (to 74) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 93 (to 75) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->redo
+  state 94 (to 76) e9: phase identifier not in the system
+->redo
+  state 95 (to 89) e15: this container identifier not in tracker
+->undo
+  state 96 (to 76) e9: phase identifier not in the system
+->undo
+  state 97 (to 75) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 98 (to 74) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->remove_container("cid2")
+  state 99 e15: this container identifier not in tracker
+->undo
+  state 100 (to 74) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 101 (to 73) e9: phase identifier not in the system
+->undo
+  state 102 (to 72) e9: phase identifier not in the system
+->redo
+  state 103 (to 73) e9: phase identifier not in the system
+->redo
+  state 104 (to 74) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 105 (to 99) e15: this container identifier not in tracker
+->undo
+  state 106 (to 74) ok
+  max_phase_radiation: 10.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid4->unpacking:2,0,0.00,{glass,metal,plastic,liquid}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 107 (to 73) e9: phase identifier not in the system
+->undo
+  state 108 (to 72) e9: phase identifier not in the system

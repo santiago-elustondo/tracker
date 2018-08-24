@@ -1,0 +1,498 @@
+  state 0 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 1 e19: there is no more to undo
+->undo
+  state 2 e19: there is no more to undo
+->undo
+  state 3 e19: there is no more to undo
+->undo
+  state 4 e19: there is no more to undo
+->redo
+  state 5 e20: there is no more to redo
+->redo
+  state 6 e20: there is no more to redo
+->redo
+  state 7 e20: there is no more to redo
+->redo
+  state 8 e20: there is no more to redo
+->redo
+  state 9 e20: there is no more to redo
+->new_phase("pid1","p1",2,<<glass, metal, plastic>>)
+  state 10 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 11 (to 0) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid1")
+  state 12 e9: phase identifier not in the system
+->redo
+  state 13 e20: there is no more to redo
+->new_phase("pid1","p1",2,<<glass, metal, plastic>>)
+  state 14 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid1")
+  state 15 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 16 (to 14) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 17 (to 15) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 18 (to 14) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 1],"pid1")
+  state 19 e14: container radiation capacity exceeded
+->undo
+  state 20 (to 14) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 0],"pid1")
+  state 21 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,0.00
+->new_tracker(50,10)
+  state 22 e1: current tracker is in use
+->undo
+  state 23 (to 21) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,0.00
+->undo
+  state 24 (to 14) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_phase("pid2","p1",2,<<glass, metal, plastic>>)
+  state 25 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_tracker(50,10)
+  state 26 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 27 e19: there is no more to undo
+->undo
+  state 28 e19: there is no more to undo
+->undo
+  state 29 e19: there is no more to undo
+->redo
+  state 30 e20: there is no more to redo
+->redo
+  state 31 e20: there is no more to redo
+->redo
+  state 32 e20: there is no more to redo
+->redo
+  state 33 e20: there is no more to redo
+->undo
+  state 34 e19: there is no more to undo
+->undo
+  state 35 e19: there is no more to undo
+->new_container("cid2",[glass, 1],"pid1")
+  state 36 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid2->pid1->glass,1.00
+->new_container("cid1",[glass, 1],"pid1")
+  state 37 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,1.00
+    cid2->pid1->glass,1.00
+->move_container("cid1","pid1","pid2")
+  state 38 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid2->pid1->glass,1.00
+->undo
+  state 39 (to 37) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,1.00
+    cid2->pid1->glass,1.00
+->redo
+  state 40 (to 38) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid2->pid1->glass,1.00
+->undo
+  state 41 (to 37) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,1.00
+    cid2->pid1->glass,1.00
+->redo
+  state 42 (to 38) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid2->pid1->glass,1.00
+->new_container("cid1",[glass, 1],"pid1")
+  state 43 e10: this container identifier already in tracker
+->new_container("cid3",[glass, 1],"pid1")
+  state 44 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid2->pid1->glass,1.00
+    cid3->pid1->glass,1.00
+->remove_container("cid2")
+  state 45 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid3->pid1->glass,1.00
+->new_container("cid4",[glass, 1],"pid1")
+  state 46 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid3->pid1->glass,1.00
+    cid4->pid1->glass,1.00
+->new_container("cid2",[glass, 1],"pid2")
+  state 47 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,2,2.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid2->glass,1.00
+    cid2->pid2->glass,1.00
+    cid3->pid1->glass,1.00
+    cid4->pid1->glass,1.00
+->remove_phase("pid1")
+  state 48 e1: current tracker is in use
+->remove_phase("pid2")
+  state 49 e1: current tracker is in use
+->remove_container("cid1")
+  state 50 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,1,1.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid2->pid2->glass,1.00
+    cid3->pid1->glass,1.00
+    cid4->pid1->glass,1.00
+->remove_container("cid2")
+  state 51 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid3->pid1->glass,1.00
+    cid4->pid1->glass,1.00
+->remove_container("cid3")
+  state 52 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid4->pid1->glass,1.00
+->remove_container("cid4")
+  state 53 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid1")
+  state 54 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->remove_phase("pid2")
+  state 55 ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+  containers: cid->pid->material,radioactivity
+->undo
+  state 56 (to 54) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 57 (to 53) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 58 (to 52) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid4->pid1->glass,1.00
+->undo
+  state 59 (to 51) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,2,2.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid3->pid1->glass,1.00
+    cid4->pid1->glass,1.00
+->redo
+  state 60 (to 52) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid4->pid1->glass,1.00
+->redo
+  state 61 (to 53) ok
+  max_phase_radiation: 50.00, max_container_radiation: 10.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_tracker(0,0)
+  state 62 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 1],"pid1")
+  state 63 e14: container radiation capacity exceeded
+->new_tracker(10,0)
+  state 64 ok
+  max_phase_radiation: 10.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 1],"pid1")
+  state 65 e14: container radiation capacity exceeded
+->new_tracker(10,5)
+  state 66 ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_container("cid1",[glass, 1],"pid1")
+  state 67 ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,1.00
+->undo
+  state 68 (to 66) ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 69 e19: there is no more to undo
+->redo
+  state 70 (to 67) ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,1,1.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid1->glass,1.00
+->redo
+  state 71 e20: there is no more to redo
+->undo
+  state 72 (to 66) ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_phase("pid1","p1",2,<<liquid, glass, glass, metal, glass, metal, glass, plastic, glass, glass, plastic, liquid>>)
+  state 73 e6: phase identifier already exists
+->new_phase("pid3","p1",0,<<liquid, glass, glass, metal, glass, metal, glass, plastic, glass, glass, plastic, liquid>>)
+  state 74 e7: phase capacity must be a positive integer
+->new_phase("pid3","p1",4,<<liquid, glass, glass, metal, glass, metal, glass, plastic, glass, glass, plastic, liquid>>)
+  state 75 ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,0,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 76 (to 74) e7: phase capacity must be a positive integer
+->undo
+  state 77 (to 73) e6: phase identifier already exists
+->redo
+  state 78 (to 74) e7: phase capacity must be a positive integer
+->redo
+  state 79 (to 75) ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,0,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->redo
+  state 80 e20: there is no more to redo
+->undo
+  state 81 (to 74) e7: phase capacity must be a positive integer
+->redo
+  state 82 (to 75) ok
+  max_phase_radiation: 10.00, max_container_radiation: 5.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,0,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->new_tracker(0,0)
+  state 83 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,0,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+->undo
+  state 84 e19: there is no more to undo
+->new_container("cid1",[glass, 0],"pid3")
+  state 85 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,1,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid3->glass,0.00
+->new_container("cid2",[plastic, 0],"pid3")
+  state 86 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,2,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid3->glass,0.00
+    cid2->pid3->plastic,0.00
+->new_container("cid3",[liquid, 0],"pid3")
+  state 87 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,3,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid3->glass,0.00
+    cid2->pid3->plastic,0.00
+    cid3->pid3->liquid,0.00
+->new_container("cid4",[metal, 0],"pid3")
+  state 88 ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,4,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid3->glass,0.00
+    cid2->pid3->plastic,0.00
+    cid3->pid3->liquid,0.00
+    cid4->pid3->metal,0.00
+->move_container("cid3","pid3","pid1")
+  state 89 e13: phase does not expect this container material
+->undo
+  state 90 (to 88) ok
+  max_phase_radiation: 0.00, max_container_radiation: 0.00
+  phases: pid->name:capacity,count,radiation
+    pid1->p1:2,0,0.00,{glass,metal,plastic}
+    pid2->p1:2,0,0.00,{glass,metal,plastic}
+    pid3->p1:4,4,0.00,{liquid,glass,metal,plastic}
+  containers: cid->pid->material,radioactivity
+    cid1->pid3->glass,0.00
+    cid2->pid3->plastic,0.00
+    cid3->pid3->liquid,0.00
+    cid4->pid3->metal,0.00
+->redo
+  state 91 (to 89) e13: phase does not expect this container material
+->new_tracker(10,1)
+  state 92 e1: current tracker is in use
+->undo
+  state 93 (to 89) e13: phase does not expect this container material
+->redo
+  state 94 (to 92) e1: current tracker is in use
+->redo
+  state 95 e20: there is no more to redo

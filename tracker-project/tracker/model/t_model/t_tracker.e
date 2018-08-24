@@ -329,11 +329,33 @@ invariant
 	current_actions_and_state_id_are_not_negative:
 		not (current_num_actions < 0);
 
-	capacity_not_exceeded: across get_phases as p all p.item.get_containers.count <= p.item.get_capacity end
-	phase_rad_not_exceeded: across get_phases as p all p.item.get_radiation <= get_max_phase_rad end
-	con_rad_not_exceeded: across get_phases as p all
-		across p.item.get_containers as c all not get_container_rad_exceeded(c.item.get_props.radioactivity) end
-	end
+	capacity_not_exceeded:
+		across get_phases as p all
+			p.item.get_containers.count <= p.item.get_capacity
+		end
+	phase_rad_not_exceeded:
+		across get_phases as p all
+			p.item.get_radiation <= get_max_phase_rad
+		end
+	con_rad_not_exceeded:
+		across get_phases as p all
+			across p.item.get_containers as c all
+				not get_container_rad_exceeded(c.item.get_props.radioactivity)
+			end
+		end
+	mat_expected:
+		across get_phases as p all
+			across p.item.get_materials as m all
+				p.item.get_materials.material_expected (m.item.get_mid)
+			end
+		end
+	con_in_only_one_phase:
+		across get_phases as p1 all
+			across get_phases as p2 all
+				p1.item /= p2.item implies
+					(p1.item.model.range |/\| p2.item.model.range).is_empty
+			end
+		end
 
 
 end
