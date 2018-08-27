@@ -18,11 +18,11 @@
 {\tab}{\cf5 {\cf5 add_container} {\cf1 (}{\cf5 a_container}{\cf1 :} {\cf4 T_CONTAINER}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  adds }{\cf5 a_container}{\cf3  to tracker}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
-{\tab}{\tab}{\tab}{\cf1 container_doesnt_exist}{\cf1 :} {\b\cf6 not} {\cf5 get_containers}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf1 cid_is_valid}{\cf1 :} {\b\cf6 not} {\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\b\cf1 .}{\cf5 is_empty} {\b\cf6 and then} {\cf5 a_container}{\b\cf1 .}{\cf5 get_cid} {\cf1 [}1{\cf1 ]}{\b\cf1 .}{\cf5 is_alpha_numeric}{\line}
 {\tab}{\tab}{\tab}{\cf1 radioactivity_non_negative}{\cf1 :} {\b\cf6 not} {\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 radioactivity}{\b\cf1 .}{\cf5 as_double} {\cf1 <} 0.0{\cf1 )}{\line}
 {\tab}{\tab}{\tab}{\cf1 max_capacity_not_exceeded}{\cf1 :} {\b\cf6 not} {\cf5 max_capacity}{\line}
 {\tab}{\tab}{\tab}{\cf1 material_expected}{\cf1 :} {\cf5 get_materials}{\b\cf1 .}{\cf5 material_expected}{\cf1  }{\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_props}{\b\cf1 .}{\cf5 material}{\b\cf1 .}{\cf5 get_mid}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 container_doesnt_exist}{\cf1 :} {\b\cf6 not} {\cf5 model}{\b\cf1 .}{\cf5 domain}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
 {\tab}{\tab}{\tab}{\cf1 container_added}{\cf1 :} {\cf5 model} {\cf1 ~} {\b\cf6 old} {\cf5 model}{\b\cf1 .}{\cf5 deep_twin} {\cf1 +} {\b\cf6 create} {\cf1 \{}{\cf4 PAIR} {\cf1 [}{\cf4 STRING_8}{\cf1 ,} {\cf4 T_CONTAINER}{\cf1 ]}{\cf1 \}}{\b\cf1 .}{\cf5 make_from_tuple}{\cf1  }{\cf1 (}{\cf1 [}{\cf5 a_container}{\b\cf1 .}{\cf5 get_cid}{\cf1 ,} {\cf5 a_container}{\cf1 ]}{\cf1 )}{\line}
 }{\line}
@@ -30,7 +30,7 @@
 {\tab}{\tab}{\tab}{\cf3 --}{\cf3  removes container associated with }{\cf5 a_cid}{\cf3  from tracker}{\line}
 {\tab}{\tab}{\b\cf6 require}{\line}
 {\tab}{\tab}{\tab}{\cf1 cid_is_valid}{\cf1 :} {\b\cf6 not} {\cf5 a_cid}{\b\cf1 .}{\cf5 is_empty} {\b\cf6 and then} {\cf5 a_cid} {\cf1 [}1{\cf1 ]}{\b\cf1 .}{\cf5 is_alpha_numeric}{\line}
-{\tab}{\tab}{\tab}{\cf1 has_container}{\cf1 :} {\cf5 get_containers}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_cid}{\cf1 )}{\line}
+{\tab}{\tab}{\tab}{\cf1 has_container}{\cf1 :} {\cf5 model}{\b\cf1 .}{\cf5 domain}{\b\cf1 .}{\cf5 has}{\cf1  }{\cf1 (}{\cf5 a_cid}{\cf1 )}{\line}
 {\tab}{\tab}{\b\cf6 ensure}{\line}
 {\tab}{\tab}{\tab}{\cf1 container_removed}{\cf1 :} {\cf5 model} {\cf1 ~} {\b\cf6 old} {\cf5 model}{\b\cf1 .}{\cf5 deep_twin} {\cf1 -} {\b\cf6 create} {\cf1 \{}{\cf4 PAIR} {\cf1 [}{\cf4 STRING_8}{\cf1 ,} {\cf4 T_CONTAINER}{\cf1 ]}{\cf1 \}}{\b\cf1 .}{\cf5 make_from_tuple}{\cf1  }{\cf1 (}{\b\cf6 old} {\cf1 [}{\cf5 a_cid}{\cf1 ,} {\cf5 get_container}{\cf1  }{\cf1 (}{\cf5 a_cid}{\cf1 )}{\cf1 ]}{\cf1 )}{\line}
 }{\tab}{\line}

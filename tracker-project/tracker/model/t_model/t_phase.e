@@ -47,7 +47,7 @@ feature -- commands
 			radioactivity_non_negative: not (a_container.get_props.radioactivity < 0.0)
 			max_capacity_not_exceeded: not max_capacity
 			material_expected: get_materials.material_expected (a_container.get_props.material.get_mid)
-			container_doesnt_exist: not model.has ([a_container.get_cid, a_container])
+			container_doesnt_exist: not model.domain.has (a_container.get_cid)
 		do
 			containers.put(a_container, a_container.get_cid)
 		ensure
@@ -63,7 +63,7 @@ feature -- commands
 		require
 			cid_is_valid: not a_cid.is_empty and then a_cid[1].is_alpha_numeric
 --			has_container: get_containers.has (a_cid)
-			has_container: model.has ([a_cid, model[a_cid]])
+			has_container: model.domain.has (a_cid)
 		do
 			containers.remove(a_cid)
 		ensure

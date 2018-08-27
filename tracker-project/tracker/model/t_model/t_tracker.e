@@ -82,7 +82,7 @@ feature -- commands
 --			phase_not_exists: not get_phases.has (a_phase.get_pid)
 			capacity_not_negative: not (a_phase.get_capacity <= 0)
 			materials_expected: not (a_phase.get_materials.count = 0)
-			phase_not_exists: not model.has ([a_phase.get_pid, a_phase])
+			phase_not_exists: not model.domain.has (a_phase.get_pid)
 		do
 			phases.put(a_phase, a_phase.get_pid)
 		ensure
@@ -97,7 +97,7 @@ feature -- commands
 		require
 --			phase_exists: get_phases.has(a_pid)
 			tracker_not_in_use : not tracker_in_use
-			phase_exists: model.has ([a_pid, model[a_pid]])
+			phase_exists: model.domain.has (a_pid)
 		do
 			phases.remove(a_pid)
 		ensure
@@ -117,8 +117,8 @@ feature -- commands
 			phase_rad_not_exceeded: not get_phase_rad_exceeded (a_pid2, a_container.get_props.radioactivity)
 			material_expected: get_phase(a_pid2).get_materials.material_expected (a_container.get_props.material.get_mid)
 --			has_container: get_phase(a_pid1).get_containers.has_item (a_container)
-			old_has_container: get_phase(a_pid1).model.has ([a_container.get_cid, a_container])
-			new_not_has_container: not get_phase(a_pid2).model.has ([a_container.get_cid, a_container])
+			old_has_container: get_phase(a_pid1).model.domain.has (a_container.get_cid)
+			new_not_has_container: not get_phase(a_pid2).model.domain.has (a_container.get_cid)
 		do
 			a_container.set_pid (a_pid2)
 			get_phase(a_pid1).get_containers.remove (a_container.get_cid)

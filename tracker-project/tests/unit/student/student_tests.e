@@ -26,14 +26,14 @@ feature {NONE}
 			add_violation_case_with_tag ("max_phase_rad_is_not_smaller_than_max_container_rad", agent e4)
 			add_violation_case_with_tag ("pid_is_valid", agent e5)
 			add_violation_case_with_tag ("phase_not_exists", agent e6)
-			add_violation_case_with_tag ("capacity_not_negative", agent e7)
+			add_violation_case_with_tag ("capacity_not_smaller_than_sum_of_containers", agent e7)
 			add_violation_case_with_tag ("materials_expected", agent e8)
 			add_boolean_case (agent t3)
 			add_boolean_case (agent t4)
 			add_boolean_case (agent t5)
 			add_violation_case_with_tag ("tracker_not_in_use", agent e1)
 			add_violation_case_with_tag ("pid_exists", agent e9)
-			add_violation_case_with_tag ("container_doesnt_exist", agent e10)
+			add_violation_case_with_tag ("max_capacity_not_exceeded", agent e10)
 			add_violation_case_with_tag ("max_capacity_not_exceeded", agent e11)
 			add_violation_case_with_tag ("phase_rad_not_exceeded", agent e12)
 			add_violation_case_with_tag ("material_expected", agent e13)
@@ -218,6 +218,7 @@ feature
 		do
 			comment("e6: phase identifier already exists")
 			create phase.make ("pid1", "p1", 1, <<glass, metal, plastic>>)
+			tracker.add_phase (phase)
 			tracker.add_phase (phase)
 		end
 
